@@ -1,0 +1,15 @@
+@import "src/assets/styles/shared";
+
+
+.board-container {
+  background-color: $dark-blue;
+  color: white;
+  transition: color 0.3s ease;
+  height: 70px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+

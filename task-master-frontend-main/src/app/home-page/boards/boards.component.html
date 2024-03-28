@@ -1,0 +1,21 @@
+<div class="container-fluid" [formGroup]="boardForm">
+  <div class="row">
+    <div class="col-12 mb-2 d-flex justify-content-between align-items-center">
+      <select name="type" class="dialog-select" formControlName="select">
+        
+    
+        <option value="Oldest Activity">En circulation</option>
+        <option value="Ascending Alphabetically">Hors circulation</option>
+        <option value="Descending Alphabetically">En réparation </option>
+      </select>
+      <input type="search" class="search-dashboard" placeholder="chercher ici ..."
+             formControlName="search">
+    </div>
+    <div *ngFor="let board of listBoards" class="col-3">
+      <app-board-box [boardData]="board"></app-board-box>
+    </div>
+    <div class="col-3" (click)="openNewBoardDialog()">
+      <app-create-board></app-create-board>
+    </div>
+  </div>
+</div>

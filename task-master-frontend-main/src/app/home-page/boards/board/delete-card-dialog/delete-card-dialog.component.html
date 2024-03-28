@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 m-0 p-0 dialog-header d-flex justify-content-between align-items-center">
+      <h2 class="dialog-title d-flex justify-content-start align-items-center">
+        <mat-icon class="dialog-icon">delete</mat-icon>
+        Delete selected board
+      </h2>
+      <button class="dialog-button-close" (click)="closeDialog()" matRipple>X</button>
+    </div>
+    <div class="col-12 mt-4" style="font-weight: 500">
+      Do you want to delete this card ?
+    </div>
+    <div class="col-12 mt-3 mb-2 d-flex justify-content-end align-items-center">
+      <button class="dialog-discard-button" (click)="closeDialog()" matRipple>Discard</button>
+      <button class="dialog-confirm-button" (click)="confirmDialog()" matRipple>Confirm
+      </button>
+    </div>
+  </div>
+</div>

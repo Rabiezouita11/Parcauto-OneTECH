@@ -1,0 +1,96 @@
+@import "src/assets/styles/shared";
+
+.dialog-header {
+  height: 40px;
+  background-color: $dark-blue;
+  color: white;
+}
+
+.dialog-button-close {
+  font-size: 12px;
+  background-color: white;
+  color: $dark-blue;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+}
+
+.dialog-title {
+  font-size: 14px;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.dialog-icon {
+  transform: scale(0.8);
+  margin-right: 5px;
+}
+
+.dialog-label {
+  padding-left: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.dialog-input {
+  background-color: $gray;
+  border: none;
+  outline: none;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 15px;
+  border-radius: 3px;
+  width: 100%;
+
+  &::placeholder {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}
+
+.dialog-select {
+  height: 40px;
+  background-color: $gray;
+  padding-left: 5px;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.dialog-textarea {
+  padding-left: 10px;
+  padding-top: 5px;
+  background-color: $gray;
+  width: 100%;
+  outline: none;
+  border: none;
+
+  &::placeholder {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}
+
+.dialog-discard-button, .dialog-confirm-button {
+  height: 34px !important;
+  width: 130px !important;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dialog-discard-button {
+  color: $dark-blue;
+  background-color: white;
+  border: 1px solid $dark-blue;
+}
+
+.dialog-confirm-button {
+  color: white;
+  background-color: $dark-blue;
+  margin-left: 10px;
+}
+

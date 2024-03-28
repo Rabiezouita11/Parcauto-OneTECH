@@ -1,0 +1,42 @@
+@import "src/assets/styles/shared";
+
+.list-container {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #edebd9;
+  width: 200px;
+  margin-right: 10px;
+}
+
+
+
+.new-card-container {
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px;
+  background-color: transparent;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    color: white;
+    background-color: $mustard-yellow;
+  }
+}
+
+.list-title {
+  margin-left: 2px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.menu-title {
+  cursor: pointer;
+}
+
+

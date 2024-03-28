@@ -1,0 +1,179 @@
+@import "src/assets/styles/shared";
+
+.upper-header-container {
+  color: white;
+  background-color: $turquoise;
+  width: 100%;
+  height: 50px;
+}
+
+.user-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.application-name {
+  font-size: 17px;
+  font-weight: 500;
+  padding-left: 15px;
+}
+
+.upper-lower-header-container {
+  height: 90px;
+  width: 100%;
+  background-color: $dark-blue;
+}
+
+.lower-lower-header-container {
+  height: 40px;
+  width: 100%;
+  background-color: white;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adding the box-shadow effect */
+  transition: box-shadow 0.2s ease-in-out; /* Adding a smooth transition effect */
+}
+
+.avatar-container {
+  height: 110px;
+  width: 110px;
+}
+
+.avatar {
+  height: 115px;
+  width: 115px;
+  margin-top: 8px;
+  margin-left: 10px;
+  background-color: white;
+  border: 1px solid #0000000f;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.user-name, .user-role {
+  font-weight: 500;
+  color: white;
+}
+
+.user-name {
+  font-size: 17px;
+  text-transform: uppercase;
+  margin-top: 24px;
+  margin-left: 30px;
+}
+
+.user-role {
+  font-size: 15px;
+  margin-top: 8px;
+  margin-left: 30px;
+}
+
+.header-element {
+  color: black;
+  cursor: pointer;
+  margin-right: 40px;
+}
+
+.header-element-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 3px;
+}
+
+.create-element {
+  background-color: $mustard-yellow;
+  color: white;
+  width: 150px;
+  height: 32px;
+  font-size: 15px;
+  border-radius: 3px;
+}
+
+.search-bar-input {
+  background-color: $blue-green;
+  width: 500px;
+  height: 30px;
+  border: 1px solid #ffffffb8;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  outline: none;
+  padding-left: 8px;
+  font-size: 14px;
+  color: #ffffffb8;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.search-bar-icon {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  color: $blue-green;
+  background-color: #ffffffb8;
+  padding: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.upper-header-button {
+  color: #ffffffb8;
+  margin-left: 20px;
+  cursor: pointer;
+  transform: scale(0.9);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: white;
+  }
+}
+
+.drawer-sidenav {
+  width: 206px;
+  padding: 10px;
+}
+
+.sidenav-content {
+  background-color: white;
+  width: 100%;
+  padding: 20px;
+}
+
+.drawer-separator {
+  font-size: 17px;
+  margin-top: 5px;
+  font-weight: 500;
+  height: 30px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.drawer-element {
+  height: 36px;
+  cursor: pointer;
+  padding-left: 5px;
+  color: black;
+  transition: color 0.3s ease;
+
+  &:hover {
+    background-color: $dark-blue;
+    border-radius: 3px;
+    color: white;
+  }
+}
+
+.drawer-element-icon {
+  margin-right: 5px;
+  transform: scale(0.8);
+  color: inherit;
+}
+
+
+.drawer-element-title {
+  font-size: 14px;
+  color: inherit;
+}
+
+
+

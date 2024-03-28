@@ -1,0 +1,30 @@
+@import "src/assets/styles/shared";
+
+.card-container {
+  height: 40px;
+  min-width: 190px !important;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px;
+  background-color: white;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    color: white;
+    background-color: $dark-blue;
+  }
+}
+
+.delete-card-icon {
+  transform: scale(0.7);
+  cursor: pointer;
+
+  &:hover {
+    color: $mustard-yellow;
+  }
+}

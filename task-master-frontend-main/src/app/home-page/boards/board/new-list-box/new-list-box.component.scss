@@ -1,0 +1,26 @@
+@import "src/assets/styles/shared";
+
+.list-container {
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #edebd9;
+  width: 200px;
+  margin-right: 10px;
+}
+
+.card-container {
+  height: 40px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background-color: white;
+  }
+}

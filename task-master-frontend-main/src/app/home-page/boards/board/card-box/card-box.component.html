@@ -1,0 +1,4 @@
+<div class="card-container d-flex justify-content-between" (mouseover)="handleDisplayingDeleteButton(true)" (mouseleave)="handleDisplayingDeleteButton(false)" matRipple>
+  <span>{{card.name}}</span>
+  <mat-icon *ngIf="displayDeleteButton" class="delete-card-icon">delete</mat-icon>
+</div>

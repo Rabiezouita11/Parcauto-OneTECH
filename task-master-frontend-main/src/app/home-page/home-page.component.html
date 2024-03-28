@@ -1,0 +1,103 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center upper-header-container">
+      <div class="d-flex align-items-center">
+        <img src="assets/logos/logo-application.png" class="user-icon">
+        <span class="application-name">Parc Auto One Tech</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <input type="search" class="search-bar-input" placeholder="Search for users, tasks, or keywords...">
+        <mat-icon class="search-bar-icon" matRipple>search</mat-icon>
+      </div>
+      <div>
+        <mat-icon class="upper-header-button" (click)="toggleFullscreen()">fullscreen</mat-icon>
+        <mat-icon class="upper-header-button" matBadge="15" matBadgeColor="warn" matBadgeSize="small">notifications
+        </mat-icon>
+        <mat-icon class="upper-header-button">settings</mat-icon>
+        <mat-icon class="upper-header-button">power_settings_new</mat-icon>
+      </div>
+    </div>
+    <div class="col-12 m-0 p-0 lower-header-container">
+      <div class="upper-lower-header-container d-flex flex-grow">
+        <div class="avatar-container">
+          <img src="assets/logos/avatar.png" class="avatar">
+        </div>
+        <span>
+          <div class="user-name">Nour</div>
+          <div class="user-role">Administrateur</div>
+        </span>
+      </div>
+      <div class="lower-lower-header-container d-flex justify-content-start align-items-center">
+        <div class="header-element d-flex justify-content-start align-items-center" style="padding-left: 140px"
+             (click)="drawer.toggle()">
+          <span class="header-element-title">Menu</span>
+          <mat-icon>menu</mat-icon>
+        </div>
+        <div class="header-element d-flex justify-content-start align-items-center" [matMenuTriggerFor]="workspace">
+          <span class="header-element-title">Gestion véhicule</span>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+          <mat-menu #workspace="matMenu">
+            <span>Workspace-1</span>
+            <span>Workspace-2</span>
+          </mat-menu>
+        </div>
+        <div class="header-element d-flex justify-content-start align-items-center" [matMenuTriggerFor]="recent">
+          <span class="header-element-title">Gestion d'utilisateur </span>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+          <mat-menu #recent="matMenu">
+            <span>Workspace-1</span>
+            <span>Workspace-2</span>
+          </mat-menu>
+        </div>
+        <div class="header-element">
+          <button class="create-element" (click)="openCreateWorkspaceDialog()" matRipple>Ajouter utilisateur</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 m-0 p-0">
+      <mat-drawer-container [style.height.px]="sidenavHeight">
+        <mat-drawer #drawer class="drawer-sidenav" mode="side">
+          <div class="drawer-separator"> gestion de véchicule</div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple routerLink="boards">
+            <mat-icon class="drawer-element-icon">directions_car</mat-icon>
+            <div class="drawer-element-title">Liste des véhicules</div>
+          </div>
+
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple router link="details">
+            <mat-icon class="drawer-element-icon"> details</mat-icon>
+            <div class="drawer-element-title">Détails de véhicules </div>
+          </div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">local_gas_station</mat-icon>
+            <div class="drawer-element-title">Carburant véhicules</div>
+          </div>
+          <div class="drawer-separator" style="margin-top: 20px">gestion de parc</div>
+          
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">view_column</mat-icon>
+            <div class="drawer-element-title">ordre de mission</div>
+          </div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">calendar_today</mat-icon>
+            <div class="drawer-element-title">Calendrier des résrvations</div>
+          </div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">supervisor_account</mat-icon>
+            <div class="drawer-element-title">Liste des conducteurs</div>
+          </div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">report</mat-icon>
+            <div class="drawer-element-title">Côuts éstimes</div>
+          </div>
+          <div class="drawer-element d-flex justify-content-start align-items-center" matRipple>
+            <mat-icon class="drawer-element-icon">settings</mat-icon>
+            <div class="drawer-element-title">Rappels de maintenance</div>
+          </div> 
+        </mat-drawer>
+        <div class="sidenav-content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-container>
+    </div>
+  </div>
+</div>

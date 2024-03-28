@@ -1,0 +1,11 @@
+<div class="board-container d-flex justify-content-between align-items-center" (click)="routeToBoard(boardData.id)"
+     matRipple>
+  <div>
+    <div class="board-name">{{boardData.name}}</div>
+    <div class="board-date">{{boardData.dateCreation| date:'mediumDate'}}</div>
+  </div>
+  <div class="d-flex flex-column">
+    <mat-icon class="board-icon" (click)="modifySelectedBoard($event,boardData)">edit</mat-icon>
+    <mat-icon class="board-icon mt-1" (click)="deleteSelectedBoard($event,boardData.id)">delete</mat-icon>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="container-fluid" [formGroup]="newWorkspaceForm">
+  <div class="row">
+    <div class="col-12 m-0 p-0 dialog-header d-flex justify-content-between align-items-center">
+      <h2 class="dialog-title d-flex justify-content-start align-items-center">
+        <mat-icon class="dialog-icon">library_add</mat-icon>
+        Ajouter Nouveau Utilisateur
+      </h2>
+      <button class="dialog-button-close" (click)="closeDialog()" matRipple>X</button>
+    </div>
+    <div class="col-12 mt-3">
+      <div class="dialog-label">Nom d'utilisateur :</div>
+      <input type="text" class="dialog-input" placeholder="Enter nom utilisateur" formControlName="name"
+             [ngStyle]=" (!newWorkspaceForm.controls['name'].valid && newWorkspaceForm.controls['name'].touched) ? {'border': '1px solid rgb(255 55 55 / 30%)'} : {'border': 'none'}">
+    </div>
+    <div class="col-12 mt-4">
+      <div class="dialog-label">type d'utilisateur :</div>
+      <select name="type" class="dialog-select" formControlName="type"
+              [ngStyle]=" (!newWorkspaceForm.controls['type'].valid && newWorkspaceForm.controls['type'].touched) ? {'border': '1px solid rgb(255 55 55 / 30%)'} : {'border': 'none'}">
+        <option value="Type 1">Type 1</option>
+        <option value="Type 2">Type 2</option>
+        <option value="Type 3">Type 3</option>
+        <option value="Type 4">Type 4</option>
+      </select>
+    </div>
+    <div class="col-12 mt-4">
+      <div class="dialog-label">Description :</div>
+      <textarea class="dialog-textarea" placeholder="Enter Votre Description" rows="7"
+                formControlName="description"
+                [ngStyle]=" (!newWorkspaceForm.controls['description'].valid && newWorkspaceForm.controls['description'].touched) ? {'border': '1px solid rgb(255 55 55 / 30%)'} : {'border': 'none'}"></textarea>
+    </div>
+    <div class="col-12 mt-5 mb-2 d-flex justify-content-end align-items-center">
+      <button class="dialog-discard-button" (click)="closeDialog()" matRipple>annuler</button>
+      <button class="dialog-confirm-button" (click)="confirmDialog()"
+              [ngStyle]="newWorkspaceForm.valid ? {'cursor': 'pointer'} : {'cursor': 'not-allowed'}" matRipple>Confirmer
+      </button>
+    </div>
+  </div>
+</div>
+

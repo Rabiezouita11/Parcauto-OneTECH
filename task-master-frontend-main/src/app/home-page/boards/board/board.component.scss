@@ -1,0 +1,12 @@
+@import "src/assets/styles/shared";
+
+
+.header-board {
+  height: 50px;
+  background-color: $gray;
+}
+
+.board-name {
+  font-weight: 500;
+  font-size: 16px;
+}
