@@ -8,6 +8,7 @@ import { SidbarComponent } from './sidbar/sidbar.component';
 import { ComponentComponent } from './component/component.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VehiculeComponent } from './vehicule/vehicule.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     SidbarComponent,
     ComponentComponent,
-    DashboardComponent
+    DashboardComponent,
+    VehiculeComponent
   ],
  
   exports: [HeaderComponent, FooterComponent],
