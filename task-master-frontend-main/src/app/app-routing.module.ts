@@ -6,9 +6,10 @@ import {BoardComponent} from "./home-page/boards/board/board.component";
 import { DetailsComponent } from './home-page/details/details.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ComponentComponent } from './admin/component/component.component';
 
 const routes: Routes = [
-  {path: '', redirectTo:'login',pathMatch:'full'},
+ 
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {
@@ -17,6 +18,12 @@ const routes: Routes = [
       {path: "board/:id", component: BoardComponent},
       {path: "details" , component : DetailsComponent},
     ]
+  },
+  {
+    path: '',
+    component: ComponentComponent,
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
   }
 ];
 

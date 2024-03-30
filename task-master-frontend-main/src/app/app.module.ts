@@ -32,6 +32,7 @@ import { DetailsComponent } from './home-page/details/details.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { AdminModule } from './admin/admin.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +71,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
     MatSidenavModule,
     MatDialogModule,
     HttpClientModule,
+    AdminModule,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
