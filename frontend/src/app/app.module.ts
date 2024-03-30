@@ -33,6 +33,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { AdminModule } from './admin/admin.module';
+import { NotfoundComponent } from './notfound/notfound.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +57,7 @@ import { AdminModule } from './admin/admin.module';
     DetailsComponent,
     RegisterComponent,
     LoginComponent,
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,

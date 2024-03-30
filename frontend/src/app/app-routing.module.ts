@@ -7,6 +7,7 @@ import { DetailsComponent } from './home-page/details/details.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ComponentComponent } from './admin/component/component.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
  
@@ -24,7 +25,8 @@ const routes: Routes = [
     component: ComponentComponent,
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
-  }
+  },
+  { path: '**', component: NotfoundComponent },
 ];
 
 @NgModule({
