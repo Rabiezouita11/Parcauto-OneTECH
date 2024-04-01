@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { AdminModule } from './admin/admin.module';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { AuthModule } from './auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
     FormsModule,
     HttpClientModule,
     AdminModule,
+    AuthModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
