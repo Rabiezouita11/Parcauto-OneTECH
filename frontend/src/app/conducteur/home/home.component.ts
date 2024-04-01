@@ -40,6 +40,10 @@ export class HomeComponent implements OnInit {
       setTimeout(() => {
         this.hideLoader();
       }, 2000);
+    }).catch((error) => {
+      console.error('Error loading scripts or styles:', error);
+      // Handle error - for example, you could display an error message or retry loading
+      this.hideLoader(); // Ensure loader is hidden even if there's an error
     });
   }
 
