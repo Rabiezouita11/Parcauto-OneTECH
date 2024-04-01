@@ -10,6 +10,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { AdminModule } from './admin/admin.module';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthModule } from './auth/auth.module';
+import { ConducteurModule } from './conducteur/conducteur.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { AuthModule } from './auth/auth.module';
     FormsModule,
     HttpClientModule,
     AdminModule,
-    AuthModule
+    AuthModule,
+    ConducteurModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

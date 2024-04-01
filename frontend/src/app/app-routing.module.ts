@@ -9,9 +9,15 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+
+
+  {
+    path: 'conducteur',
+    loadChildren: () => import('./conducteur/conducteur.module').then(m => m.ConducteurModule)
+  },
+
   {
     path: 'auth',
-    
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
