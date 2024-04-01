@@ -36,8 +36,10 @@ export class ProfileComponent implements OnInit {
       .then(() => {
         this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)
           .then(() => {
-            // Hide the loader after loading is complete
-            this.hideLoader();
+            // Hide the loader after a delay of 1 second (1000 milliseconds)
+            setTimeout(() => {
+              this.hideLoader();
+            }, 2000);
           });
       });
   }

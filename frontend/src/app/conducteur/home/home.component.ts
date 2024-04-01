@@ -37,7 +37,9 @@ export class HomeComponent implements OnInit {
       this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)
     ]).then(() => {
       // Hide the loader after loading is complete
-      this.hideLoader();
+      setTimeout(() => {
+        this.hideLoader();
+      }, 2000);
     });
   }
 
