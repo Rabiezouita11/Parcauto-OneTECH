@@ -51,9 +51,6 @@
         background-color: #ffffff;
         min-height: 100vh;
         width: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -131,7 +128,7 @@
             i {
                 position: absolute;
                 z-index: 1;
-                right: 0;
+                left: 0;
                 top: 50%;
                 -webkit-transform: translateY(-50%);
                 -ms-transform: translateY(-50%);
@@ -152,7 +149,7 @@
             box-shadow: none;
             border: 0;
             border-bottom: 1px solid #e7e7e7;
-            padding: 10px 30px 10px 10px;
+            padding: 10px 10px 10px 30px;
             color: #111111;
         }
         input::-webkit-input-placeholder {
@@ -180,13 +177,13 @@
             flex-wrap: wrap;
             margin-bottom: 25px;
             .fxt-form-col {
-                margin-left: 10px;
+                margin-right: 10px;
                 flex-basis: 0;
                 flex-grow: 1;
                 padding: 10px;
                 text-align: center;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
@@ -200,7 +197,7 @@
             flex-wrap: wrap;
         }
         .fxt-btn-resend {
-            margin-right: 3px;
+            margin-left: 3px;
             box-shadow: none;
             border: 0;
             background-color: transparent;
@@ -217,7 +214,7 @@
             }
         }
         .text-or {
-            margin-right: 3px;
+            margin-left: 3px;
             color: #000000;
         }
     }
@@ -234,7 +231,7 @@
     }
     .fxt-page-switcher {
         position: absolute;
-        right: -97px;
+        left: -97px;
         top: 100px;
         z-index: 1;
         display: -webkit-box;
@@ -250,7 +247,7 @@
         margin-bottom: 25px;
         @media only screen and (max-width: 767px) {
             position: inherit;
-            right: inherit;
+            left: inherit;
             top: inherit;
             -webkit-box-orient: inherit;
             -webkit-box-direction: inherit;
@@ -261,8 +258,8 @@
         .switcher-text {
             color: #fff;
             font-size: 18px;
-            padding: 10px 20px 10px 30px;
-            border-radius: 0 45px 45px 0;
+            padding: 10px 30px 10px 20px;
+            border-radius: 45px 0 0 45px;
             width: 100%;
             -webkit-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;
@@ -277,7 +274,7 @@
             @media only screen and (max-width: 767px) {
                 background-color: #eaeaea;
                 color: #000;
-                padding: 8px 25px;
+                padding: 6px 30px 6px 20px;
                 font-size: 16px;
                 &.active {
                     color: #0e9d88;
@@ -287,12 +284,12 @@
         }
         .switcher-text.switcher-text1 {
             @media only screen and (max-width: 767px) {
-                border-radius: 0 45px 45px 0;
+                border-radius: 45px 0 0 45px;
             }
         }
         .switcher-text.switcher-text2 {
             @media only screen and (max-width: 767px) {
-                border-radius: 45px 0 0 45px;
+                border-radius: 0 45px 45px 0;
             }
         }
     }
@@ -311,7 +308,7 @@
         background-color: #10b099;
         padding: 10px 36px;
         margin-bottom: 10px;
-        margin-left: 10px;
+        margin-right: 10px;
         -webkit-transition: all 0.3s ease-in-out;
         -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
@@ -325,7 +322,7 @@
     }
     .switcher-text3 {
         position: absolute;
-        left: 0;
+        right: 0;
         top: 0;
         padding: 2px 0;
         color: #9f9f9f;
@@ -353,13 +350,13 @@
         }
         li {
             display: inline-block;
-            margin-left: 4px;
+            margin-right: 4px;
             margin-bottom: 5px;
             @media only screen and (max-width: 575px) {
-                margin-left: 2px;
+                margin-right: 2px;
             }
             &:last-child {
-                margin-left: 0;
+                margin-right: 0;
             }
             a {
                 display: -webkit-box;
@@ -444,10 +441,10 @@
         }
     }
     .checkbox {
-        padding-right: 5px;
+        padding-left: 5px;
         margin-bottom: 10px;
         label {
-            padding-right: 20px;
+            padding-left: 20px;
             color: #a4a4a4;
             margin-bottom: 0;
             font-size: 15px;
@@ -458,8 +455,8 @@
                 width: 16px;
                 height: 16px;
                 top: 4px;
-                right: 0;
-                margin-right: -5px;
+                left: 0;
+                margin-left: -5px;
                 border: 1px solid;
                 border-color: #dcdcdc;
                 border-radius: 3px;
@@ -470,8 +467,8 @@
             }
             &:after {
                 position: absolute;
-                margin-right: -20px;
-                padding-right: 3px;
+                margin-left: -20px;
+                padding-left: 3px;
                 font-size: 10px;
                 color: #555555;
             }
@@ -484,7 +481,7 @@
             content: "\f00c";
             font-weight: 900;
             color: #ffffff;
-            right: 15px;
+            left: 15px;
             top: 4px;
         }
         input[type="checkbox"]:checked+label::before {

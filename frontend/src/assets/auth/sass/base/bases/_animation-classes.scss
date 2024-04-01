@@ -18,15 +18,15 @@
     }
     .fxt-transformX-L-50 {
         opacity: 0;
-        -webkit-transform: translateX(50px);
-        -ms-transform: translateX(50px);
-        transform: translateX(50px);
-    }
-    .fxt-transformX-R-50 {
-        opacity: 0;
         -webkit-transform: translateX(-50px);
         -ms-transform: translateX(-50px);
         transform: translateX(-50px);
+    }
+    .fxt-transformX-R-50 {
+        opacity: 0;
+        -webkit-transform: translateX(50px);
+        -ms-transform: translateX(50px);
+        transform: translateX(50px);
     }
 }
 

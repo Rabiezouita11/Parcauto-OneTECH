@@ -1,13 +1,3 @@
-*,
-:after,
-:before,
-[type=email],
-[type=number],
-[type=tel],
-[type=url] {
-    direction: rtl;
-}
-
 a {
     text-decoration: none;
 }

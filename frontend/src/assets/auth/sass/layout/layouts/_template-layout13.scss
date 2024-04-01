@@ -1,7 +1,7 @@
 .fxt-template-layout13 {
     min-height: 100vh;
     .fxt-bg-wrap {
-        padding: 8vh 0vw 8vh 16vw;
+        padding: 8vh 16vw 8vh 0;
         min-height: 100vh;
         position: relative;
         z-index: 1;
@@ -13,13 +13,13 @@
             min-height: 100%;
             width: 35vw;
             top: 0;
-            left: 0;
+            right: 0;
         }
         @media only screen and (max-width: 1199px) {
-            padding: 8vh 0vw 8vh 10vw;
+            padding: 8vh 10vw 8vh 0;
         }
         @media only screen and (max-width: 991px) {
-            padding: 6vh 0vw 6vh 6vw;
+            padding: 6vh 6vw 6vh 0;
         }
         @media only screen and (max-width: 767px) {
             padding: 5vh 4vw;
@@ -95,21 +95,21 @@
             height: 100%;
             width: 100%;
             background-color: rgba(#020203, 0.6);
-            left: 0;
+            right: 0;
             top: 0;
             position: absolute;
             z-index: 0;
         }
         &:after {
             content: "";
-            right: 0;
+            left: 0;
             top: 20%;
             position: absolute;
             z-index: 1;
             width: 0;
             height: 0;
             border-top: 15px solid transparent;
-            border-right: 20px solid #fff;
+            border-left: 20px solid #fff;
             border-bottom: 15px solid transparent;
         }
     }
@@ -193,7 +193,7 @@
             .field-icon {
                 position: absolute;
                 z-index: 1;
-                left: 24px;
+                right: 24px;
                 bottom: 18px;
                 padding: 0 5px;
                 color: #c5c5c5;
@@ -209,7 +209,7 @@
             box-shadow: none;
             border: 0;
             border-bottom: 1px solid #e7e7e7;
-            padding: 10px 0px 10px 30px;
+            padding: 10px 30px 10px 0;
             color: #111;
         }
         input::-webkit-input-placeholder {
@@ -239,11 +239,11 @@
             .fxt-form-col {
                 padding: 10px 5px;
                 text-align: center;
-                margin-left: 10px;
+                margin-right: 10px;
                 flex-basis: 0;
                 flex-grow: 1;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
@@ -282,12 +282,12 @@
         text-align: center;
         li {
             display: inline-block;
-            margin-left: 4px;
+            margin-right: 4px;
             @media only screen and (max-width: 575px) {
-                margin-left: 2px;
+                margin-right: 2px;
             }
             &:last-child {
-                margin-left: 0;
+                margin-right: 0;
             }
             a {
                 display: -webkit-box;
@@ -391,18 +391,18 @@
         -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
         &.inline-text {
-            margin-right: 3px;
+            margin-left: 3px;
         }
         &:hover {
             color: #000000;
         }
     }
     .checkbox {
-        padding-right: 5px;
-        margin-left: 30px;
+        padding-left: 5px;
+        margin-right: 30px;
         margin-bottom: 5px;
         label {
-            padding-right: 20px;
+            padding-left: 20px;
             color: #a4a4a4;
             margin-bottom: 0;
             font-size: 15px;
@@ -413,8 +413,8 @@
                 width: 16px;
                 height: 16px;
                 top: 4px;
-                right: 0;
-                margin-right: -5px;
+                left: 0;
+                margin-left: -5px;
                 border: 1px solid;
                 border-color: #dcdcdc;
                 border-radius: 3px;
@@ -425,8 +425,8 @@
             }
             &:after {
                 position: absolute;
-                margin-right: -20px;
-                padding-right: 3px;
+                margin-left: -20px;
+                padding-left: 3px;
                 font-size: 10px;
                 color: #555555;
             }
@@ -439,7 +439,7 @@
             content: "\f00c";
             font-weight: 900;
             color: #ffffff;
-            right: 15px;
+            left: 15px;
             top: 4px;
         }
         input[type="checkbox"]:checked+label::before {
@@ -458,7 +458,7 @@
             width: 100%;
         }
         .fxt-btn-resend {
-            margin-right: 3px;
+            margin-left: 3px;
             box-shadow: none;
             border: 0;
             background-color: transparent;
@@ -475,7 +475,7 @@
             }
         }
         .text-or {
-            margin-right: 3px;
+            margin-left: 3px;
             color: #000000;
         }
     }

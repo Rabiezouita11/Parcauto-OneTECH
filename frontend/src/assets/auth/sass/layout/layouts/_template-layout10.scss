@@ -81,10 +81,6 @@
         -ms-flex: 1;
         flex: 1;
         margin-bottom: 40px;
-        .fxt-otp-logo {
-            margin-bottom: 20px;
-            display: block;
-        }
         h2 {
             font-weight: 500;
             margin-bottom: 80px;
@@ -109,6 +105,11 @@
                 display: block;
             }
         }
+        .fxt-otp-label {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 500;
+        }
         .form-group {
             position: relative;
             z-index: 1;
@@ -116,7 +117,7 @@
             .field-icon {
                 position: absolute;
                 z-index: 1;
-                left: 8px;
+                right: 8px;
                 top: 50%;
                 color: #9f9f9f;
                 font-size: 14px;
@@ -134,7 +135,7 @@
             box-shadow: none;
             border: 0;
             border-bottom: 1px solid #e7e7e7;
-            padding: 10px 0px 10px 30px;
+            padding: 10px 30px 10px 0;
             color: #111;
         }
         input::-webkit-input-placeholder {
@@ -188,11 +189,11 @@
             .fxt-form-col {
                 padding: 10px 5px;
                 text-align: center;
-                margin-left: 10px;
+                margin-right: 10px;
                 flex-basis: 0;
                 flex-grow: 1;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
@@ -208,7 +209,7 @@
             width: 100%;
         }
         .fxt-btn-resend {
-            margin-right: 3px;
+            margin-left: 3px;
             box-shadow: none;
             border: 0;
             background-color: transparent;
@@ -225,7 +226,7 @@
             }
         }
         .text-or {
-            margin-right: 3px;
+            margin-left: 3px;
             color: #000000;
         }
     }
@@ -299,10 +300,10 @@
         }
     }
     .checkbox {
-        padding-right: 5px;
-        margin-left: 30px;
+        padding-left: 5px;
+        margin-right: 30px;
         label {
-            padding-right: 20px;
+            padding-left: 20px;
             color: #9f9f9f;
             margin-bottom: 0;
             font-size: 15px;
@@ -313,8 +314,8 @@
                 width: 16px;
                 height: 16px;
                 top: 4px;
-                right: 0;
-                margin-right: -5px;
+                left: 0;
+                margin-left: -5px;
                 border: 1px solid;
                 border-color: #dcdcdc;
                 border-radius: 2px;
@@ -325,8 +326,8 @@
             }
             &:after {
                 position: absolute;
-                margin-right: -20px;
-                padding-right: 3px;
+                margin-left: -20px;
+                padding-left: 3px;
                 font-size: 10px;
                 color: #555555;
             }
@@ -339,7 +340,7 @@
             content: "\f00c";
             font-weight: 900;
             color: #ffffff;
-            right: 15px;
+            left: 15px;
             top: 4px;
         }
         input[type="checkbox"]:checked+label::before {
@@ -350,13 +351,13 @@
     ul.fxt-socials {
         li {
             display: inline-block;
-            margin-left: 4px;
+            margin-right: 4px;
             margin-bottom: 5px;
             @media only screen and (max-width: 575px) {
-                margin-left: 2px;
+                margin-right: 2px;
             }
             &:last-child {
-                margin-left: 0;
+                margin-right: 0;
             }
             a {
                 display: -webkit-box;

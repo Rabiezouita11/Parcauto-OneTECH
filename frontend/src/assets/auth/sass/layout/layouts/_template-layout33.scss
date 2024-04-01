@@ -35,7 +35,7 @@
         }
         &:before {
             content: "";
-            border-radius: 100px 0 0 100px;
+            border-radius: 0 100px 100px 0;
             position: absolute;
             z-index: -1;
             height: 100%;
@@ -222,14 +222,14 @@
             .fxt-otp-col {
                 padding: 10px 5px;
                 text-align: center;
-                margin-left: 30px;
+                margin-right: 30px;
                 -ms-flex-preferred-size: 0;
                 flex-basis: 0;
                 -webkit-box-flex: 1;
                 -ms-flex-positive: 1;
                 flex-grow: 1;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }

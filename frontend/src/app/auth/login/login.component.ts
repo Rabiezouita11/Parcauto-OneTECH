@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
       "../../../assets/auth/js/main.js"
     ];
     const STYLE_PATH_LIST = [
-      '../../../assets/auth/css/bootstrap-rtl.min.css',
+      '../../../assets/auth/css/bootstrap.min.css',
       '../../../assets/auth/font/flaticon.css',
       '../../../assets/auth/style.css'
     ];

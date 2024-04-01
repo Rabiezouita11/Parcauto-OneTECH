@@ -55,7 +55,6 @@ Version: 2.0
 =========================================================================*/
 html {
   height: 100%;
-  direction: rtl;
 }
 body {
   font-size: 16px;
@@ -168,15 +167,6 @@ h5 {
 /*=======================================================================
 2. Template Default Style
 =========================================================================*/
-*,
-:after,
-:before,
-[type=email],
-[type=number],
-[type=tel],
-[type=url] {
-  direction: rtl;
-}
 a {
   text-decoration: none;
 }
@@ -342,15 +332,15 @@ ul {
 }
 .fxt-template-animation .fxt-transformX-L-50 {
   opacity: 0;
-  -webkit-transform: translateX(50px);
-  -ms-transform: translateX(50px);
-  transform: translateX(50px);
-}
-.fxt-template-animation .fxt-transformX-R-50 {
-  opacity: 0;
   -webkit-transform: translateX(-50px);
   -ms-transform: translateX(-50px);
   transform: translateX(-50px);
+}
+.fxt-template-animation .fxt-transformX-R-50 {
+  opacity: 0;
+  -webkit-transform: translateX(50px);
+  -ms-transform: translateX(50px);
+  transform: translateX(50px);
 }
 .loaded.fxt-template-animation {
   opacity: 1;
@@ -494,6 +484,7 @@ ul {
 .fxt-template-layout1 .fxt-bg-color {
   background-color: #ffffff;
   min-height: 100vh;
+  background-size: cover;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -506,10 +497,10 @@ ul {
   padding: 50px 30px 42px;
 }
 .fxt-template-layout1 .fxt-bg-img {
-  min-height: 100vh;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -562,7 +553,7 @@ ul {
   display: block;
   margin-bottom: 30px;
   max-width: 40vw;
-  margin-left: 30px;
+  margin-right: 30px;
 }
 .fxt-template-layout1 .fxt-header .fxt-page-switcher {
   display: -webkit-box;
@@ -576,10 +567,10 @@ ul {
 .fxt-template-layout1 .fxt-header .fxt-page-switcher .switcher-text1 {
   color: #111111;
   font-size: 18px;
-  margin-left: 15px;
-  padding-left: 15px;
+  margin-right: 15px;
+  padding-right: 15px;
   margin-bottom: 10px;
-  border-left: 1px solid #9f9f9f;
+  border-right: 1px solid #9f9f9f;
   line-height: 1;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -591,9 +582,9 @@ ul {
   }
 }
 .fxt-template-layout1 .fxt-header .fxt-page-switcher .switcher-text1:last-child {
-  margin-left: 0;
-  padding-left: 0;
-  border-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  border-right: 0;
 }
 .fxt-template-layout1 .fxt-header .fxt-page-switcher .switcher-text1:hover {
   color: #000000;
@@ -631,7 +622,7 @@ ul {
 .fxt-template-layout1 .fxt-form .form-group i {
   position: absolute;
   z-index: 1;
-  left: 5px;
+  right: 5px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -652,7 +643,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111111;
   background-color: #ffffff;
 }
@@ -682,15 +673,15 @@ ul {
   margin-bottom: 15px;
 }
 .fxt-template-layout1 .fxt-form .fxt-form-row .fxt-form-col {
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout1 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout1 .fxt-btn-fill {
-  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 15px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
@@ -737,16 +728,16 @@ ul {
 }
 .fxt-template-layout1 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout1 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout1 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout1 ul.fxt-socials li a {
   display: -webkit-box;
@@ -831,7 +822,7 @@ ul {
   flex-wrap: wrap;
 }
 .fxt-template-layout1 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -848,7 +839,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout1 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -1004,12 +995,12 @@ ul {
 }
 .fxt-template-layout2 .fxt-form .fxt-form-row .fxt-form-col {
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout2 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout2 .fxt-form .fxt-form-btn {
   margin-bottom: 20px;
@@ -1062,7 +1053,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout2 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout2 .switcher-text2:hover {
   color: #000000;
@@ -1222,12 +1213,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout2 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout2 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -1239,8 +1230,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -1251,8 +1242,8 @@ ul {
 }
 .fxt-template-layout2 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -1264,7 +1255,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout2 .checkbox input[type="checkbox"]:checked + label::before {
@@ -1282,7 +1273,7 @@ ul {
   justify-content: center;
 }
 .fxt-template-layout2 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -1299,7 +1290,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout2 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -1467,7 +1458,7 @@ ul {
 .fxt-template-layout3 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 24px;
+  right: 24px;
   bottom: 18px;
   padding: 0 5px;
   color: #c5c5c5;
@@ -1512,12 +1503,12 @@ ul {
 }
 .fxt-template-layout3 .fxt-form .fxt-form-row .fxt-form-col {
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout3 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout3 .fxt-form .fxt-form-btn {
   margin-bottom: 20px;
@@ -1570,7 +1561,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout3 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout3 .switcher-text2:hover {
   color: #000000;
@@ -1673,8 +1664,8 @@ ul {
 .fxt-template-layout3 ul.fxt-socials li a:before {
   content: "";
   width: 0;
-  left: 0;
-  right: inherit;
+  right: 0;
+  left: inherit;
   height: 100%;
   position: absolute;
   z-index: -1;
@@ -1685,7 +1676,7 @@ ul {
 }
 .fxt-template-layout3 ul.fxt-socials li a:hover:before {
   width: 100%;
-  right: 0;
+  left: 0;
   right: inherit;
 }
 .fxt-template-layout3 ul.fxt-socials li.fxt-facebook a {
@@ -1713,12 +1704,12 @@ ul {
   background-color: #006da6;
 }
 .fxt-template-layout3 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout3 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -1730,8 +1721,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -1742,8 +1733,8 @@ ul {
 }
 .fxt-template-layout3 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -1755,7 +1746,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout3 .checkbox input[type="checkbox"]:checked + label::before {
@@ -1773,7 +1764,7 @@ ul {
   justify-content: center;
 }
 .fxt-template-layout3 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -1790,7 +1781,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout3 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -1800,7 +1791,7 @@ ul {
   min-height: 100vh;
 }
 .fxt-template-layout4 .fxt-bg-wrap {
-  padding: 8vh 16vw 8vh 0;
+  padding: 8vh 0 8vh 16vw;
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -1813,16 +1804,16 @@ ul {
   min-height: 100%;
   width: 35vw;
   top: 0;
-  right: 0;
+  left: 0;
 }
 @media only screen and (max-width: 1199px) {
   .fxt-template-layout4 .fxt-bg-wrap {
-    padding: 8vh 10vw 8vh 0;
+    padding: 8vh 0 8vh 10vw;
   }
 }
 @media only screen and (max-width: 991px) {
   .fxt-template-layout4 .fxt-bg-wrap {
-    padding: 6vh 6vw 6vh 0;
+    padding: 6vh 0 6vh 6vw;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -1916,14 +1907,14 @@ ul {
 }
 .fxt-template-layout4 .fxt-bg-img:after {
   content: "";
-  left: 0;
+  right: 0;
   top: 20%;
   position: absolute;
   z-index: 1;
   width: 0;
   height: 0;
   border-top: 15px solid transparent;
-  border-left: 20px solid #fff;
+  border-right: 20px solid #fff;
   border-bottom: 15px solid transparent;
 }
 .fxt-template-layout4 .fxt-header {
@@ -2013,7 +2004,7 @@ ul {
 .fxt-template-layout4 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 24px;
+  right: 24px;
   bottom: 18px;
   padding: 0 5px;
   color: #c5c5c5;
@@ -2028,7 +2019,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111;
 }
 .fxt-template-layout4 .fxt-form input::-webkit-input-placeholder {
@@ -2057,12 +2048,12 @@ ul {
   margin-bottom: 25px;
 }
 .fxt-template-layout4 .fxt-form .fxt-form-row .fxt-form-col {
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout4 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout4 .fxt-form .fxt-form-btn {
   margin-bottom: 20px;
@@ -2099,15 +2090,15 @@ ul {
 }
 .fxt-template-layout4 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout4 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout4 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout4 ul.fxt-socials li a {
   display: -webkit-box;
@@ -2198,18 +2189,18 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout4 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout4 .switcher-text2:hover {
   color: #000000;
 }
 .fxt-template-layout4 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout4 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -2221,8 +2212,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -2233,8 +2224,8 @@ ul {
 }
 .fxt-template-layout4 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -2246,7 +2237,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout4 .checkbox input[type="checkbox"]:checked + label::before {
@@ -2264,7 +2255,7 @@ ul {
   justify-content: center;
 }
 .fxt-template-layout4 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -2281,7 +2272,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout4 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -2347,9 +2338,6 @@ ul {
   background-color: #ffffff;
   min-height: 100vh;
   width: 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2429,7 +2417,7 @@ ul {
 .fxt-template-layout5 .fxt-form .form-group i {
   position: absolute;
   z-index: 1;
-  right: 0;
+  left: 0;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -2449,7 +2437,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 30px 10px 10px;
+  padding: 10px 10px 10px 30px;
   color: #111111;
 }
 .fxt-template-layout5 .fxt-form input::-webkit-input-placeholder {
@@ -2478,14 +2466,14 @@ ul {
   margin-bottom: 25px;
 }
 .fxt-template-layout5 .fxt-form .fxt-form-row .fxt-form-col {
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
   padding: 10px;
   text-align: center;
 }
 .fxt-template-layout5 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout5 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -2497,7 +2485,7 @@ ul {
   flex-wrap: wrap;
 }
 .fxt-template-layout5 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -2514,7 +2502,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout5 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout5 .fxt-logo {
@@ -2532,7 +2520,7 @@ ul {
 }
 .fxt-template-layout5 .fxt-page-switcher {
   position: absolute;
-  right: -97px;
+  left: -97px;
   top: 100px;
   z-index: 1;
   display: -webkit-box;
@@ -2550,7 +2538,7 @@ ul {
 @media only screen and (max-width: 767px) {
   .fxt-template-layout5 .fxt-page-switcher {
     position: inherit;
-    right: inherit;
+    left: inherit;
     top: inherit;
     -webkit-box-orient: inherit;
     -webkit-box-direction: inherit;
@@ -2562,8 +2550,8 @@ ul {
 .fxt-template-layout5 .fxt-page-switcher .switcher-text {
   color: #fff;
   font-size: 18px;
-  padding: 10px 20px 10px 30px;
-  border-radius: 0 45px 45px 0;
+  padding: 10px 30px 10px 20px;
+  border-radius: 45px 0 0 45px;
   width: 100%;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -2578,7 +2566,7 @@ ul {
   .fxt-template-layout5 .fxt-page-switcher .switcher-text.switcher-text2 {
     background-color: #eaeaea;
     color: #000;
-    padding: 8px 25px;
+    padding: 6px 30px 6px 20px;
     font-size: 16px;
   }
   .fxt-template-layout5 .fxt-page-switcher .switcher-text.switcher-text1.active,
@@ -2589,12 +2577,12 @@ ul {
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout5 .fxt-page-switcher .switcher-text.switcher-text1 {
-    border-radius: 0 45px 45px 0;
+    border-radius: 45px 0 0 45px;
   }
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout5 .fxt-page-switcher .switcher-text.switcher-text2 {
-    border-radius: 45px 0 0 45px;
+    border-radius: 0 45px 45px 0;
   }
 }
 .fxt-template-layout5 .fxt-btn-fill {
@@ -2612,7 +2600,7 @@ ul {
   background-color: #10b099;
   padding: 10px 36px;
   margin-bottom: 10px;
-  margin-left: 10px;
+  margin-right: 10px;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -2626,7 +2614,7 @@ ul {
 }
 .fxt-template-layout5 .switcher-text3 {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   padding: 2px 0;
   color: #9f9f9f;
@@ -2657,16 +2645,16 @@ ul {
 }
 .fxt-template-layout5 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 5px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout5 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout5 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout5 ul.fxt-socials li a {
   display: -webkit-box;
@@ -2737,11 +2725,11 @@ ul {
   color: #bd081c;
 }
 .fxt-template-layout5 .checkbox {
-  padding-right: 5px;
+  padding-left: 5px;
   margin-bottom: 10px;
 }
 .fxt-template-layout5 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -2753,8 +2741,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -2765,8 +2753,8 @@ ul {
 }
 .fxt-template-layout5 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -2778,7 +2766,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout5 .checkbox input[type="checkbox"]:checked + label::before {
@@ -2945,12 +2933,12 @@ ul {
 .fxt-template-layout6 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout6 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout6 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -2962,7 +2950,7 @@ ul {
   flex-wrap: wrap;
 }
 .fxt-template-layout6 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -2979,11 +2967,11 @@ ul {
   color: #000000;
 }
 .fxt-template-layout6 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout6 .fxt-btn-fill {
-  margin-left: 30px;
+  margin-right: 30px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
   display: inline-block;
@@ -3030,27 +3018,27 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout6 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout6 .switcher-text2:hover {
   color: #000;
 }
 .fxt-template-layout6 ul.fxt-socials {
-  margin-left: 15px;
+  margin-right: 15px;
   margin-bottom: 15px;
 }
 .fxt-template-layout6 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 10px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout6 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout6 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout6 ul.fxt-socials li a {
   display: -webkit-box;
@@ -3233,12 +3221,12 @@ ul {
 .fxt-template-layout7 .fxt-form .form-group {
   position: relative;
   z-index: 1;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 .fxt-template-layout7 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -3282,12 +3270,12 @@ ul {
 .fxt-template-layout7 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout7 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout7 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -3340,7 +3328,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout7 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout7 .switcher-text2:hover {
   color: #000000;
@@ -3500,12 +3488,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout7 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout7 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -3517,8 +3505,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -3529,8 +3517,8 @@ ul {
 }
 .fxt-template-layout7 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -3542,7 +3530,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout7 .checkbox input[type="checkbox"]:checked + label::before {
@@ -3562,7 +3550,7 @@ ul {
   justify-content: center;
 }
 .fxt-template-layout7 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -3579,7 +3567,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout7 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -3715,7 +3703,7 @@ ul {
 .fxt-template-layout8 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -3760,12 +3748,12 @@ ul {
 .fxt-template-layout8 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout8 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout8 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -3820,7 +3808,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout8 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout8 .switcher-text2:hover {
   color: #e6e6e6;
@@ -3980,12 +3968,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout8 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout8 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -3997,8 +3985,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -4009,8 +3997,8 @@ ul {
 }
 .fxt-template-layout8 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -4022,7 +4010,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout8 .checkbox input[type="checkbox"]:checked + label::before {
@@ -4044,13 +4032,13 @@ ul {
   font-size: 17px;
 }
 .fxt-template-layout8 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
   cursor: pointer;
   padding: 0;
-  color: #ececec;
+  color: #f3f3f3;
   text-decoration: underline;
   transition: all 0.3s ease-in-out;
 }
@@ -4061,7 +4049,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout8 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 12. Demo Layout Nine
@@ -4112,16 +4100,16 @@ ul {
 .fxt-template-layout9 .fxt-content {
   padding-top: 40px;
   padding-bottom: 15px;
-  padding-right: 70px;
-  margin-right: 40px;
-  border-right: 2px solid rgba(111, 117, 182, 0.5);
+  padding-left: 70px;
+  margin-left: 40px;
+  border-left: 2px solid rgba(111, 117, 182, 0.5);
 }
 @media only screen and (max-width: 991px) {
   .fxt-template-layout9 .fxt-content {
-    padding-right: 0;
-    margin-right: 0;
+    padding-left: 0;
+    margin-left: 0;
     margin-top: 40px;
-    border-right: 0;
+    border-left: 0;
     padding-bottom: 0;
     border-top: 2px solid rgba(111, 117, 182, 0.5);
   }
@@ -4206,7 +4194,7 @@ ul {
 .fxt-template-layout9 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -4251,12 +4239,12 @@ ul {
 .fxt-template-layout9 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout9 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout9 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -4311,18 +4299,18 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout9 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout9 .switcher-text2:hover {
   color: #e6e6e6;
 }
 .fxt-template-layout9 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout9 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -4334,8 +4322,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -4346,8 +4334,8 @@ ul {
 }
 .fxt-template-layout9 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -4359,7 +4347,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout9 .checkbox input[type="checkbox"]:checked + label::before {
@@ -4381,7 +4369,7 @@ ul {
   font-size: 17px;
 }
 .fxt-template-layout9 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -4398,7 +4386,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout9 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 13. Demo Layout Ten
@@ -4486,10 +4474,6 @@ ul {
   flex: 1;
   margin-bottom: 40px;
 }
-.fxt-template-layout10 .fxt-form .fxt-otp-logo {
-  margin-bottom: 20px;
-  display: block;
-}
 .fxt-template-layout10 .fxt-form h2 {
   font-weight: 500;
   margin-bottom: 80px;
@@ -4518,6 +4502,11 @@ ul {
 .fxt-template-layout10 .fxt-form p span {
   display: block;
 }
+.fxt-template-layout10 .fxt-form .fxt-otp-label {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
 .fxt-template-layout10 .fxt-form .form-group {
   position: relative;
   z-index: 1;
@@ -4526,7 +4515,7 @@ ul {
 .fxt-template-layout10 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 8px;
+  right: 8px;
   top: 50%;
   color: #9f9f9f;
   font-size: 14px;
@@ -4543,7 +4532,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111;
 }
 .fxt-template-layout10 .fxt-form input::-webkit-input-placeholder {
@@ -4614,12 +4603,12 @@ ul {
 .fxt-template-layout10 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout10 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout10 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -4633,7 +4622,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout10 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -4650,7 +4639,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout10 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout10 .fxt-btn-fill {
@@ -4723,11 +4712,11 @@ ul {
   color: #666;
 }
 .fxt-template-layout10 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
 }
 .fxt-template-layout10 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #9f9f9f;
   margin-bottom: 0;
   font-size: 15px;
@@ -4739,8 +4728,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -4751,8 +4740,8 @@ ul {
 }
 .fxt-template-layout10 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -4764,7 +4753,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout10 .checkbox input[type="checkbox"]:checked + label::before {
@@ -4773,16 +4762,16 @@ ul {
 }
 .fxt-template-layout10 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 5px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout10 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout10 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout10 ul.fxt-socials li a {
   display: -webkit-box;
@@ -4964,7 +4953,7 @@ ul {
 .fxt-template-layout11 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -5008,12 +4997,12 @@ ul {
 .fxt-template-layout11 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout11 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout11 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -5066,7 +5055,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout11 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout11 .switcher-text2:hover {
   color: #000000;
@@ -5226,12 +5215,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout11 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout11 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -5243,8 +5232,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -5255,8 +5244,8 @@ ul {
 }
 .fxt-template-layout11 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -5268,7 +5257,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout11 .checkbox input[type="checkbox"]:checked + label::before {
@@ -5290,7 +5279,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout11 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -5307,7 +5296,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout11 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -5420,7 +5409,7 @@ ul {
 .fxt-template-layout12 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -5464,12 +5453,12 @@ ul {
 .fxt-template-layout12 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout12 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout12 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -5522,7 +5511,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout12 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout12 .switcher-text2:hover {
   color: #000000;
@@ -5682,12 +5671,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout12 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout12 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -5699,8 +5688,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -5711,8 +5700,8 @@ ul {
 }
 .fxt-template-layout12 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -5724,7 +5713,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout12 .checkbox input[type="checkbox"]:checked + label::before {
@@ -5746,7 +5735,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout12 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -5763,7 +5752,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout12 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -5773,7 +5762,7 @@ ul {
   min-height: 100vh;
 }
 .fxt-template-layout13 .fxt-bg-wrap {
-  padding: 8vh 0vw 8vh 16vw;
+  padding: 8vh 16vw 8vh 0;
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -5786,16 +5775,16 @@ ul {
   min-height: 100%;
   width: 35vw;
   top: 0;
-  left: 0;
+  right: 0;
 }
 @media only screen and (max-width: 1199px) {
   .fxt-template-layout13 .fxt-bg-wrap {
-    padding: 8vh 0vw 8vh 10vw;
+    padding: 8vh 10vw 8vh 0;
   }
 }
 @media only screen and (max-width: 991px) {
   .fxt-template-layout13 .fxt-bg-wrap {
-    padding: 6vh 0vw 6vh 6vw;
+    padding: 6vh 6vw 6vh 0;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -5882,21 +5871,21 @@ ul {
   height: 100%;
   width: 100%;
   background-color: rgba(2, 2, 3, 0.6);
-  left: 0;
+  right: 0;
   top: 0;
   position: absolute;
   z-index: 0;
 }
 .fxt-template-layout13 .fxt-bg-img:after {
   content: "";
-  right: 0;
+  left: 0;
   top: 20%;
   position: absolute;
   z-index: 1;
   width: 0;
   height: 0;
   border-top: 15px solid transparent;
-  border-right: 20px solid #fff;
+  border-left: 20px solid #fff;
   border-bottom: 15px solid transparent;
 }
 .fxt-template-layout13 .fxt-header {
@@ -5986,7 +5975,7 @@ ul {
 .fxt-template-layout13 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 24px;
+  right: 24px;
   bottom: 18px;
   padding: 0 5px;
   color: #c5c5c5;
@@ -6001,7 +5990,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111;
 }
 .fxt-template-layout13 .fxt-form input::-webkit-input-placeholder {
@@ -6032,12 +6021,12 @@ ul {
 .fxt-template-layout13 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout13 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout13 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -6074,15 +6063,15 @@ ul {
 }
 .fxt-template-layout13 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout13 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout13 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout13 ul.fxt-socials li a {
   display: -webkit-box;
@@ -6173,18 +6162,18 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout13 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout13 .switcher-text2:hover {
   color: #000000;
 }
 .fxt-template-layout13 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout13 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -6196,8 +6185,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -6208,8 +6197,8 @@ ul {
 }
 .fxt-template-layout13 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -6221,7 +6210,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout13 .checkbox input[type="checkbox"]:checked + label::before {
@@ -6240,7 +6229,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout13 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -6257,7 +6246,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout13 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -6375,7 +6364,7 @@ ul {
 .fxt-template-layout14 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -6419,12 +6408,12 @@ ul {
 .fxt-template-layout14 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout14 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout14 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -6477,7 +6466,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout14 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout14 .switcher-text2:hover {
   color: #000000;
@@ -6637,12 +6626,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout14 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout14 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -6654,8 +6643,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -6666,8 +6655,8 @@ ul {
 }
 .fxt-template-layout14 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -6679,7 +6668,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout14 .checkbox input[type="checkbox"]:checked + label::before {
@@ -6701,7 +6690,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout14 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -6718,7 +6707,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout14 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -6815,9 +6804,9 @@ ul {
 .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1 {
   color: #fff;
   font-size: 18px;
-  margin-left: 15px;
-  padding-left: 15px;
-  border-left: 1px solid #f1f1f1;
+  margin-right: 15px;
+  padding-right: 15px;
+  border-right: 1px solid #f1f1f1;
   line-height: 1;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -6825,26 +6814,26 @@ ul {
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1 {
-    margin-left: 30px;
+    margin-right: 30px;
   }
 }
 @media only screen and (max-width: 479px) {
   .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1 {
-    margin-left: 15px;
-    padding-left: 10px;
+    margin-right: 15px;
+    padding-right: 10px;
     font-size: 16px;
   }
 }
 @media only screen and (max-width: 320px) {
   .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1 {
-    margin-left: 10px;
-    padding-left: 5px;
+    margin-right: 10px;
+    padding-right: 5px;
   }
 }
 .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1:last-child {
-  margin-left: 0;
-  padding-left: 0;
-  border-left: 0;
+  margin-right: 0;
+  padding-right: 0;
+  border-right: 0;
 }
 .fxt-template-layout15 .fxt-intro .fxt-page-switcher .switcher-text1:hover {
   color: #dddddd;
@@ -6892,7 +6881,7 @@ ul {
 .fxt-template-layout15 .fxt-form .form-group i {
   position: absolute;
   z-index: 1;
-  left: 5px;
+  right: 5px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -6912,7 +6901,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111111;
 }
 .fxt-template-layout15 .fxt-form input::-webkit-input-placeholder {
@@ -6943,15 +6932,15 @@ ul {
 .fxt-template-layout15 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout15 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout15 .fxt-btn-fill {
-  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 15px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
@@ -6992,16 +6981,16 @@ ul {
 }
 .fxt-template-layout15 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout15 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout15 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout15 ul.fxt-socials li a {
   display: -webkit-box;
@@ -7091,7 +7080,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout15 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -7108,7 +7097,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout15 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -7209,7 +7198,7 @@ ul {
 .fxt-template-layout16 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -7253,12 +7242,12 @@ ul {
 .fxt-template-layout16 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout16 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout16 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -7311,7 +7300,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout16 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout16 .switcher-text2:hover {
   color: #000000;
@@ -7471,12 +7460,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout16 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout16 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -7488,8 +7477,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -7500,8 +7489,8 @@ ul {
 }
 .fxt-template-layout16 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -7513,7 +7502,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout16 .checkbox input[type="checkbox"]:checked + label::before {
@@ -7535,7 +7524,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout16 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -7552,7 +7541,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout16 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -7701,12 +7690,12 @@ ul {
 .fxt-template-layout17 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout17 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout17 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -7759,7 +7748,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout17 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout17 .switcher-text2:hover {
   color: #000000;
@@ -7919,12 +7908,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout17 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout17 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -7936,8 +7925,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -7948,8 +7937,8 @@ ul {
 }
 .fxt-template-layout17 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -7961,7 +7950,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout17 .checkbox input[type="checkbox"]:checked + label::before {
@@ -7980,7 +7969,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout17 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -7997,7 +7986,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout17 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -8150,7 +8139,7 @@ ul {
 .fxt-template-layout18 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -8195,12 +8184,12 @@ ul {
 .fxt-template-layout18 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout18 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout18 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -8255,7 +8244,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout18 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout18 .switcher-text2:hover {
   color: #ffffff;
@@ -8415,12 +8404,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout18 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout18 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -8432,8 +8421,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -8444,8 +8433,8 @@ ul {
 }
 .fxt-template-layout18 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -8457,7 +8446,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout18 .checkbox input[type="checkbox"]:checked + label::before {
@@ -8478,7 +8467,7 @@ ul {
   font-size: 17px;
 }
 .fxt-template-layout18 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -8495,7 +8484,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout18 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 22. Demo Layout Nineteen
@@ -8615,23 +8604,6 @@ ul {
     margin-bottom: 40px;
   }
 }
-.fxt-template-layout19 .fxt-form h2 {
-  font-weight: 500;
-  margin-bottom: 80px;
-  font-size: 24px;
-}
-@media only screen and (max-width: 991px) {
-  .fxt-template-layout19 .fxt-form h2 {
-    font-size: 22px;
-    margin-bottom: 60px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .fxt-template-layout19 .fxt-form h2 {
-    font-size: 20px;
-    margin-bottom: 40px;
-  }
-}
 .fxt-template-layout19 .fxt-form .fxt-otp-logo {
   margin-bottom: 20px;
   display: block;
@@ -8656,7 +8628,7 @@ ul {
 .fxt-template-layout19 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 8px;
+  right: 8px;
   top: 50%;
   color: #9f9f9f;
   font-size: 14px;
@@ -8673,7 +8645,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0px 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111;
 }
 .fxt-template-layout19 .fxt-form input::-webkit-input-placeholder {
@@ -8744,12 +8716,12 @@ ul {
 .fxt-template-layout19 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout19 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout19 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -8763,7 +8735,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout19 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -8780,7 +8752,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout19 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout19 .fxt-btn-fill {
@@ -8847,12 +8819,12 @@ ul {
   color: #000000;
 }
 .fxt-template-layout19 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout19 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #9f9f9f;
   margin-bottom: 0;
   font-size: 15px;
@@ -8864,8 +8836,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -8876,8 +8848,8 @@ ul {
 }
 .fxt-template-layout19 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -8889,7 +8861,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout19 .checkbox input[type="checkbox"]:checked + label::before {
@@ -8898,16 +8870,16 @@ ul {
 }
 .fxt-template-layout19 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 5px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout19 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout19 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout19 ul.fxt-socials li a {
   display: -webkit-box;
@@ -9038,10 +9010,10 @@ ul {
   background-size: cover;
   margin: 0;
   padding: 0;
-  border-radius: 0 15px 15px 0;
+  border-radius: 15px 0 0 15px;
 }
 .fxt-template-layout20 .fxt-content {
-  border-radius: 15px 0 0 15px;
+  border-radius: 0 15px 15px 0;
   padding: 100px 50px 70px 50px;
   width: 100%;
   -webkit-box-shadow: 3px 0 79px 0 rgba(0, 0, 0, 0.08);
@@ -9148,12 +9120,12 @@ ul {
 .fxt-template-layout20 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout20 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout20 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -9206,7 +9178,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout20 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout20 .switcher-text2:hover {
   color: #000000;
@@ -9366,12 +9338,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout20 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout20 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -9383,8 +9355,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -9395,8 +9367,8 @@ ul {
 }
 .fxt-template-layout20 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -9408,7 +9380,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout20 .checkbox input[type="checkbox"]:checked + label::before {
@@ -9427,7 +9399,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout20 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -9444,7 +9416,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout20 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -9565,7 +9537,7 @@ ul {
 .fxt-template-layout21 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -9609,12 +9581,12 @@ ul {
 .fxt-template-layout21 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout21 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout21 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -9667,7 +9639,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout21 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout21 .switcher-text2:hover {
   color: #000000;
@@ -9827,12 +9799,12 @@ ul {
   background-color: #e75042;
 }
 .fxt-template-layout21 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout21 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -9844,8 +9816,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -9856,8 +9828,8 @@ ul {
 }
 .fxt-template-layout21 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -9869,7 +9841,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout21 .checkbox input[type="checkbox"]:checked + label::before {
@@ -9891,7 +9863,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout21 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -9908,7 +9880,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout21 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -10054,7 +10026,7 @@ ul {
 .fxt-template-layout22 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 24px;
+  right: 24px;
   bottom: 18px;
   padding: 0 5px;
   color: #c5c5c5;
@@ -10099,12 +10071,12 @@ ul {
 .fxt-template-layout22 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout22 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout22 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -10157,7 +10129,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout22 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout22 .switcher-text2:hover {
   color: #000000;
@@ -10300,12 +10272,12 @@ ul {
   background-color: #006da6;
 }
 .fxt-template-layout22 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout22 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #a4a4a4;
   margin-bottom: 0;
   font-size: 15px;
@@ -10317,8 +10289,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 3px;
@@ -10329,8 +10301,8 @@ ul {
 }
 .fxt-template-layout22 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -10342,7 +10314,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout22 .checkbox input[type="checkbox"]:checked + label::before {
@@ -10361,7 +10333,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout22 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -10378,7 +10350,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout22 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -10391,7 +10363,7 @@ ul {
   background-color: #011f42;
 }
 .fxt-template-layout23 .fxt-bg-overlay {
-  background-position: right;
+  background-position: left;
   min-height: 100vh;
   width: 100%;
   display: -webkit-box;
@@ -10415,11 +10387,11 @@ ul {
 .fxt-template-layout23 .fxt-content {
   max-width: 460px;
   width: 100%;
-  margin-right: 15vw;
+  margin-left: 15vw;
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout23 .fxt-content {
-    margin-right: 0;
+    margin-left: 0;
   }
 }
 .fxt-template-layout23 .fxt-header {
@@ -10526,7 +10498,7 @@ ul {
 .fxt-template-layout23 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -10571,12 +10543,12 @@ ul {
 .fxt-template-layout23 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout23 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout23 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -10631,7 +10603,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout23 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout23 .switcher-text2:hover {
   color: #ffffff;
@@ -10805,12 +10777,12 @@ ul {
   flex-wrap: wrap;
 }
 .fxt-template-layout23 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout23 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -10822,8 +10794,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -10834,8 +10806,8 @@ ul {
 }
 .fxt-template-layout23 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -10847,7 +10819,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout23 .checkbox input[type="checkbox"]:checked + label::before {
@@ -10868,7 +10840,7 @@ ul {
   font-size: 17px;
 }
 .fxt-template-layout23 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -10885,7 +10857,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout23 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 27. Demo Layout Twenty Four
@@ -10950,16 +10922,16 @@ ul {
 .fxt-template-layout24 .fxt-content {
   padding-top: 40px;
   padding-bottom: 15px;
-  padding-right: 70px;
-  margin-right: 40px;
-  border-right: 2px solid rgba(241, 241, 241, 0.15);
+  padding-left: 70px;
+  margin-left: 40px;
+  border-left: 2px solid rgba(241, 241, 241, 0.15);
 }
 @media only screen and (max-width: 991px) {
   .fxt-template-layout24 .fxt-content {
-    padding-right: 0;
-    margin-right: 0;
+    padding-left: 0;
+    margin-left: 0;
     margin-top: 40px;
-    border-right: 0;
+    border-left: 0;
     padding-bottom: 0;
     border-top: 2px solid rgba(241, 241, 241, 0.15);
   }
@@ -11047,7 +11019,7 @@ ul {
 .fxt-template-layout24 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -11092,12 +11064,12 @@ ul {
 .fxt-template-layout24 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout24 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout24 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -11152,18 +11124,18 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout24 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout24 .switcher-text2:hover {
   color: #ffffff;
 }
 .fxt-template-layout24 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout24 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -11175,8 +11147,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -11187,8 +11159,8 @@ ul {
 }
 .fxt-template-layout24 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -11200,7 +11172,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout24 .checkbox input[type="checkbox"]:checked + label::before {
@@ -11220,7 +11192,7 @@ ul {
   font-size: 18px;
 }
 .fxt-template-layout24 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -11237,7 +11209,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout24 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 28. Demo Layout Twenty Five
@@ -11368,16 +11340,16 @@ ul {
 }
 .fxt-template-layout25 .fxt-header .fxt-bottom-content ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout25 .fxt-header .fxt-bottom-content ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout25 .fxt-header .fxt-bottom-content ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout25 .fxt-header .fxt-bottom-content ul.fxt-socials li a {
   display: -webkit-box;
@@ -11516,7 +11488,7 @@ ul {
 .fxt-template-layout25 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 20px;
+  right: 20px;
   top: 50%;
   color: #9f9f9f;
   font-size: 14px;
@@ -11607,12 +11579,12 @@ ul {
 .fxt-template-layout25 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout25 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout25 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -11626,7 +11598,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout25 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -11643,7 +11615,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout25 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout25 .fxt-btn-fill {
@@ -11707,15 +11679,15 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout25 .switcher-text.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout25 .switcher-text:hover {
   color: #ffffff;
 }
 .fxt-template-layout25 .switcher-text2 {
   color: #63bbff;
-  margin-bottom: 5px;
   font-size: 15px;
+  margin-bottom: 5px;
   display: inline-block;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -11725,12 +11697,12 @@ ul {
   color: #000000;
 }
 .fxt-template-layout25 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout25 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #9f9f9f;
   margin-bottom: 0;
   font-size: 15px;
@@ -11742,8 +11714,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -11754,8 +11726,8 @@ ul {
 }
 .fxt-template-layout25 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -11767,7 +11739,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout25 .checkbox input[type="checkbox"]:checked + label::before {
@@ -11936,7 +11908,7 @@ ul {
 .fxt-template-layout26 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -11984,12 +11956,12 @@ ul {
 .fxt-template-layout26 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout26 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout26 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -12047,7 +12019,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout26 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout26 .switcher-text2:hover {
   color: #ffffff;
@@ -12102,16 +12074,16 @@ ul {
 }
 .fxt-template-layout26 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 5px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout26 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout26 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout26 ul.fxt-socials li a {
   display: -webkit-box;
@@ -12190,12 +12162,12 @@ ul {
   color: #fff;
 }
 .fxt-template-layout26 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout26 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -12207,8 +12179,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -12219,8 +12191,8 @@ ul {
 }
 .fxt-template-layout26 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -12232,7 +12204,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout26 .checkbox input[type="checkbox"]:checked + label::before {
@@ -12253,7 +12225,7 @@ ul {
   font-size: 17px;
 }
 .fxt-template-layout26 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -12270,7 +12242,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout26 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 /*========================================================================
 30. Demo Layout Twenty Seven
@@ -12433,7 +12405,7 @@ ul {
 .fxt-template-layout27 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -12481,12 +12453,12 @@ ul {
 .fxt-template-layout27 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout27 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout27 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -12501,7 +12473,7 @@ ul {
   color: #646464;
 }
 .fxt-template-layout27 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -12518,7 +12490,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout27 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 .fxt-template-layout27 .fxt-btn-fill {
@@ -12601,7 +12573,7 @@ ul {
   background-color: #d2a41d;
 }
 .fxt-template-layout27 .fxt-switcher-wrap li:first-child a.switcher-text {
-  border-radius: 0 45px 45px 0;
+  border-radius: 45px 0 0 45px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout27 .fxt-switcher-wrap li:first-child a.switcher-text {
@@ -12609,7 +12581,7 @@ ul {
   }
 }
 .fxt-template-layout27 .fxt-switcher-wrap li:last-child a.switcher-text {
-  border-radius: 45px 0 0 45px;
+  border-radius: 0 45px 45px 0;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout27 .fxt-switcher-wrap li:last-child a.switcher-text {
@@ -12664,16 +12636,16 @@ ul {
 }
 .fxt-template-layout27 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout27 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout27 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout27 ul.fxt-socials li a {
   display: -webkit-box;
@@ -12752,12 +12724,12 @@ ul {
   color: #bd081c;
 }
 .fxt-template-layout27 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 10px;
 }
 .fxt-template-layout27 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #484848;
   margin-bottom: 0;
   font-size: 15px;
@@ -12769,8 +12741,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #484848;
   border-radius: 2px;
@@ -12781,8 +12753,8 @@ ul {
 }
 .fxt-template-layout27 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -12794,7 +12766,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout27 .checkbox input[type="checkbox"]:checked + label::before {
@@ -12984,7 +12956,7 @@ ul {
 .fxt-template-layout28 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #bebebe;
@@ -13032,12 +13004,12 @@ ul {
 .fxt-template-layout28 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout28 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout28 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -13051,7 +13023,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout28 .fxt-form .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -13068,7 +13040,7 @@ ul {
   color: #ffffff;
 }
 .fxt-template-layout28 .fxt-form .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout28 .fxt-btn-fill {
   font-family: 'Roboto', sans-serif;
@@ -13151,7 +13123,7 @@ ul {
   background-color: #16904d;
 }
 .fxt-template-layout28 .fxt-switcher-wrap li:first-child a.switcher-text {
-  border-radius: 0 45px 45px 0;
+  border-radius: 45px 0 0 45px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout28 .fxt-switcher-wrap li:first-child a.switcher-text {
@@ -13159,7 +13131,7 @@ ul {
   }
 }
 .fxt-template-layout28 .fxt-switcher-wrap li:last-child a.switcher-text {
-  border-radius: 45px 0 0 45px;
+  border-radius: 0 45px 45px 0;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout28 .fxt-switcher-wrap li:last-child a.switcher-text {
@@ -13215,16 +13187,16 @@ ul {
 }
 .fxt-template-layout28 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout28 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout28 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout28 ul.fxt-socials li a {
   display: -webkit-box;
@@ -13303,12 +13275,12 @@ ul {
   color: #bd081c;
 }
 .fxt-template-layout28 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 10px;
 }
 .fxt-template-layout28 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #b9b9b9;
   margin-bottom: 0;
   font-size: 15px;
@@ -13320,8 +13292,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #dcdcdc;
   border-radius: 2px;
@@ -13332,8 +13304,8 @@ ul {
 }
 .fxt-template-layout28 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #555555;
 }
@@ -13345,7 +13317,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout28 .checkbox input[type="checkbox"]:checked + label::before {
@@ -13418,7 +13390,7 @@ ul {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  left: 0;
+  right: 0;
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout29 .fxt-page-switcher {
@@ -13426,7 +13398,7 @@ ul {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
     transform: translateY(0);
-    right: 0;
+    left: 0;
     text-align: center;
   }
 }
@@ -13439,7 +13411,7 @@ ul {
   padding: 20px 30px;
   background-color: #000000;
   margin: 2px 0;
-  border-radius: 0 45px 45px 0;
+  border-radius: 45px 0 0 45px;
   line-height: 1;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -13549,7 +13521,7 @@ ul {
 .fxt-template-layout29 .fxt-form .form-group i {
   position: absolute;
   z-index: 1;
-  left: 5px;
+  right: 5px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -13569,7 +13541,7 @@ ul {
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #e7e7e7;
-  padding: 10px 0 10px 30px;
+  padding: 10px 30px 10px 0;
   color: #111111;
 }
 .fxt-template-layout29 .fxt-form input::-webkit-input-placeholder {
@@ -13601,15 +13573,15 @@ ul {
   border-radius: 0;
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout29 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout29 .fxt-btn-fill {
-  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 15px;
   font-family: 'Roboto', sans-serif;
   cursor: pointer;
@@ -13631,7 +13603,7 @@ ul {
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout29 .fxt-btn-fill {
-    margin-left: 0;
+    margin-right: 0;
     margin-bottom: 0;
     margin-top: 0;
   }
@@ -13657,16 +13629,16 @@ ul {
 }
 .fxt-template-layout29 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout29 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout29 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout29 ul.fxt-socials li a {
   display: -webkit-box;
@@ -13761,7 +13733,7 @@ ul {
   }
 }
 .fxt-template-layout29 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -13778,7 +13750,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout29 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -13950,7 +13922,7 @@ ul {
 .fxt-template-layout30 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #888888;
@@ -13995,12 +13967,12 @@ ul {
 .fxt-template-layout30 .fxt-form .fxt-form-row .fxt-form-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 10px;
+  margin-right: 10px;
   flex-basis: 0;
   flex-grow: 1;
 }
 .fxt-template-layout30 .fxt-form .fxt-form-row .fxt-form-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout30 .fxt-form .fxt-form-btn {
   margin-bottom: 10px;
@@ -14053,7 +14025,7 @@ ul {
   transition: all 0.3s ease-in-out;
 }
 .fxt-template-layout30 .switcher-text2.inline-text {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .fxt-template-layout30 .switcher-text2:hover {
   color: #000000;
@@ -14107,16 +14079,16 @@ ul {
 }
 .fxt-template-layout30 ul.fxt-socials li {
   display: inline-block;
-  margin-left: 4px;
+  margin-right: 4px;
   margin-bottom: 8px;
 }
 @media only screen and (max-width: 575px) {
   .fxt-template-layout30 ul.fxt-socials li {
-    margin-left: 2px;
+    margin-right: 2px;
   }
 }
 .fxt-template-layout30 ul.fxt-socials li:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout30 ul.fxt-socials li a {
   display: -webkit-box;
@@ -14195,12 +14167,12 @@ ul {
   color: #bd081c;
 }
 .fxt-template-layout30 .checkbox {
-  padding-right: 5px;
-  margin-left: 30px;
+  padding-left: 5px;
+  margin-right: 30px;
   margin-bottom: 5px;
 }
 .fxt-template-layout30 .checkbox label {
-  padding-right: 20px;
+  padding-left: 20px;
   color: #6f6f6f;
   margin-bottom: 0;
   font-size: 15px;
@@ -14212,8 +14184,8 @@ ul {
   width: 16px;
   height: 16px;
   top: 4px;
-  right: 0;
-  margin-right: -5px;
+  left: 0;
+  margin-left: -5px;
   border: 1px solid;
   border-color: #6f6f6f;
   border-radius: 2px;
@@ -14224,8 +14196,8 @@ ul {
 }
 .fxt-template-layout30 .checkbox label:after {
   position: absolute;
-  margin-right: -20px;
-  padding-right: 3px;
+  margin-left: -20px;
+  padding-left: 3px;
   font-size: 10px;
   color: #ffffff;
 }
@@ -14237,7 +14209,7 @@ ul {
   content: "\f00c";
   font-weight: 900;
   color: #ffffff;
-  right: 15px;
+  left: 15px;
   top: 4px;
 }
 .fxt-template-layout30 .checkbox input[type="checkbox"]:checked + label::before {
@@ -14259,7 +14231,7 @@ ul {
   width: 100%;
 }
 .fxt-template-layout30 .fxt-footer .fxt-btn-resend {
-  margin-right: 3px;
+  margin-left: 3px;
   box-shadow: none;
   border: 0;
   background-color: transparent;
@@ -14276,7 +14248,7 @@ ul {
   color: #000000;
 }
 .fxt-template-layout30 .fxt-footer .text-or {
-  margin-right: 3px;
+  margin-left: 3px;
   color: #000000;
 }
 /*========================================================================
@@ -14322,7 +14294,7 @@ ul {
   width: calc((100vw + 220px)/4);
   background-color: #1a3d8f;
   content: "";
-  right: 0;
+  left: 0;
   top: 0;
   z-index: -1;
   position: absolute;
@@ -14546,7 +14518,7 @@ ul {
   margin-bottom: 20px;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:first-child .fxt-switcher-btn {
-  border-right: 1px solid;
+  border-left: 1px solid;
   border-color: #111111;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:first-child .fxt-switcher-btn:hover,
@@ -14554,7 +14526,7 @@ ul {
   border-color: #1b53d4;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn {
-  border-left: 1px solid;
+  border-right: 1px solid;
   border-color: #111111;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn:hover,
@@ -14579,6 +14551,7 @@ ul {
 .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn.active {
   background-color: #1b53d4;
   color: #ffffff;
+  border-color: #1b53d4;
 }
 @media only screen and (max-width: 1199px) {
   .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn {
@@ -14674,7 +14647,7 @@ ul {
 .fxt-template-layout31 .fxt-form-content .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -14859,7 +14832,7 @@ ul {
 .fxt-template-layout31 .fxt-form-content .fxt-otp-row .fxt-otp-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 30px;
+  margin-right: 30px;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
   -webkit-box-flex: 1;
@@ -14867,15 +14840,15 @@ ul {
   flex-grow: 1;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-otp-row .fxt-otp-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout31 .fxt-form-content .fxt-otp-btn {
   margin-bottom: 30px;
 }
 .fxt-template-layout31 .fxt-shape.fxt-animation-active {
-  -webkit-transform: translateX(100%);
-  -ms-transform: translateX(100%);
-  transform: translateX(100%);
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 .loaded.fxt-template-layout31 .fxt-shape.fxt-animation-active {
   -webkit-transform: translateX(0);
@@ -14943,13 +14916,13 @@ ul {
   position: absolute;
   z-index: 1;
   top: -43px;
-  right: 85px;
+  left: 85px;
   text-align: center;
 }
 @media only screen and (max-width: 767px) {
   .fxt-template-layout32 .fxt-content-wrap .fxt-logo {
     padding: 20px 30px;
-    right: 35px;
+    left: 35px;
     top: -33px;
   }
   .fxt-template-layout32 .fxt-content-wrap .fxt-logo img {
@@ -14959,7 +14932,7 @@ ul {
 @media only screen and (max-width: 575px) {
   .fxt-template-layout32 .fxt-content-wrap .fxt-logo {
     padding: 20px 30px;
-    right: 15px;
+    left: 15px;
   }
 }
 .fxt-template-layout32 .fxt-content-wrap .fxt-main-title {
@@ -15064,7 +15037,7 @@ ul {
 }
 .layout32.modal-content {
   margin-top: 45px;
-  border-radius: 0 10px 10px 10px;
+  border-radius: 10px 0 10px 10px;
   border: 0;
   position: relative;
 }
@@ -15073,7 +15046,7 @@ ul {
   top: -50px;
   -webkit-box-shadow: none;
   box-shadow: none;
-  left: 0;
+  right: 0;
   background-color: #ffffff;
   padding: 17px 27px 12px;
   line-height: 1;
@@ -15170,7 +15143,7 @@ ul {
 .layout32.modal-content .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 19px;
+  right: 19px;
   bottom: 18px;
   font-size: 14px;
   color: #a1a1a1;
@@ -15399,7 +15372,7 @@ ul {
 .layout32.modal-content .fxt-otp-row .fxt-otp-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 20px;
+  margin-right: 20px;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
   -webkit-box-flex: 1;
@@ -15407,7 +15380,7 @@ ul {
   flex-grow: 1;
 }
 .layout32.modal-content .fxt-otp-row .fxt-otp-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .layout32.modal-content .fxt-otp-btn {
   margin-bottom: 20px;
@@ -15460,7 +15433,7 @@ ul {
 }
 .fxt-template-layout33 .fxt-heading-content:before {
   content: "";
-  border-radius: 100px  0 0 100px;
+  border-radius: 0 100px 100px 0;
   position: absolute;
   z-index: -1;
   height: 100%;
@@ -15674,7 +15647,7 @@ ul {
 .fxt-template-layout33 .fxt-form-content .fxt-otp-row .fxt-otp-col {
   padding: 10px 5px;
   text-align: center;
-  margin-left: 30px;
+  margin-right: 30px;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
   -webkit-box-flex: 1;
@@ -15682,7 +15655,7 @@ ul {
   flex-grow: 1;
 }
 .fxt-template-layout33 .fxt-form-content .fxt-otp-row .fxt-otp-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout33 .fxt-form-content .fxt-otp-btn {
   margin-bottom: 20px;
@@ -15960,7 +15933,7 @@ ul {
 }
 .fxt-template-layout34 .fxt-shape {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
   z-index: 0;
 }
@@ -15968,7 +15941,7 @@ ul {
   position: absolute;
   z-index: -1;
   top: 50%;
-  left: 50px;
+  right: 50px;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -16084,15 +16057,10 @@ ul {
 .fxt-template-layout34 .fxt-form .form-group .field-icon {
   position: absolute;
   z-index: 1;
-  left: 26px;
+  right: 26px;
   bottom: 24px;
   font-size: 14px;
   color: #a1a1a1;
-}
-@media only screen and (max-width: 767px) {
-  .fxt-template-layout34 .fxt-form .form-group .field-icon {
-    bottom: 18px;
-  }
 }
 .fxt-template-layout34 .fxt-form .form-group .field-icon:before {
   padding: 17px 10px;
@@ -16197,7 +16165,7 @@ ul {
   min-height: 50px;
   padding: 5px;
   text-align: center;
-  margin-left: 15px;
+  margin-right: 15px;
   -ms-flex-preferred-size: 0;
   flex-basis: 0;
   -webkit-box-flex: 1;
@@ -16205,7 +16173,7 @@ ul {
   flex-grow: 1;
 }
 .fxt-template-layout34 .fxt-form .fxt-otp-row .fxt-otp-col:last-child {
-  margin-left: 0;
+  margin-right: 0;
 }
 .fxt-template-layout34 .fxt-form .fxt-otp-btn {
   margin-bottom: 20px;

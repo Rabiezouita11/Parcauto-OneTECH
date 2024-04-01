@@ -58,13 +58,13 @@
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
         transform: translateY(-50%);
-        left: 0;
+        right: 0;
         @media only screen and (max-width: 767px) {
             top: calc(100% - 48px);
             -webkit-transform: translateY(0);
             -ms-transform: translateY(0);
             transform: translateY(0);
-            right: 0;
+            left: 0;
             text-align: center;
         }
         .switcher-text1 {
@@ -76,7 +76,7 @@
             padding: 20px 30px;
             background-color: #000000;
             margin: 2px 0;
-            border-radius: 0 45px 45px 0;
+            border-radius: 45px 0 0 45px;
             line-height: 1;
             -webkit-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;
@@ -171,7 +171,7 @@
             i {
                 position: absolute;
                 z-index: 1;
-                left: 5px;
+                right: 5px;
                 top: 50%;
                 -webkit-transform: translateY(-50%);
                 -ms-transform: translateY(-50%);
@@ -192,7 +192,7 @@
             box-shadow: none;
             border: 0;
             border-bottom: 1px solid #e7e7e7;
-            padding: 10px 0 10px 30px;
+            padding: 10px 30px 10px 0;
             color: #111111;
         }
         input::-webkit-input-placeholder {
@@ -223,17 +223,17 @@
                 border-radius: 0;
                 padding: 10px 5px;
                 text-align: center;
-                margin-left: 10px;
+                margin-right: 10px;
                 flex-basis: 0;
                 flex-grow: 1;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
     }
     .fxt-btn-fill {
-        margin-left: 30px;
+        margin-right: 30px;
         margin-top: 15px;
         font-family: 'Roboto', sans-serif;
         cursor: pointer;
@@ -253,7 +253,7 @@
         -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
         @media only screen and (max-width: 767px) {
-            margin-left: 0;
+            margin-right: 0;
             margin-bottom: 0;
             margin-top: 0;
         }
@@ -280,13 +280,13 @@
     ul.fxt-socials {
         li {
             display: inline-block;
-            margin-left: 4px;
+            margin-right: 4px;
             margin-bottom: 8px;
             @media only screen and (max-width: 575px) {
-                margin-left: 2px;
+                margin-right: 2px;
             }
             &:last-child {
-                margin-left: 0;
+                margin-right: 0;
             }
             a {
                 display: -webkit-box;
@@ -396,7 +396,7 @@
             }
         }
         .fxt-btn-resend {
-            margin-right: 3px;
+            margin-left: 3px;
             box-shadow: none;
             border: 0;
             background-color: transparent;
@@ -413,7 +413,7 @@
             }
         }
         .text-or {
-            margin-right: 3px;
+            margin-left: 3px;
             color: #000000;
         }
     }

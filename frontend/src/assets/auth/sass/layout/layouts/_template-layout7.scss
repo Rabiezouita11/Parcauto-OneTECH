@@ -88,11 +88,11 @@
         .form-group {
             position: relative;
             z-index: 1;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
             .field-icon {
                 position: absolute;
                 z-index: 1;
-                left: 19px;
+                right: 19px;
                 bottom: 18px;
                 font-size: 14px;
                 color: #a1a1a1;
@@ -136,11 +136,11 @@
             .fxt-form-col {
                 padding: 10px 5px;
                 text-align: center;
-                margin-left: 10px;
+                margin-right: 10px;
                 flex-basis: 0;
                 flex-grow: 1;
                 &:last-child {
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
@@ -195,7 +195,7 @@
         -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
         &.inline-text {
-            margin-right: 3px;
+            margin-left: 3px;
         }
         &:hover {
             color: #000000;
@@ -358,11 +358,11 @@
         }
     }
     .checkbox {
-        padding-right: 5px;
-        margin-left: 30px;
+        padding-left: 5px;
+        margin-right: 30px;
         margin-bottom: 5px;
         label {
-            padding-right: 20px;
+            padding-left: 20px;
             color: #a4a4a4;
             margin-bottom: 0;
             font-size: 15px;
@@ -373,8 +373,8 @@
                 width: 16px;
                 height: 16px;
                 top: 4px;
-                right: 0;
-                margin-right: -5px;
+                left: 0;
+                margin-left: -5px;
                 border: 1px solid;
                 border-color: #dcdcdc;
                 border-radius: 3px;
@@ -385,8 +385,8 @@
             }
             &:after {
                 position: absolute;
-                margin-right: -20px;
-                padding-right: 3px;
+                margin-left: -20px;
+                padding-left: 3px;
                 font-size: 10px;
                 color: #555555;
             }
@@ -399,7 +399,7 @@
             content: "\f00c";
             font-weight: 900;
             color: #ffffff;
-            right: 15px;
+            left: 15px;
             top: 4px;
         }
         input[type="checkbox"]:checked+label::before {
@@ -419,7 +419,7 @@
             justify-content: center;
         }
         .fxt-btn-resend {
-            margin-right: 3px;
+            margin-left: 3px;
             box-shadow: none;
             border: 0;
             background-color: transparent;
@@ -436,7 +436,7 @@
             }
         }
         .text-or {
-            margin-right: 3px;
+            margin-left: 3px;
             color: #000000;
         }
     }
