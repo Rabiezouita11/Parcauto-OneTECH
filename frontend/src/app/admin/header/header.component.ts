@@ -15,6 +15,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
    
   }
-
+  logout(): void {
+    // Remove the JWT token from local storage
+    localStorage.removeItem('jwtToken');
+  
+    // Redirect the user to the login page
+    this.router.navigateByUrl('/auth/login');
+  }
+  
 
 }

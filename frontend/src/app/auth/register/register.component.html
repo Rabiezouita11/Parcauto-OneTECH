@@ -29,52 +29,53 @@
                 <div class="fxt-inner-wrap fxt-opacity fxt-transition-delay-13">
                     <h2 class="fxt-page-title">Sign Up</h2>
                     <p class="fxt-description">Sign Up to try our amazing services</p>
-                    <form method="POST">
+                    <form (ngSubmit)="registerUser()" #registerForm="ngForm">
                         <div class="form-group">
-                            <label for="name" class="fxt-label">Full Name</label>
-                            <input type="text" id="name" class="form-control" name="name" placeholder="Enter your name" required="required">
+                            <label for="firstName" class="fxt-label">First Name</label>
+                            <input type="text" id="firstName" class="form-control" name="firstName" placeholder="Enter your first name" required [(ngModel)]="user.firstName" #firstName="ngModel">
+                            <div *ngIf="firstName && firstName.invalid" class="text-danger">
+                                <div *ngIf="firstName.errors && firstName.errors['required']">First name is required.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName" class="fxt-label">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Enter your last name" required [(ngModel)]="user.lastName" #lastName="ngModel">
+                            <div *ngIf="lastName && lastName.invalid" class="text-danger">
+                                <div *ngIf="lastName.errors && lastName.errors['required']">last Name is required.</div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="email" class="fxt-label">Email Address</label>
-                            <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email" required="required">
+                            <label for="username" class="fxt-label">Username</label>
+                            <input type="text" id="username" class="form-control" name="username" placeholder="Enter your username" required [(ngModel)]="user.username" #username="ngModel">
+                            <div *ngIf="username && username.invalid " class="text-danger">
+                                <div *ngIf="username.errors && username.errors['required']">user name is required.</div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="password" class="fxt-label">Password</label>
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password" required="required">
-                        </div>
-                        <div class="form-group">
-                            <div class="fxt-checkbox-box">
-                                <input id="checkbox1" type="checkbox">
-                                <label for="checkbox1" class="ps-4">I agree with Terms of Service. Terms Of Payments and Privacy Policy</label>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Enter your password" required [(ngModel)]="user.password" #password="ngModel">
+                            <div *ngIf="password && password.invalid" class="text-danger">
+                                <div *ngIf="password.errors && password.errors['required']">password is required.</div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="role" class="fxt-label">Role</label>
+                            <select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel" required>
+                                <option value="" disabled>Select Role</option>
+                                <option value="CONDUCTEUR">Conducteur</option>
+                                <option value="CHEF_DEPARTEMENT">Chef departement</option>
+
+                                <option value="ADMIN">Admin</option>
+                            </select>
+                            <div *ngIf="role.errors && role.errors['required']" class="text-danger">Role is required.</div>
+                        </div>
+                        
                         <div class="form-group mb-3">
-                            <button type="submit" class="fxt-btn-fill">Log in</button>
+                            <button type="submit" class="fxt-btn-fill" [disabled]="!registerForm.valid">Sign Up</button>
                         </div>
                     </form>
-                    <div class="fxt-divider-text">OR</div>
-                    <div id="fxt-login-option" class="fxt-login-option">
-                        <ul>
-                            <li class="fxt-google active">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-google"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Google</span>
-                                </a>
-                            </li>
-                            <li class="fxt-facebook">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-facebook-f"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Facebook</span>
-                                </a>
-                            </li>
-                            <li class="fxt-apple">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-apple"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Apple</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                  
                 </div>
             </div>
         </div>

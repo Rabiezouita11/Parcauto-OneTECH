@@ -45,7 +45,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         req->req.requestMatchers("/login/**","/register/**")
                                 .permitAll()
-                                .requestMatchers("/admin_only/**").hasAuthority("ADMIN")
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/ChefDepartement/**").hasAuthority("CHEF_DEPARTEMENT")
+
+                                .requestMatchers("/conducteur/**").hasAuthority("CONDUCTEUR")
+
                                 .anyRequest()
                                 .authenticated()
                 ).userDetailsService(userDetailsServiceImp)

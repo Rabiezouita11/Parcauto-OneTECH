@@ -1,0 +1,4 @@
+button[disabled] {
+    opacity: 0.5; /* Adjust opacity or other styles as needed */
+    cursor: not-allowed;
+}

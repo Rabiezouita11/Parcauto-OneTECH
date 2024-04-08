@@ -1,6 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
-import { ScriptService } from 'src/app/Service/script/script.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -8,10 +10,16 @@ import { ScriptService } from 'src/app/Service/script/script.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  user: any = {
+    firstName: '',
+    lastName: '',
+    username: '',
+    password: '',
+    role: '' 
+  };
  
-  constructor(private scriptStyleLoaderService: ScriptStyleLoaderService
-    ) { }
+  constructor( private router: Router ,private scriptStyleLoaderService: ScriptStyleLoaderService, private userService: UserService) 
+  { }
 
   ngOnInit(): void {
     const SCRIPT_PATH_LIST = [
@@ -22,7 +30,7 @@ export class RegisterComponent implements OnInit {
       "../../../assets/auth/js/main.js"
     ];
     const STYLE_PATH_LIST = [
-      '../../../assets/auth/css/bootstrap-rtl.min.css',
+      '../../../assets/auth/css/bootstrap.min.css',
       '../../../assets/auth/font/flaticon.css',
       '../../../assets/auth/style.css'
     ];
@@ -30,6 +38,47 @@ export class RegisterComponent implements OnInit {
     this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST);
     this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST);
   }
+
+
+  registerUser(): void {
+    console.log(this.user);
+    this.userService.register(this.user).subscribe(
+      (response) => {
+        console.log('Registration successful:', response.message);
+        if (response.message === 'User already exist') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: 'User already exists. Please try with a different username.',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'You have successfully registered.',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.router.navigateByUrl('/auth/login');
+          });
+        }
+      },
+      (error) => {
+        console.error('Registration failed:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: 'Failed to register. Please try again later.',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  }
+  
+
+
+
+
   }
 
 

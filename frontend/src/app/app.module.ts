@@ -4,8 +4,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { AdminModule } from './admin/admin.module';
 import { NotfoundComponent } from './notfound/notfound.component';
@@ -14,8 +12,6 @@ import { ConducteurModule } from './conducteur/conducteur.module';
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterComponent,
-    LoginComponent,
     NotfoundComponent,
   ],
   imports: [
