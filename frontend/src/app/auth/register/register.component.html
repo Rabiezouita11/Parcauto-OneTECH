@@ -10,17 +10,20 @@
         <div class="fxt-heading-content">
             <div class="fxt-inner-wrap fxt-transformX-R-50 fxt-transition-delay-3">
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
-                    <a href="login-33.html" class="fxt-logo"><img src="assets/OTH000_3855501c-446d-4508-9450-62022cf9589f_b.jpg" alt="Logo"></a>
+                    <a href="login-33.html" class="fxt-logo"><img
+                            src="assets/OTH000_3855501c-446d-4508-9450-62022cf9589f_b.jpg" alt="Logo"></a>
                 </div>
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
                     <div class="fxt-middle-content">
                         <div class="fxt-sub-title">Welcome to</div>
                         <h1 class="fxt-main-title">OneTech Parc Automobile</h1>
-                        <p class="fxt-description">We are glad to see you again! Get access to your Orders, Wishlist and Recommendations.</p>
+                        <p class="fxt-description">We are glad to see you again! Get access to your Orders, Wishlist and
+                            Recommendations.</p>
                     </div>
                 </div>
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
-                    <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/login" class="fxt-switcher-text">Sign In</a></div>
+                    <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/login"
+                            class="fxt-switcher-text">Sign In</a></div>
                 </div>
             </div>
         </div>
@@ -32,50 +35,71 @@
                     <form (ngSubmit)="registerUser()" #registerForm="ngForm">
                         <div class="form-group">
                             <label for="firstName" class="fxt-label">First Name</label>
-                            <input type="text" id="firstName" class="form-control" name="firstName" placeholder="Enter your first name" required [(ngModel)]="user.firstName" #firstName="ngModel">
+                            <input type="text" id="firstName" class="form-control" name="firstName"
+                                placeholder="Enter your first name" required [(ngModel)]="user.firstName"
+                                #firstName="ngModel">
                             <div *ngIf="firstName && firstName.invalid" class="text-danger">
-                                <div *ngIf="firstName.errors && firstName.errors['required']">First name is required.</div>
+                                <div *ngIf="firstName.errors && firstName.errors['required']">First name is required.
+                                </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="lastName" class="fxt-label">Last Name</label>
-                            <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Enter your last name" required [(ngModel)]="user.lastName" #lastName="ngModel">
+                            <input type="text" id="lastName" class="form-control" name="lastName"
+                                placeholder="Enter your last name" required [(ngModel)]="user.lastName"
+                                #lastName="ngModel">
                             <div *ngIf="lastName && lastName.invalid" class="text-danger">
                                 <div *ngIf="lastName.errors && lastName.errors['required']">last Name is required.</div>
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="email" class="fxt-label">Email</label>
+                            <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email" required [(ngModel)]="user.email" #email="ngModel">
+                            <div *ngIf="email && email.invalid" class="text-danger">
+                              <div *ngIf="email.errors && email.errors['required']">Email is required.</div>
+                              <div *ngIf="email.errors && email.errors['email']">Invalid email format.</div>
+                            </div>
+                          </div>
+                          
+                        <div class="form-group">
                             <label for="username" class="fxt-label">Username</label>
-                            <input type="text" id="username" class="form-control" name="username" placeholder="Enter your username" required [(ngModel)]="user.username" #username="ngModel">
+                            <input type="text" id="username" class="form-control" name="username"
+                                placeholder="Enter your username" required [(ngModel)]="user.username"
+                                #username="ngModel">
                             <div *ngIf="username && username.invalid " class="text-danger">
                                 <div *ngIf="username.errors && username.errors['required']">user name is required.</div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label for="password" class="fxt-label">Password</label>
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Enter your password" required [(ngModel)]="user.password" #password="ngModel">
+                            <input id="password" type="password" class="form-control" name="password"
+                                placeholder="Enter your password" required [(ngModel)]="user.password"
+                                #password="ngModel">
                             <div *ngIf="password && password.invalid" class="text-danger">
                                 <div *ngIf="password.errors && password.errors['required']">password is required.</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="role" class="fxt-label">Role</label>
-                            <select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel" required>
+                            <select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel"
+                                required>
                                 <option value="" disabled>Select Role</option>
                                 <option value="CONDUCTEUR">Conducteur</option>
                                 <option value="CHEF_DEPARTEMENT">Chef departement</option>
 
                                 <option value="ADMIN">Admin</option>
                             </select>
-                            <div *ngIf="role.errors && role.errors['required']" class="text-danger">Role is required.</div>
+                            <div *ngIf="role.errors && role.errors['required']" class="text-danger">Role is required.
+                            </div>
                         </div>
-                        
+
                         <div class="form-group mb-3">
                             <button type="submit" class="fxt-btn-fill" [disabled]="!registerForm.valid">Sign Up</button>
                         </div>
                     </form>
-                  
+
                 </div>
             </div>
         </div>

@@ -36,6 +36,16 @@ export class UserService {
 
     return this.http.get<any>(`${this.baseUrl}/user`, { headers });
   }
+
+  forgetPassword(email :string) {
+ 
+    return this.http.get(`http://localhost:8080/users/verif/${email}`);
+   } 
+
+   resetPassword(token : string, pwd : string) {
+  
+    return this.http.get(`http://localhost:8080/users/rest/${token}/${pwd}`);
+   }  
   }
   
  

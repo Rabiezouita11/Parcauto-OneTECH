@@ -3,7 +3,7 @@ package com.helloIftekhar.springJwt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.helloIftekhar.springJwt")
 public class SpringJwtApplication {
 
 	public static void main(String[] args) {
