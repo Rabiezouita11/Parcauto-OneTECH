@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
     username: '',
     password: ''
   };
+    contentLoaded: boolean = false;
+
   constructor(private router: Router, private userService: UserService ,private scriptStyleLoaderService: ScriptStyleLoaderService
     ) { }
 
@@ -31,7 +33,10 @@ export class LoginComponent implements OnInit {
       '../../../assets/auth/style.css'
     ];
 
-    this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST);
+    this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST).then(() => {
+      // Set contentLoaded to true when scripts are loaded
+      this.contentLoaded = true;
+    });    
     this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST);
   }
   loginUser(): void {

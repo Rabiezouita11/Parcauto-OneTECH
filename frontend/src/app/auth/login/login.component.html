@@ -1,10 +1,13 @@
-<div id="preloader" class="preloader">
-    <div class='inner'>
+<div *ngIf="!contentLoaded">
+    <div id="preloader" class="preloader">
+      <div class='inner'>
         <div class='line1'></div>
         <div class='line2'></div>
         <div class='line3'></div>
+      </div>
     </div>
-</div>
+  </div>
+  
 <section class="fxt-template-animation fxt-template-layout33">
     <div class="fxt-content-wrap">
         <div class="fxt-heading-content">
