@@ -76,8 +76,13 @@ export class HomeComponent implements OnInit {
       // Remove the JWT token from local storage
       localStorage.removeItem('jwtToken');
     
-      // Redirect the user to the login page
-      this.router.navigateByUrl('/auth/login');
+      // Redirect the user to the login page after a delay
+      setTimeout(() => {
+        this.router.navigateByUrl('/auth/login');
+        
+        // Refresh the page to ensure a fresh state
+        window.location.reload();
+      }, 1000); // Adjust the delay as needed (in milliseconds)
     }
     
 }
