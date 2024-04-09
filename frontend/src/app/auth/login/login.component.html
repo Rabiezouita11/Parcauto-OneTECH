@@ -13,64 +13,41 @@
         <div class="fxt-heading-content">
             <div class="fxt-inner-wrap fxt-transformX-R-50 fxt-transition-delay-3">
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
-                    <a href="login-33.html" class="fxt-logo"><img src="assets/auth/img/logo-33.png" alt="Logo"></a>
+                    <a href="login-33.html" class="fxt-logo"><img src="assets/OTH000_3855501c-446d-4508-9450-62022cf9589f_b.jpg" alt="Logo"></a>
                 </div>
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
                     <div class="fxt-middle-content">
-                        <div class="fxt-sub-title">Welcome to</div>
-                        <h1 class="fxt-main-title">We're a Digital Agency.</h1>
-                        <p class="fxt-description">We are glad to see you again! Get access to your Orders, Wishlist and Recommendations.</p>
+                        <div class="fxt-sub-title">bienvenue</div>
+                        <h1 class="fxt-main-title">OneTech Parc Automobile</h1>
                     </div>
                 </div>
                 <div class="fxt-transformX-R-50 fxt-transition-delay-10">
-                    <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/register" class="fxt-switcher-text">Register</a></div>
+                    <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/register" class="fxt-switcher-text" style="font-size: large;">Register</a></div>
                 </div>
             </div>
         </div>
         <div class="fxt-form-content">
             <div class="fxt-main-form">
                 <div class="fxt-inner-wrap fxt-opacity fxt-transition-delay-13">
-                    <h2 class="fxt-page-title">Log In</h2>
-                    <p class="fxt-description">Log In to try our amazing servuces</p>
+                    <h2 class="fxt-page-title">connexion</h2>
+                    <p class="fxt-description"> </p>
                     <form (submit)="loginUser()">
                         <div class="form-group">
-                            <label for="email" class="fxt-label">Email Address</label>
-                            <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email" required [(ngModel)]="user.username">
+                            <label for="email" class="fxt-label">Adresse E-mail</label>
+                            <input type="email" id="email" class="form-control" name="email" placeholder="Enter votre email" required [(ngModel)]="user.username">
                         </div>
                         <div class="form-group">
-                            <label for="password" class="fxt-label">Password</label>
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password" required [(ngModel)]="user.password">
+                            <label for="password" class="fxt-label">Mot de passe</label>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Enter votre mot de passe" required [(ngModel)]="user.password">
                         </div>
                         <div class="form-group">
-                            <a routerLink="/auth/frogetpassword" class="fxt-switcher-text">Forgot Password</a>
+                            <a routerLink="/auth/frogetpassword" class="fxt-switcher-text">Mot de passe oublié</a>
                         </div>
                         <div class="form-group mb-3">
-                            <button type="submit" class="fxt-btn-fill">Log in</button>
+                            <button type="submit" class="fxt-btn-fill">Connexion</button>
                         </div>
                     </form>
-                    <div class="fxt-divider-text">OR</div>
-                    <div id="fxt-login-option" class="fxt-login-option">
-                        <ul>
-                            <li class="fxt-google active">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-google"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Google</span>
-                                </a>
-                            </li>
-                            <li class="fxt-facebook">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-facebook-f"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Facebook</span>
-                                </a>
-                            </li>
-                            <li class="fxt-apple">
-                                <a href="#">
-                                    <span class="fxt-option-icon"><i class="fab fa-apple"></i></span>
-                                    <span class="fxt-option-text ml-2">Continue with Apple</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                   
                 </div>
 
             </div>
