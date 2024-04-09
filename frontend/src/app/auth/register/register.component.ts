@@ -59,9 +59,7 @@ export class RegisterComponent implements OnInit {
             text: 'You have successfully registered.',
             confirmButtonText: 'OK'
           }).then(() => {
-            this.router.navigateByUrl('/auth/login').then(() => {
-              window.location.reload();
-            });
+            this.router.navigateByUrl('/auth/login');
           });
         }
       },

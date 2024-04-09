@@ -4,31 +4,46 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ScriptStyleLoaderService {
-
   loadScripts(scripts: string[]): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const promises: Promise<void>[] = [];
+      let loadedScripts = 0;
+      const totalScripts = scripts.length;
+
       scripts.forEach(script => {
         const scriptElement = document.createElement('script');
         scriptElement.src = script;
-        scriptElement.type = 'text/javascript';
-        scriptElement.async = true;
-        scriptElement.onload = () => resolve();
-        scriptElement.onerror = (error) => reject(error);
-        document.head.appendChild(scriptElement);
+        scriptElement.onload = () => {
+          loadedScripts++;
+          if (loadedScripts === totalScripts) {
+            resolve();
+          }
+        };
+        scriptElement.onerror = (error) => {
+          reject(error);
+        };
+        document.body.appendChild(scriptElement);
       });
     });
   }
 
   loadStyles(styles: string[]): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      const promises: Promise<void>[] = [];
+      let loadedStyles = 0;
+      const totalStyles = styles.length;
+
       styles.forEach(style => {
         const linkElement = document.createElement('link');
-        linkElement.href = style;
         linkElement.rel = 'stylesheet';
-        linkElement.onload = () => resolve();
-        linkElement.onerror = (error) => reject(error);
+        linkElement.href = style;
+        linkElement.onload = () => {
+          loadedStyles++;
+          if (loadedStyles === totalStyles) {
+            resolve();
+          }
+        };
+        linkElement.onerror = (error) => {
+          reject(error);
+        };
         document.head.appendChild(linkElement);
       });
     });
