@@ -1,11 +1,12 @@
-  <!-- Page Sidebar Start-->
+<!-- Page Sidebar Start-->
 
-  <div class="main-header-left d-none d-lg-block">
+<div class="main-header-left d-none d-lg-block">
     <div class="logo-wrapper">
         <br>
         <br>
         <a href="index.html">
-            <img class="d-none d-lg-block blur-up lazyloaded "src="assets/logo.jpg" width="100px" height="100px" alt="">
+            <img class="d-none d-lg-block blur-up lazyloaded " src="assets/logo.jpg" width="100px" height="100px"
+                alt="">
         </a>
     </div>
 </div>
@@ -13,15 +14,22 @@
     <a href="javascript:void(0)" class="sidebar-back d-lg-none d-block"><i class="fa fa-times"
             aria-hidden="true"></i></a>
     <div class="sidebar-user">
-        <img class="img-60" src="assets/nour.jpg" alt="#">
+        <div *ngIf="imageUrl">
+            <!-- If imageUrl is available, display the image -->
+            <img class="img-60" [src]="imageUrl" alt="#">
+        </div>
+        <div *ngIf="!imageUrl && firstName && lastName" class="avatar-placeholder">
+            <!-- If imageUrl is not available and firstName and lastName are available, display the initials -->
+            {{ firstName.charAt(0).toUpperCase() }}{{ lastName.charAt(0).toUpperCase() }}
+        </div>
         <div>
-            <h6 class="f-14">Nour jbeli</h6>
+            <h6 class="f-14">{{firstName}} {{lastName}}</h6>
             <p>general manager.</p>
         </div>
     </div>
     <ul class="sidebar-menu">
         <li>
-            <a class="sidebar-header" routerLink="dashboard"  >
+            <a class="sidebar-header" routerLink="dashboard">
                 <i data-feather="home"></i>
                 <span>Dashboard</span>
             </a>
@@ -36,7 +44,7 @@
 
 
         </li>
-            <li>
+        <li>
             <a class="sidebar-header" routerLink="avisAdmin">
                 <i data-feather="box"></i>
                 <span>Avis</span>
@@ -47,18 +55,18 @@
         </li>
 
 
-      <li>
-        <a class="sidebar-header" routerLink="category">
-          <i data-feather="box"></i>
-          <span>Category</span>
+        <li>
+            <a class="sidebar-header" routerLink="category">
+                <i data-feather="box"></i>
+                <span>Category</span>
 
-        </a>
+            </a>
 
 
-      </li>
+        </li>
 
         <li>
-            <a class="sidebar-header" routerLink="ListQuiz" >
+            <a class="sidebar-header" routerLink="ListQuiz">
                 <i data-feather="archive"></i>
                 <span>Quiz</span>
 

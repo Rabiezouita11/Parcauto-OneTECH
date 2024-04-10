@@ -2,18 +2,21 @@ package com.helloIftekhar.springJwt.service;
 
 
 import com.helloIftekhar.springJwt.model.AuthenticationResponse;
-import com.helloIftekhar.springJwt.model.Role;
 import com.helloIftekhar.springJwt.model.Token;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.repository.TokenRepository;
 import com.helloIftekhar.springJwt.repository.UserRepository;
+import com.helloIftekhar.springJwt.utils.FileUploadUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class AuthenticationService {
@@ -38,33 +41,39 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register(User request) {
-
-        // check if user already exist. if exist than authenticate the user
-        if(repository.findByUsername(request.getUsername()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exist");
+    public AuthenticationResponse register(User request, MultipartFile multipartFile) throws IOException {
+        // check if user already exists. If exists then authenticate the user
+        if (repository.findByUsername(request.getUsername()).isPresent()) {
+            return new AuthenticationResponse(null, "User already exists");
         }
-
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            return new AuthenticationResponse(null, "User with this email already exists");
+        }
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-
-
         user.setRole(request.getRole());
 
-        user = repository.save(user);
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            user.setPhotos(fileName);
+
+            // Save the file to the file system
+            user = repository.save(user); // Save user to get ID
+            String uploadDir = "user-photos/" + user.getId();
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        } else {
+            user = repository.save(user);
+        }
 
         String jwt = jwtService.generateToken(user);
-
         saveUserToken(jwt, user);
 
         return new AuthenticationResponse(jwt, "User registration was successful");
-
     }
-
     public AuthenticationResponse authenticate(User request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

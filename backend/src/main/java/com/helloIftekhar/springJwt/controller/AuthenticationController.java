@@ -7,14 +7,23 @@ import com.helloIftekhar.springJwt.service.AuthenticationService;
 import com.helloIftekhar.springJwt.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,10 +44,9 @@ public class AuthenticationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody User request
-            ) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<AuthenticationResponse> register(User request, @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
+        // Pass both user request and multipart file to the service method
+        return ResponseEntity.ok( authService.register(request, multipartFile));
     }
 
     @PostMapping("/login")
@@ -107,6 +115,35 @@ public class AuthenticationController {
 
         }
     }
+    @GetMapping("/images/{userId}/{fileName}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Integer userId, @PathVariable String fileName) throws IOException {
+
+        Optional<User> userOptional = userService.findById(userId);
+        if (userOptional.isEmpty()) {
+            String errorMessage = "User not found with ID: " + userId;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage.getBytes());
+        }
+        // Construct the path to the image file
+        String filePath = "user-photos/" + userId + "/" + fileName;
+        Path path = Paths.get(filePath);
+
+        if (!Files.exists(path)) {
+            String errorMessage = "Image not found for user ID: " + userId + " and file name: " + fileName;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage.getBytes());
+        }
+
+        // Read the image file as bytes
+        byte[] imageData = Files.readAllBytes(path);
+
+        // Set content type header
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Adjust content type as needed
+
+        // Serve the image data as a response
+        return ResponseEntity.ok().headers(headers).body(imageData);
+    }
+
+
     /**
      * Check whether the created token expired or not.
      *
@@ -120,4 +157,6 @@ public class AuthenticationController {
 
         return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
     }
+
+
 }

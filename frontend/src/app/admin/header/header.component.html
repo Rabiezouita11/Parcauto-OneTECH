@@ -87,10 +87,16 @@
                     </a>
                 </li>
                 <li class="onhover-dropdown">
-                    <div class="media align-items-center">
+                    <div *ngIf="!imageUrl && firstName && lastName" class="avatar-placeholder">
+                        <!-- If imageUrl is not available and firstName and lastName are available, display the initials -->
+                        {{ firstName.charAt(0).toUpperCase() }}{{ lastName.charAt(0).toUpperCase() }}
+                    </div>
+                    <div class="media align-items-center" *ngIf="imageUrl">
                         <img class="align-self-center pull-right img-50 blur-up lazyloaded"
-                            src="assets/nour.jpg" alt="header-user">
-                        <div class="dotted-animation">
+                            [src]="imageUrl" alt="header-user">
+                        
+                        
+                            <div class="dotted-animation">
                             <span class="animate-circle"></span>
                             <span class="main-circle"></span>
                         </div>

@@ -25,7 +25,7 @@ public class User implements UserDetails {
 
     @Column(name = "first_name")
     private String firstName;
-
+    @Column(name = "email", unique = true) // Make email field unique
     private String  email;
     @Column(name = "last_name")
     private String lastName;
@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private LocalDateTime dateToken;
     @Column(name = "password")
     private String password;
-
+    private String photos;
     @Enumerated(value = EnumType.STRING)
     private Role role;
 

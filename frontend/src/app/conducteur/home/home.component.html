@@ -176,15 +176,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 mb30">
+                     
                         <div class="card p-4 rounded-5">
+                            <div *ngIf="!imageUrl && firstName && lastName" class="avatar-placeholder">
+                                {{ firstName.charAt(0).toUpperCase() }}{{ lastName.charAt(0).toUpperCase() }}
+                            </div>
                             <div class="profile_avatar">
-                                <div class="profile_img">
-                                    <img src="assets/conducteur/images/profile/1.jpg" alt="">
+                                <div  *ngIf="imageUrl"  class="profile_img">
+                                    <img [src]="imageUrl" alt="">
                                 </div>
+                               
                                 <div class="profile_name">
                                     <h4>
                                     conducteur {{firstName}}                                              
-                                        <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        <span class="profile_username text-gray">{{email}}</span>
                                     </h4>
                                 </div>
                             </div>

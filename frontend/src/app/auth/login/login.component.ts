@@ -73,17 +73,11 @@ export class LoginComponent implements OnInit {
             this.userService.getUserInfo(token).subscribe(
               (data) => {
                 if (data.role === 'ADMIN') {
-                  this.router.navigateByUrl('/dashboard', { skipLocationChange: false }).then(() => {
-                    window.location.reload();
-                  });
+                  this.router.navigateByUrl('/dashboard', { skipLocationChange: false });
                 } else if (data.role === 'CHEF_DEPARTEMENT') {
-                  this.router.navigateByUrl('/Chef_Departement/dashboard', { skipLocationChange: false }).then(() => {
-                    window.location.reload();
-                  });
+                  this.router.navigateByUrl('/Chef_Departement/dashboard', { skipLocationChange: false });
                 } else if (data.role === 'CONDUCTEUR') {
-                  this.router.navigateByUrl('/conducteur/dashboard', { skipLocationChange: false }).then(() => {
-                    window.location.reload();
-                  });
+                  this.router.navigateByUrl('/conducteur/dashboard', { skipLocationChange: false });
                 }
               },
               (error) => {

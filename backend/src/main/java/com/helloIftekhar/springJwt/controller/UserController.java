@@ -37,6 +37,10 @@ public class UserController {
             userInfo.put("username", user.getUsername());
             userInfo.put("firstName", user.getFirstName());
             userInfo.put("lastName", user.getLastName());
+            userInfo.put("image", user.getPhotos());
+            userInfo.put("id", String.valueOf(user.getId()));
+            userInfo.put("email", String.valueOf(user.getEmail()));
+
             userInfo.put("role", user.getRole().toString()); // Assuming role is an enum
 
             return ResponseEntity.ok(userInfo);

@@ -39,5 +39,8 @@ public class UserService {
     public User findUserByResetToken(String resetToken) {
         return userRepository.findByResetToken(resetToken).orElse(null);
     }
+    public Optional<User> findById(Integer id) {
+        return userRepository.findById(id);
+    }
 
 }
