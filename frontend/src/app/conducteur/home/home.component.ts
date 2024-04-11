@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
         this.showLoader();
 
         // Load scripts and styles concurrently
-        Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => { // Hide the loader after loading is complete
+        Promise.all([ this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => { // Hide the loader after loading is complete
             setTimeout(() => {
                 this.hideLoader();
             }, 1000);
@@ -120,17 +120,14 @@ export class HomeComponent implements OnInit {
             console.error('Error fetching image:', error);
         });
     }
-    logout(): void { // Remove the JWT token from local storage
-        localStorage.removeItem('jwtToken');
+ logout(): void {
+    // Remove the JWT token from local storage
+    localStorage.removeItem('jwtToken');
 
-        // Redirect the user to the login page after a delay
-        setTimeout(() => {
-            this.router.navigateByUrl('/auth/login');
+    // Redirect the user to the login page after a delay
+    window.location.reload();
 
-            // Refresh the page to ensure a fresh state
-            window.location.reload();
-        }, 1000); // Adjust the delay as needed (in milliseconds)
-    }
+  }
     generateAvatarSrc(firstName : string, lastName : string): SafeResourceUrl {
         try {
             const initials = `${

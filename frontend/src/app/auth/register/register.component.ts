@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 @Component({selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css']})
 export class RegisterComponent implements OnInit {
+    isLoginPage!: boolean;
 
     user : any = {};
     selectedImage : File | null = null; // Variable to store selected image file
@@ -14,21 +15,11 @@ export class RegisterComponent implements OnInit {
     constructor(private router : Router, private scriptStyleLoaderService : ScriptAuthService, private userService : UserService) {}
 
     ngOnInit(): void {
-        const SCRIPT_PATH_LIST = [
-            "../../../assets/auth/js/bootstrap.min.js",
-            "../../../assets/auth/js/imagesloaded.pkgd.min.js",
-            "../../../assets/auth/js/validator.min.js",
-            "../../../assets/auth/js/main.js"
-        ];
-        const STYLE_PATH_LIST = ['../../../assets/auth/css/bootstrap.min.css', '../../../assets/auth/font/flaticon.css', '../../../assets/auth/style.css'];
-
-        Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => {
-            // All scripts and styles have finished loading
-            // Call addNewClass function to add 'loaded' class
-        }).catch(error => {
-            console.error('Error loading scripts or styles:', error);
-        });
-    }
+       
+        }
+        
+    
+    
 
 
     registerUser(): void {

@@ -20,26 +20,7 @@ export class ResetPasswordComponent implements OnInit {
     constructor(private ScriptServiceService: ScriptService ,private renderer: Renderer2 ,private scriptStyleLoaderService : ScriptStyleLoaderService, public service : UserService, public fb : FormBuilder, private router : Router, private route : ActivatedRoute) {}
     ngOnInit(): void {
 
-        SCRIPT_PATH_LIST.forEach(e=> {
-            const scriptElement = this.ScriptServiceService.loadJsScript(this.renderer, e);
-            scriptElement.onload = () => {
-             console.log('loaded');
-    
-            }
-            scriptElement.onerror = () => {
-              console.log('Could not load the script!');
-            }
-    
-          })
-       
-        const STYLE_PATH_LIST = ['assets/auth/css/bootstrap.min.css', 'assets/auth/font/flaticon.css', 'assets/auth/style.css'];
-
-        Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => {
-            // All scripts and styles have finished loading
-            // Call addNewClass function to add 'loaded' class
-        }).catch(error => {
-            console.error('Error loading scripts or styles:', error);
-        });
+ 
         this.infoForm();
         this.route.queryParams.subscribe(params => {
             this.token = params['token'];
