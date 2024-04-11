@@ -7,6 +7,7 @@ import { AdminGuard } from './Guard/Admin/admin.guard';
 import { ConducteurGuard } from './Guard/Conducteur/conducteur.guard';
 import { ChefDepartementGuard } from './Guard/Chef_departement/chef-departement.guard';
 import { AuthComponentComponent } from './auth/authComponent/auth-component/auth-component.component';
+import { ConducteurComponentComponent } from './conducteur/Component/conducteur-component/conducteur-component.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     }, 
     {
         path: 'conducteur',
+        component : ConducteurComponentComponent,
          canActivate: [ConducteurGuard], // Apply AuthGuard here
         loadChildren: () => import ('./conducteur/conducteur.module').then(m => m.ConducteurModule)
     }, {

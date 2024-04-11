@@ -5,13 +5,17 @@ import { ConducteurRoutingModule } from './conducteur-routing.module';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ConducteurComponentComponent } from './Component/conducteur-component/conducteur-component.component';
+import { HeaderComponent } from './Component/header/header.component';
+import { FooterComponent } from './Component/footer/footer.component';
 
 
 @NgModule({
   declarations: [
     HomeComponent,
     ProfileComponent,
-    ConducteurComponentComponent
+    ConducteurComponentComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
