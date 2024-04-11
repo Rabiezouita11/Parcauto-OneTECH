@@ -1,51 +1,52 @@
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ScriptStyleLoaderService {
-  loadScripts(scripts: string[]): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      let loadedScripts = 0;
-      const totalScripts = scripts.length;
+  private loadedScripts: Set<string> = new Set<string>(); // Keep track of loaded scripts
 
-      scripts.forEach(script => {
+  loadScripts(scriptPaths: string[]): Promise<void> {
+    const loadScriptPromises = scriptPaths.map(path => this.loadScript(path));
+    return Promise.all(loadScriptPromises).then(() => {});
+  }
+
+  loadStyles(stylePaths: string[]): Promise<void> {
+    const loadStylePromises = stylePaths.map(path => this.loadStyle(path));
+    return Promise.all(loadStylePromises).then(() => {});
+  }
+
+  private loadScript(path: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.loadedScripts.has(path)) { // Check if script is already loaded
+        resolve();
+      } else {
         const scriptElement = document.createElement('script');
-        scriptElement.src = script;
+        scriptElement.src = path;
+        scriptElement.async = true; // Load script asynchronously
         scriptElement.onload = () => {
-          loadedScripts++;
-          if (loadedScripts === totalScripts) {
-            resolve();
-          }
+          this.loadedScripts.add(path); // Mark script as loaded
+          resolve();
         };
         scriptElement.onerror = (error) => {
+          console.error('Error loading script:', error);
           reject(error);
         };
         document.body.appendChild(scriptElement);
-      });
+      }
     });
   }
-
-  loadStyles(styles: string[]): Promise<void> {
+  
+  private loadStyle(path: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      let loadedStyles = 0;
-      const totalStyles = styles.length;
-
-      styles.forEach(style => {
-        const linkElement = document.createElement('link');
-        linkElement.rel = 'stylesheet';
-        linkElement.href = style;
-        linkElement.onload = () => {
-          loadedStyles++;
-          if (loadedStyles === totalStyles) {
-            resolve();
-          }
-        };
-        linkElement.onerror = (error) => {
-          reject(error);
-        };
-        document.head.appendChild(linkElement);
-      });
+      const linkElement = document.createElement('link');
+      linkElement.rel = 'stylesheet';
+      linkElement.href = path;
+      linkElement.onload = () => resolve();
+      linkElement.onerror = (error) => {
+        console.error('Error loading style:', error);
+        reject(error);
+      };
+      document.head.appendChild(linkElement);
     });
   }
 }

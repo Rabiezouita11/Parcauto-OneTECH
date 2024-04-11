@@ -1,9 +1,11 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {ScriptStyleLoaderService} from 'src/app/Service/script-style-loader/script-style-loader.service';
-
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {ScriptService} from 'src/app/Service/script/script.service';
+const SCRIPT_PATH_LIST = [ 'assets/conducteur/js/plugins.js', 'assets/conducteur/js/designesia.js']
 @Component({selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnInit {
     userId : any;
@@ -13,19 +15,30 @@ export class HomeComponent implements OnInit {
     firstName : any;
     lastName : any;
     email : any;
-    constructor(private http : HttpClient, private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {
+    constructor(private ScriptServiceService : ScriptService, private renderer : Renderer2, private sanitizer : DomSanitizer, private http : HttpClient, private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
 
     }
 
     ngOnInit(): void {
-        this.loadScriptsAndStyles();
+        SCRIPT_PATH_LIST.forEach(e=> {
+            const scriptElement = this.ScriptServiceService.loadJsScript(this.renderer, e);
+            scriptElement.onload = () => {
+             console.log('loaded');
+      
+            }
+            scriptElement.onerror = () => {
+              console.log('Could not load the script!');
+            }
+      
+          })
+
         this.getUserFirstName();
+        this.loadScriptsAndStyles();
 
     }
 
     loadScriptsAndStyles(): void {
-        const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js', 'assets/conducteur/js/designesia.js'];
         const STYLE_PATH_LIST = [
             'assets/conducteur/css/bootstrap.min.css',
             'assets/conducteur/css/mdb.min.css',
@@ -42,7 +55,7 @@ export class HomeComponent implements OnInit {
         Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => { // Hide the loader after loading is complete
             setTimeout(() => {
                 this.hideLoader();
-            }, 2000);
+            }, 1000);
         }).catch((error) => {
             console.error('Error loading scripts or styles:', error);
             // Handle error - for example, you could display an error message or retry loading
@@ -67,9 +80,7 @@ export class HomeComponent implements OnInit {
 
         if (this.token) {
             this.userService.getUserInfo(this.token).subscribe((data) => { // Assuming the response contains the user information in JSON format
-                console.log(data)
                 this.userId = data.id;
-                this.firstName = data.firstName;
                 this.fileName = data.image;
                 this.firstName = data.firstName;
                 this.lastName = data.lastName;
@@ -120,5 +131,34 @@ export class HomeComponent implements OnInit {
             window.location.reload();
         }, 1000); // Adjust the delay as needed (in milliseconds)
     }
-
+    generateAvatarSrc(firstName : string, lastName : string): SafeResourceUrl {
+        try {
+            const initials = `${
+                firstName.charAt(0).toUpperCase()
+            }${
+                lastName.charAt(0).toUpperCase()
+            }`;
+            const svgString = `<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'><text x='50' y='50' text-anchor='middle' alignment-baseline='central' font-size='40' fill='black'>${initials}</text></svg>`;
+            const safeSvg = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString));
+            return safeSvg;
+        } catch (error) {
+            console.error('Error generating avatar source:', error);
+            return '';
+        }
+    }
+    generateAvatarSrcBlanc(firstName : string, lastName : string): SafeResourceUrl {
+        try {
+            const initials = `${
+                firstName.charAt(0).toUpperCase()
+            }${
+                lastName.charAt(0).toUpperCase()
+            }`;
+            const svgString = `<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'><text x='50' y='50' text-anchor='middle' alignment-baseline='central' font-size='40' fill='white'>${initials}</text></svg>`;
+            const safeSvg = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString));
+            return safeSvg;
+        } catch (error) {
+            console.error('Error generating avatar source:', error);
+            return '';
+        }
+    }
 }

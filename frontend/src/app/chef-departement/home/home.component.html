@@ -120,16 +120,18 @@
                             <div class="menu_side_area">
                                 <div class="de-login-menu">
 
-                                    <span id="de-click-menu-profile" class="de-menu-profile">                           
-                                        <img src="assets/conducteur/images/profile/1.jpg" class="img-fluid" alt="">
+                                    <span id="de-click-menu-profile" class="de-menu-profile" *ngIf="imageUrl"  >                           
+                                        <img [src]="imageUrl"  class="img-fluid" alt="">
                                     </span>
-
+                                    <span id="de-click-menu-profile" class="avatar-container" *ngIf="!imageUrl && firstName && lastName"  >                           
+                                        <img [src]="generateAvatarSrcBlanc(firstName, lastName)" class="img-fluid" alt="" width="100" height="100">
+                                    </span>
                                     
 
                                     <div id="de-submenu-profile" class="de-submenu">
                                         <div class="d-name">
-                                            <h4> Chef departement {{ firstName }}</h4>
-                                            <span class="text-gray">monica@rentaly.com</span>
+                                            <h4>{{ firstName }} {{lastName}}</h4>
+                                            <span class="text-gray">{{email}}</span>
                                         </div>
 
                                         <div class="d-line"></div>
@@ -182,13 +184,17 @@
                     <div class="col-lg-3 mb30">
                         <div class="card p-4 rounded-5">
                             <div class="profile_avatar">
-                                <div class="profile_img">
-                                    <img src="assets/conducteur/images/profile/1.jpg" alt="">
+                                <div *ngIf="imageUrl" class="profile_img">
+                                    <img [src]="imageUrl" alt="">
                                 </div>
+                                <div *ngIf="!imageUrl && firstName && lastName" class="avatar-container">
+                                    <img [src]="generateAvatarSrc(firstName, lastName)" alt="">
+                                  </div>
+                                  
                                 <div class="profile_name">
                                     <h4>
-                                     Chef departement  {{firstName}}                                              
-                                        <span class="profile_username text-gray">monica@rentaly.com</span>
+                                        Chef departement {{firstName}} {{lastName}}
+                                        <span class="profile_username text-gray">{{email}}</span>
                                     </h4>
                                 </div>
                             </div>

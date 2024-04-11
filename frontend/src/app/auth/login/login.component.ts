@@ -1,16 +1,16 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
-import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
 import Swal from 'sweetalert2';
-import * as jQuery from 'jquery';
-import 'imagesloaded';
-// Extend jQuery interface to include imagesLoaded function
-declare global {
-  interface JQuery {
-    imagesLoaded: any; // Adjust the type according to how imagesLoaded is defined
-  }
-}
+import { ScriptAuthService } from 'src/app/Service/scriptAuth/script-auth.service';
+import { ScriptService } from 'src/app/Service/script/script.service';
+const SCRIPT_PATH_LIST =[
+  "assets/auth/js/jquery-3.5.0.min.js", // Add jQuery link here
+  "assets/auth/js/bootstrap.min.js",
+  "assets/auth/js/imagesloaded.pkgd.min.js",
+  "assets/auth/js/validator.min.js",
+  "assets/auth/js/main.js"
+]
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,17 +21,22 @@ export class LoginComponent implements OnInit {
     username: '',
     password: ''
   };
-  constructor(private router: Router, private userService: UserService ,private scriptStyleLoaderService: ScriptStyleLoaderService
+  constructor(private ScriptServiceService: ScriptService, private renderer: Renderer2,private router: Router, private userService: UserService ,private scriptStyleLoaderService: ScriptAuthService
     ) { }
 
     ngOnInit(): void {
-      const SCRIPT_PATH_LIST = [
-        "../../../assets/auth/js/jquery-3.5.0.min.js",
-        "../../../assets/auth/js/bootstrap.min.js",
-        "../../../assets/auth/js/imagesloaded.pkgd.min.js",
-        "../../../assets/auth/js/validator.min.js",
-        "../../../assets/auth/js/main.js"
-      ];
+      
+        SCRIPT_PATH_LIST.forEach(e=> {
+            const scriptElement = this.ScriptServiceService.loadJsScript(this.renderer, e);
+            scriptElement.onload = () => {
+             console.log('loaded');
+    
+            }
+            scriptElement.onerror = () => {
+              console.log('Could not load the script!');
+            }
+    
+          })
       const STYLE_PATH_LIST = [
         '../../../assets/auth/css/bootstrap.min.css',
         '../../../assets/auth/font/flaticon.css',
@@ -39,22 +44,16 @@ export class LoginComponent implements OnInit {
       ];
     
       Promise.all([
-        this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST),
         this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)
       ]).then(() => {
         // All scripts and styles have finished loading
         // Call addNewClass function to add 'loaded' class
-        this.addNewClass();
       }).catch(error => {
         console.error('Error loading scripts or styles:', error);
       });
     }
     
-    addNewClass(): void {
-      $('.fxt-template-animation').imagesLoaded().done(function() {
-        $('.fxt-template-animation').addClass('loaded');
-      });
-    }
+  
     
   
   loginUser(): void {

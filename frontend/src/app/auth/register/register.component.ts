@@ -2,6 +2,7 @@ import {Component, OnInit, Renderer2} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {ScriptStyleLoaderService} from 'src/app/Service/script-style-loader/script-style-loader.service';
+import { ScriptAuthService } from 'src/app/Service/scriptAuth/script-auth.service';
 import Swal from 'sweetalert2';
 
 @Component({selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css']})
@@ -10,11 +11,10 @@ export class RegisterComponent implements OnInit {
     user : any = {};
     selectedImage : File | null = null; // Variable to store selected image file
 
-    constructor(private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {}
+    constructor(private router : Router, private scriptStyleLoaderService : ScriptAuthService, private userService : UserService) {}
 
     ngOnInit(): void {
         const SCRIPT_PATH_LIST = [
-            "../../../assets/auth/js/jquery-3.5.0.min.js",
             "../../../assets/auth/js/bootstrap.min.js",
             "../../../assets/auth/js/imagesloaded.pkgd.min.js",
             "../../../assets/auth/js/validator.min.js",
@@ -25,16 +25,11 @@ export class RegisterComponent implements OnInit {
         Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => {
             // All scripts and styles have finished loading
             // Call addNewClass function to add 'loaded' class
-            this.addNewClass();
         }).catch(error => {
             console.error('Error loading scripts or styles:', error);
         });
     }
-    addNewClass(): void {
-        $('.fxt-template-animation').imagesLoaded().done(function () {
-            $('.fxt-template-animation').addClass('loaded');
-        });
-    }
+
 
     registerUser(): void {
         const formData = new FormData();
@@ -89,7 +84,26 @@ export class RegisterComponent implements OnInit {
     }
     
 
-    onImageSelected(event : any): void { // Get the selected image file
-        this.selectedImage = event.target.files[0];
+    onImageSelected(event: any): void {
+        const file = event.target.files[0];
+        if (file) {
+            // Check if the file size exceeds the maximum allowed size (in bytes)
+            const maxSize = 5 * 1024 * 1024; // 5 MB
+            if (file.size > maxSize) {
+                // Reset the selected image
+                this.selectedImage = null;
+                // Display an error message using Swal
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Image Size Exceeded',
+                    text: 'The selected image size exceeds the maximum allowed size (5 MB). Please select a smaller image.'
+                });
+                return;
+            }
+            
+            // Set the selected image
+            this.selectedImage = file;
+        }
     }
+    
 }

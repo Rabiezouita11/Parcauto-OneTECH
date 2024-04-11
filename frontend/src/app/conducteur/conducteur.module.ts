@@ -13,7 +13,8 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     CommonModule,
-    ConducteurRoutingModule
+    ConducteurRoutingModule,
+
   ]
 })
 export class ConducteurModule { }

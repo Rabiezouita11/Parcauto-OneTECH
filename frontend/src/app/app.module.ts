@@ -23,7 +23,8 @@ import { ConducteurModule } from './conducteur/conducteur.module';
     HttpClientModule,
     AdminModule,
     AuthModule,
-    ConducteurModule
+    ConducteurModule,
+    
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
