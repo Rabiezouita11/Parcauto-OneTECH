@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit {
         localStorage.removeItem('jwtToken');
 
         // Redirect the user to the login page
-        this.router.navigateByUrl('/auth/login');
+        window.location.reload();
     }
 
 
