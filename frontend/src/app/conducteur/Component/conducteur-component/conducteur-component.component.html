@@ -14,9 +14,68 @@
         <div id="de-preloader"></div>
         <app-header></app-header>
         <a href="#" id="back-to-top"></a>
+        <div class="no-bottom no-top zebra" id="content">
+            <div id="top"></div>
+            <section id="subheader" class="jarallax text-light">
+                <img src="assets/conducteur/images/background/14.jpg" class="jarallax-img" alt="">
+                <div class="center-y relative text-center">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h1> aaa {{ pageTitle }}</h1>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="section-cars" class="bg-gray-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 mb30">
+                            <div class="card p-4 rounded-5">
+                                <div class="profile_avatar">
+                                    <div *ngIf="imageUrl" class="profile_img">
+                                        <img [src]="imageUrl" alt="">
+                                    </div>
+                                    <div *ngIf="!imageUrl && firstName && lastName" class="avatar-container">
+                                        <img [src]="generateAvatarSrc(firstName, lastName)" alt="">
+                                    </div>
 
-        <router-outlet></router-outlet>
+                                    <div class="profile_name">
+                                        <h4>
+                                            conducteur {{firstName}} {{lastName}}
+                                            <span class="profile_username text-gray">{{email}}</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="spacer-20"></div>
+                                <ul class="menu-col">
+                                    <li><a routerLink="/conducteur/dashboard" class="active"><i
+                                                class="fa fa-home"></i>Dashboard</a></li>
+                                    <li><a routerLink="/conducteur/profile"><i class="fa fa-user"></i>My Profile</a>
+                                    </li>
+                                    <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
+                                    <li><a href="account-favorite.html"><i class="fa fa-car"></i>My Favorite Cars</a>
+                                    </li>
+                                    <li>
+                                        <a (click)="logout()">
+                                            <i class="fa fa-sign-out"></i>Sign Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
 
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
         <app-footer></app-footer>
     </div>
 
