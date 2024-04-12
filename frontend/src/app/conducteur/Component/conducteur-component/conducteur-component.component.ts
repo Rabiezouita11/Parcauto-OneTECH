@@ -5,7 +5,7 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {ScriptStyleLoaderService} from 'src/app/Service/script-style-loader/script-style-loader.service';
 import {ScriptService} from 'src/app/Service/script/script.service';
-const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js', 'assets/conducteur/js/designesia.js']
+const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js']
 
 @Component({selector: 'app-conducteur-component', templateUrl: './conducteur-component.component.html', styleUrls: ['./conducteur-component.component.scss']})
 export class ConducteurComponentComponent implements OnInit {
