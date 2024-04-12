@@ -67,8 +67,6 @@ export class HeaderComponent implements OnInit {
     }
     logout(): void { // Remove the JWT token from local storage
         localStorage.removeItem('jwtToken');
-
-        // Redirect the user to the login page
         window.location.reload();
     }
 
