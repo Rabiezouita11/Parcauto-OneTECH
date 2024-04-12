@@ -80,7 +80,7 @@ export class ConducteurComponentComponent implements OnInit {
         Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => { // Hide the loader after loading is complete
             setTimeout(() => {
                 this.hideLoader();
-            }, 1000);
+            }, 200);
         }).catch((error) => {
             console.error('Error loading scripts or styles:', error);
             // Handle error - for example, you could display an error message or retry loading
