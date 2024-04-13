@@ -45,25 +45,10 @@ export class LoginComponent implements OnInit {
             if (token) {
               this.userService.getUserInfo(token).subscribe(
                 (data) => {
-                  if (data.role === 'ADMIN') {
-                    this.router.navigateByUrl('/dashboard', { skipLocationChange: false }).then(() => {
-                     
-                        window.location.reload();
-                      
-                    });
-                  } else if (data.role === 'CHEF_DEPARTEMENT') {
-                    this.router.navigateByUrl('/Chef_Departement/dashboard', { skipLocationChange: false }).then(() => {
-                      
-                        window.location.reload();
-                     
-                    });
-                  } else if (data.role === 'CONDUCTEUR') {
-                    this.router.navigateByUrl('/conducteur/dashboard', { skipLocationChange: false }).then(() => {
-                     
-                        window.location.reload();
-                    
-                    });
+                  if (data.role === 'ADMIN'|| data.role === 'CHEF_DEPARTEMENT'||data.role === 'CONDUCTEUR' ) {
+                    this.router.navigateByUrl('/dashboard', { skipLocationChange: false });
                   }
+                 
                 },
                 (error) => {
                   console.error('Error fetching user information:', error);

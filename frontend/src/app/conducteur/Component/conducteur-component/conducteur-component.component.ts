@@ -18,6 +18,7 @@ export class ConducteurComponentComponent implements OnInit {
     firstName : any;
     lastName : any;
     email : any;
+    role: any;
     constructor(private route: ActivatedRoute ,private ScriptServiceService : ScriptService, private renderer : Renderer2, private sanitizer : DomSanitizer, private http : HttpClient, private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
 
@@ -53,6 +54,7 @@ export class ConducteurComponentComponent implements OnInit {
                 this.firstName = data.firstName;
                 this.lastName = data.lastName;
                 this.email = data.email;
+                this.role = data.role;
                 this.getImageUrl(); // Call getImageUrl after getting user info
 
             }, (error) => {

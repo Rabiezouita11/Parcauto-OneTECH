@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
-import { AdminModule } from './admin/admin.module';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthModule } from './auth/auth.module';
 import { ConducteurModule } from './conducteur/conducteur.module';
@@ -21,7 +20,6 @@ import { ConducteurModule } from './conducteur/conducteur.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    AdminModule,
     AuthModule,
     ConducteurModule,
     

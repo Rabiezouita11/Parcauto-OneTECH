@@ -7,7 +7,7 @@ import { UserService } from 'src/app/Service/UserService/user-service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate {
+export class GuardGuard implements CanActivate {
  
   constructor(private userService: UserService, private router: Router) {}
 
@@ -17,14 +17,16 @@ export class AdminGuard implements CanActivate {
     if (token) {
       return this.userService.getUserInfo(token).pipe(
         map((data) => {
-          const isAdmin = data.role === 'ADMIN'; // Assuming the response contains a 'role' field
-          if (isAdmin) {
-            return true;
-          } else {
-            this.router.navigate(['/auth/login']); // Redirect to login page if there's an error
-
-            return false;
+          const role = data.role; // Assuming the response contains a 'role' field
+          const allowedRoles = ['CONDUCTEUR', 'ADMIN', 'CHEF_DEPARTEMENT'];
+          const canActivate = allowedRoles.includes(role);
+          
+          if (!canActivate) {
+            console.error('User does not have permission to access this page');
+            this.router.navigate(['/auth/login']); // Redirect to login page if user does not have permission
           }
+          
+          return canActivate;
         }),
         catchError((error) => {
           console.error('Error fetching user information:', error);
@@ -38,4 +40,3 @@ export class AdminGuard implements CanActivate {
     }
   }
 }
-

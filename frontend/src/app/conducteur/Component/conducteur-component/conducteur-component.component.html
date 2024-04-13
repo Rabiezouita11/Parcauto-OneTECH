@@ -33,18 +33,17 @@
 
                                     <div class="profile_name">
                                         <h4>
-                                            conducteur {{firstName}} {{lastName}}
-                                            <span class="profile_username text-gray">{{email}}</span>
+                                            {{ role }}: {{ firstName }} {{ lastName }}
+                                            <span class="profile_username text-gray">({{ email }})</span>
                                         </h4>
                                     </div>
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a routerLink="/conducteur/dashboard" routerLinkActive="active"><i
+                                    <li><a routerLink="/dashboard" routerLinkActive="active"><i
                                                 class="fa fa-home"></i>Dashboard</a></li>
-                                    <li><a routerLink="/conducteur/profile" routerLinkActive="active"><i
-                                                class="fa fa-user"></i>My Profile</a></li>
-                                    
+                                                <li *ngIf="role === 'ADMIN'"><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i>My Profile</a></li>
+
                                     <li><a href="account-booking.html"><i class="fa fa-calendar"></i>My Orders</a></li>
                                     <li><a href="account-favorite.html"><i class="fa fa-car"></i>My Favorite Cars</a>
                                     </li>
