@@ -1,7 +1,7 @@
-import { Component, OnInit ,Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
-import { ScriptService } from 'src/app/Service/script/script.service';
+import { Component, OnInit } from '@angular/core';
+import { ProfileUpdateService } from 'src/app/Service/ProfileUpdateService/profile-update-service.service';
+import { UserService } from 'src/app/Service/UserService/user-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -9,19 +9,94 @@ import { ScriptService } from 'src/app/Service/script/script.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  token: string | null;
+  userId: any;
+  fileName: any;
+  firstName: any;
+  lastName: any;
+  email: any;
+  role: any;
+  userName: any;
+  selectedFile: File | null = null;
+  profileImage!: File | null;
+  user: any = {};
 
-  constructor(private router : Router, private ScriptServiceService: ScriptService, private renderer: Renderer2 , private scriptStyleLoaderService: ScriptStyleLoaderService) { }
+  constructor(private userService: UserService,private profileUpdateService: ProfileUpdateService) {
+    this.token = localStorage.getItem('jwtToken');
 
-  ngOnInit(): void {
- 
   }
 
+  ngOnInit(): void {
+    this.getInfo();
+  }
+  getInfo(): void {
 
-  logout(): void { // Remove the JWT token from local storage
-    localStorage.removeItem('jwtToken');
+    if (this.token) {
+      this.userService.getUserInfo(this.token).subscribe((data) => { // Assuming the response contains the user information in JSON format
+        this.userId = data.id;
+        this.fileName = data.image;
+        this.firstName = data.firstName;
+        this.lastName = data.lastName;
+        this.email = data.email;
+        this.role = data.role;
+        this.userName = data.username;
 
-    // Redirect the user to the login page after a delay
-    window.location.reload();
+      }, (error) => {
+        console.error('Error fetching user information:', error);
+      });
+    } else {
+      console.error('Token not found in localStorage');
+    }
+  }
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
 
+  updateProfile(): void {
+    if (!this.token || !this.userId) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Token or User ID is missing',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    const userData = {
+      id : this.userId,
+      username: this.userName,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      // Add other fields as needed
+    };
+    console.log(userData)
+    this.userService.updateProfile(userData, this.token).subscribe(
+      (response) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Profile updated successfully',
+          confirmButtonText: 'OK'
+        });        // Optionally, update any UI elements or show success message
+        this.profileUpdateService.triggerProfileUpdated();
+
+      },
+      (error) => {
+        console.error('Error updating profile:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to update profile. Please try again later.',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  }
 }
-}
+
+
+
+
+

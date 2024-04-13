@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .requestMatchers("/ChefDepartement/**").hasAuthority("CHEF_DEPARTEMENT")
+                                .requestMatchers("/user/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN", "CONDUCTEUR")
 
                                 .requestMatchers("/conducteur/**").hasAuthority("CONDUCTEUR")
 

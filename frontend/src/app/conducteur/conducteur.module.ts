@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ConducteurComponentComponent } from './Component/conducteur-component/conducteur-component.component';
 import { HeaderComponent } from './Component/header/header.component';
 import { FooterComponent } from './Component/footer/footer.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,8 @@ import { FooterComponent } from './Component/footer/footer.component';
   imports: [
     CommonModule,
     ConducteurRoutingModule,
+    FormsModule, // Import the FormsModule here
+    ReactiveFormsModule ,
 
   ]
 })

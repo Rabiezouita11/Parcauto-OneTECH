@@ -43,4 +43,18 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public void updateUserProfile(Integer userId, String username, String firstName, String lastName ,String email ) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setUsername(username);
+            user.setFirstName(firstName);
+            user.setEmail(email);
+            user.setLastName(lastName);
+            userRepository.save(user);
+        } else {
+            // Handle the case where the user with the given ID is not found
+        }
+    }
+
 }

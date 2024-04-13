@@ -3,20 +3,17 @@ package com.helloIftekhar.springJwt.controller;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.service.JwtService;
 import com.helloIftekhar.springJwt.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class UserController {
     private final JwtService jwtService;
     private final UserService userService; // Inject the UserService
@@ -47,6 +44,25 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @PostMapping("/user/profile/update")
+    public ResponseEntity<Object> updateProfile(@RequestBody User user) {
+        // Extract user details from request
+        Integer userId = user.getId();
+        String username = user.getUsername();
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String email = user.getEmail();
+
+        // Assuming you have a method in your UserService to update the user profile
+        userService.updateUserProfile(userId, username, firstName, lastName ,email);
+
+        // Create a JSON object with a response message
+        String message = "Profile updated successfully";
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

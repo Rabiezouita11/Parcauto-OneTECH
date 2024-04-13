@@ -9,6 +9,7 @@ import {tap} from 'rxjs/operators';
 export class UserService {
 
     private baseUrl = 'http://localhost:8080';
+    private UserUrl = 'http://localhost:8080/user';
 
     constructor(private http : HttpClient) {}
 
@@ -48,4 +49,12 @@ export class UserService {
 
         return this.http.get(`http://localhost:8080/users/rest/${token}/${pwd}`);
     }
+
+    updateProfile(profileData: any ,token: string): Observable<any> {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+      
+        return this.http.post<any>(`http://localhost:8080/user/profile/update`, profileData, { headers });
+      }
 }

@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Component, OnInit, Renderer2} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { ActivatedRoute, Data, Router } from '@angular/router';
+import { ProfileUpdateService } from 'src/app/Service/ProfileUpdateService/profile-update-service.service';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {ScriptStyleLoaderService} from 'src/app/Service/script-style-loader/script-style-loader.service';
 import {ScriptService} from 'src/app/Service/script/script.service';
@@ -19,11 +20,21 @@ export class ConducteurComponentComponent implements OnInit {
     lastName : any;
     email : any;
     role: any;
-    constructor(private route: ActivatedRoute ,private ScriptServiceService : ScriptService, private renderer : Renderer2, private sanitizer : DomSanitizer, private http : HttpClient, private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {
+    constructor(private profileUpdateService: ProfileUpdateService ,private route: ActivatedRoute ,private ScriptServiceService : ScriptService, private renderer : Renderer2, private sanitizer : DomSanitizer, private http : HttpClient, private router : Router, private scriptStyleLoaderService : ScriptStyleLoaderService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
 
     }
+    reloadData(): void {
+        this.getUserFirstName();
+      }
     ngOnInit(): void {
+
+
+        this.profileUpdateService.profileUpdated$.subscribe(() => {
+            // Reload the data in this component
+            this.reloadData();
+          });
+
         this.route.data.subscribe((data: Data) => {
             // Update pageTitle based on the data received from the route
             this.pageTitle = data['title'] || 'aaaaa';
@@ -73,7 +84,7 @@ export class ConducteurComponentComponent implements OnInit {
             'assets/conducteur/css/coloring.css',
             'assets/conducteur/css/colors/scheme-01.css'
         ];
-        const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js', 'assets/conducteur/js/designesia.js']
+        const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js']
 
         // Show the loader
         this.showLoader();
