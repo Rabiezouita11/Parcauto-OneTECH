@@ -11,6 +11,7 @@ const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js']
 @Component({selector: 'app-conducteur-component', templateUrl: './conducteur-component.component.html', styleUrls: ['./conducteur-component.component.scss']})
 export class ConducteurComponentComponent implements OnInit {
     pageTitle: string = '';
+    loading = false;
 
     userId : any;
     fileName : any;
@@ -87,32 +88,18 @@ export class ConducteurComponentComponent implements OnInit {
         const SCRIPT_PATH_LIST = ['assets/conducteur/js/plugins.js']
 
         // Show the loader
-        this.showLoader();
-
+        this.loading = true;
         // Load scripts and styles concurrently
         Promise.all([this.scriptStyleLoaderService.loadScripts(SCRIPT_PATH_LIST), this.scriptStyleLoaderService.loadStyles(STYLE_PATH_LIST)]).then(() => { // Hide the loader after loading is complete
             setTimeout(() => {
-                this.hideLoader();
-            }, 200);
+                this.loading = false;
+            }, 1000);
         }).catch((error) => {
             console.error('Error loading scripts or styles:', error);
-            // Handle error - for example, you could display an error message or retry loading
-            this.hideLoader(); // Ensure loader is hidden even if there's an error
+            this.loading = false;
         });
     }
-    showLoader(): void {
-        const loader = document.getElementById('de-preloader');
-        if (loader) {
-            loader.style.display = 'block';
-        }
-    }
-
-    hideLoader(): void {
-        const loader = document.getElementById('de-preloader');
-        if (loader) {
-            loader.style.display = 'none';
-        }
-    }
+ 
     generateAvatarSrc(firstName : string, lastName : string): SafeResourceUrl {
         try {
             const initials = `${

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ConducteurRoutingModule } from './conducteur-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -8,6 +9,7 @@ import { ConducteurComponentComponent } from './Component/conducteur-component/c
 import { HeaderComponent } from './Component/header/header.component';
 import { FooterComponent } from './Component/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VehiculeComponent } from './vehicule/vehicule.component';
 
 
 @NgModule({
@@ -16,14 +18,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProfileComponent,
     ConducteurComponentComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    VehiculeComponent
   ],
   imports: [
     CommonModule,
     ConducteurRoutingModule,
     FormsModule, // Import the FormsModule here
     ReactiveFormsModule ,
-
+    MatProgressSpinnerModule
   ]
 })
 export class ConducteurModule { }
