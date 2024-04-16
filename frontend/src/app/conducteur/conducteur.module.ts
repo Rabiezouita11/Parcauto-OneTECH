@@ -10,6 +10,9 @@ import { HeaderComponent } from './Component/header/header.component';
 import { FooterComponent } from './Component/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VehiculeComponent } from './vehicule/vehicule.component';
+import { MatIconModule } from '@angular/material/icon';
+import { VehicleDetailsModalComponent } from './vehicule/vehicle-details-modal/vehicle-details-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -19,14 +22,18 @@ import { VehiculeComponent } from './vehicule/vehicule.component';
     ConducteurComponentComponent,
     HeaderComponent,
     FooterComponent,
-    VehiculeComponent
+    VehiculeComponent,
+    VehicleDetailsModalComponent
   ],
   imports: [
     CommonModule,
     ConducteurRoutingModule,
     FormsModule, // Import the FormsModule here
     ReactiveFormsModule ,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatDialogModule
+
   ]
 })
 export class ConducteurModule { }

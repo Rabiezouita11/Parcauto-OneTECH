@@ -1,15 +1,16 @@
 
 
         <div class="row">
-            <div class="col-lg-3 col-6 mb25 order-sm-1">
+            <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'ADMIN'">
                 <div class="card p-4 rounded-5">
                     <div class="symbol mb40">
-                        <i class="fa id-color fa-2x fa-calendar-check-o"></i>
+                        <i class="fa id-color fa-2x fa-car"></i>
                     </div>
-                    <span class="h1 mb0">03</span>
-                    <span class="text-gray">Upcoming Orders</span>
+                    <span class="h1 mb0">{{ vehicleCount }}</span>
+                    <span class="text-gray">Total Vehicles</span>
                 </div>
             </div>
+            
 
             <div class="col-lg-3 col-6 mb25 order-sm-1">
                 <div class="card p-4 rounded-5">
