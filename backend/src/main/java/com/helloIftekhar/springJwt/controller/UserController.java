@@ -5,11 +5,15 @@ import com.helloIftekhar.springJwt.service.JwtService;
 import com.helloIftekhar.springJwt.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -46,7 +50,7 @@ public class UserController {
         }
     }
     @PostMapping("/user/profile/update")
-    public ResponseEntity<Object> updateProfile(@RequestBody User user) {
+    public ResponseEntity<Object> updateProfile(@ModelAttribute User user, @RequestParam(value = "image", required = false) MultipartFile multipartFile) throws IOException {
         // Extract user details from request
         Integer userId = user.getId();
         String username = user.getUsername();
@@ -54,8 +58,16 @@ public class UserController {
         String lastName = user.getLastName();
         String email = user.getEmail();
 
+        // Process the file
+        String fileName = null;
+        if (multipartFile != null) {
+            fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            System.out.println(fileName);
+            // Save the file or do any processing as needed
+        }
+
         // Assuming you have a method in your UserService to update the user profile
-        userService.updateUserProfile(userId, username, firstName, lastName ,email);
+        userService.updateUserProfile(userId, username, firstName, lastName, email, multipartFile);
 
         // Create a JSON object with a response message
         String message = "Profile updated successfully";
@@ -64,5 +76,4 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

@@ -62,26 +62,30 @@ export class ProfileComponent implements OnInit {
       });
       return;
     }
-
-    const userData = {
-      id : this.userId,
-      username: this.userName,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      // Add other fields as needed
-    };
-    console.log(userData)
-    this.userService.updateProfile(userData, this.token).subscribe(
+  
+    // Create FormData object
+    const formData = new FormData();
+    formData.append('id', this.userId);
+    formData.append('username', this.userName);
+    formData.append('firstName', this.firstName);
+    formData.append('lastName', this.lastName);
+    formData.append('email', this.email);
+    // Append the file
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+    }
+  
+    // Send the FormData object to the backend
+    this.userService.updateProfile(formData, this.token).subscribe(
       (response) => {
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Profile updated successfully',
           confirmButtonText: 'OK'
-        });        // Optionally, update any UI elements or show success message
+        });
+        // Optionally, update any UI elements or show success message
         this.profileUpdateService.triggerProfileUpdated();
-
       },
       (error) => {
         console.error('Error updating profile:', error);
@@ -94,6 +98,7 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+  
 }
 
 

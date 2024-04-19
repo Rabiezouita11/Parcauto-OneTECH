@@ -1,5 +1,6 @@
 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add Vehicle</button>
+
 <br>
 <br>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,7 +99,10 @@
       </div>
     </div>
   </div>
-  <table *ngIf="vehicles && vehicles.length > 0" class="table table-bordered border-primary">
+          <div class="card p-4 rounded-5 mb25">
+
+    <table *ngIf="vehicles && vehicles.length > 0" class="table de-table">
+
     <thead>
       <tr>
         <th>ID</th>
@@ -124,7 +128,7 @@
         <td>{{ vehicle.historiqueReservation }}</td>
         <!-- Add more table cells as needed -->
         <td>
-          <button mat-icon-button color="primary" >
+          <button mat-icon-button color="primary" (click)="openUpdate(vehicle)" >
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="deleteVehicle(vehicle.id)">
@@ -137,4 +141,5 @@
       </tr>
     </tbody>
   </table>
+        </div>
 

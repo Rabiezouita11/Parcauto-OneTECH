@@ -28,9 +28,16 @@ public class AdminController {
     public Vehicle createOrUpdateVehicle(@RequestBody Vehicle vehicle) {
         return vehicleService.saveOrUpdateVehicle(vehicle);
     }
-
+    @PutMapping("/admin/vehicles/{id}") // Use PUT method for updates
+    public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        // Ensure that the ID of the vehicle matches the path variable ID
+        vehicle.setId(id);
+        System.out.println("idididididididi"+id);
+        return vehicleService.saveOrUpdateVehicle(vehicle);
+    }
     @DeleteMapping("/admin/vehicles/{id}")
     public void deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
     }
+
 }

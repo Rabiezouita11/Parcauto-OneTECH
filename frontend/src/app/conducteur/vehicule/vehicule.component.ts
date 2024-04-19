@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { VehicleDetailsModalComponent } from './vehicle-details-modal/vehicle-details-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
+import { VehiculeUpdateModalComponent } from './vehicule-update-modal/vehicule-update-modal.component';
 
 @Component({
   selector: 'app-vehicule',
@@ -49,6 +50,12 @@ export class VehiculeComponent implements OnInit {
   }
   openDetailsModal(vehicle: any): void {
     this.dialog.open(VehicleDetailsModalComponent, {
+      width: '400px',
+      data: vehicle
+    });
+  }
+  openUpdate(vehicle: any): void {
+    this.dialog.open(VehiculeUpdateModalComponent, {
       width: '400px',
       data: vehicle
     });

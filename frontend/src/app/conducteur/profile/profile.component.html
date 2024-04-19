@@ -1,7 +1,7 @@
 <div class="card p-4  rounded-5">
     <div class="row">
         <div class="col-lg-12">
-            <form (ngSubmit)="updateProfile()" #updateForm="ngForm">
+            <form (ngSubmit)="updateProfile()" #updateForm="ngForm" enctype="multipart/form-data">
                 <div class="de_tab tab_simple">
                     <ul class="de_nav">
                         <li class="active"><span>Profile</span></li>
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col-md-6 mb20">
                                     <h5>Profile Image</h5>
-                                    <input type="file" name="profile_image" id="profile_image" class="form-control" (change)="onFileSelected($event)" />
+                                    <input type="file" name="image" id="image" class="form-control" (change)="onFileSelected($event)" />
                                 </div>
                                 <div class="col-md-6 mb20">
                                     <h5>Role</h5>

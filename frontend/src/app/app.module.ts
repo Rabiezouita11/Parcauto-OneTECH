@@ -11,7 +11,7 @@ import { ConducteurModule } from './conducteur/conducteur.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NotfoundComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,

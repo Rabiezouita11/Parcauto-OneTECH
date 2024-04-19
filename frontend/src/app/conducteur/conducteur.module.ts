@@ -13,6 +13,9 @@ import { VehiculeComponent } from './vehicule/vehicule.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VehicleDetailsModalComponent } from './vehicule/vehicle-details-modal/vehicle-details-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { VehiculeUpdateModalComponent } from './vehicule/vehicule-update-modal/vehicule-update-modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HeaderComponent,
     FooterComponent,
     VehiculeComponent,
-    VehicleDetailsModalComponent
+    VehicleDetailsModalComponent,
+    VehiculeUpdateModalComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule ,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule, // Add MatFormFieldModule here
+    
 
   ]
 })

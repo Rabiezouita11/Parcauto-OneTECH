@@ -2,12 +2,18 @@ package com.helloIftekhar.springJwt.service;
 
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.repository.UserRepository;
+import com.helloIftekhar.springJwt.utils.FileUploadUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,7 +49,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void updateUserProfile(Integer userId, String username, String firstName, String lastName ,String email ) {
+    public void updateUserProfile(Integer userId, String username, String firstName, String lastName , String email , MultipartFile multipartFile) throws IOException {
         Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -51,7 +57,19 @@ public class UserService {
             user.setFirstName(firstName);
             user.setEmail(email);
             user.setLastName(lastName);
-            userRepository.save(user);
+            if (multipartFile != null) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+               System.out.println(fileName);
+                user.setPhotos(fileName);
+                userRepository.save(user);
+
+                String uploadDir = "user-photos/" + user.getId();
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+            }else  {
+                userRepository.save(user);
+
+            }
         } else {
             // Handle the case where the user with the given ID is not found
         }
