@@ -34,7 +34,7 @@
         <td>{{ user.username }}</td>
         <td>{{ user.role }}</td>
         <td>
-          <ng-container>
+          <ng-container *ngIf="user.status === null;">
             <button class="btn btn-success" title="Accepter" (click)="acceptUser(user)">
               <i class="fa fa-check"></i> 
             </button>
