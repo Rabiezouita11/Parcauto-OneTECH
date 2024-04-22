@@ -7,18 +7,18 @@
                         <i class="fa id-color fa-2x fa-car"></i>
                     </div>
                     <span class="h1 mb0">{{ vehicleCount }}</span>
-                    <span class="text-gray">Total Vehicles</span>
+                    <span class="text-gray">Total voitures</span>
                 </div>
             </div>
             
 
-            <div class="col-lg-3 col-6 mb25 order-sm-1">
+            <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'ADMIN'">
                 <div class="card p-4 rounded-5">
                     <div class="symbol mb40">
                         <i class="fa id-color fa-2x fa-tags"></i>
                     </div>
-                    <span class="h1 mb0">12</span>
-                    <span class="text-gray">Coupons</span>
+                    <span class="h1 mb0">{{usersCount}}</span>
+                    <span class="text-gray">total utilisateurs</span>
                 </div>
             </div>
 

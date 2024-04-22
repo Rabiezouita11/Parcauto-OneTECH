@@ -160,5 +160,73 @@ public class AuthenticationController {
         return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
     }
 
+    
+    @PostMapping("/users/sendVerificationCode")
+    public ResponseEntity<MessageResponse> sendVerificationCode(@RequestParam("email") String email, HttpServletRequest request) {
+        Optional<User> userOptional = Optional.ofNullable(userService.findUserByEmail(email));
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("User not found with email: " + email));
+        }
+
+        User user = userOptional.get();
+        String appUrl = request.getScheme() + "://" + request.getServerName() + ":4200";
+
+        // Generate a random verification code
+        String verificationCode = generateVerificationCode();
+
+        // Update user's verification code
+        user.setVerificationCode(verificationCode);
+        userService.save(user);
+
+        // Send verification code to the user's email
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("Parcauto-OneTECH");
+        simpleMailMessage.setTo(user.getEmail());
+        simpleMailMessage.setSubject("Email Verification Code");
+        simpleMailMessage.setText("Your verification code is: " + verificationCode);
+
+        userService.sendEmail(simpleMailMessage);
+
+        return ResponseEntity.ok(new MessageResponse("Verification code sent to your email address"));
+    }
+
+    /**
+     * Generate a random verification code.
+     * @return the generated verification code
+     */
+    private String generateVerificationCode() {
+        int length = 6; // Set the length of the verification code
+        String chars = "0123456789"; // Define the characters to be used in the code
+
+        StringBuilder verificationCode = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * chars.length());
+            verificationCode.append(chars.charAt(index));
+        }
+        return verificationCode.toString();
+    }
+    @PostMapping("/users/verifyCode")
+    public ResponseEntity<MessageResponse> verifyCode(@RequestParam("email") String email, @RequestParam("code") String code) {
+        Optional<User> userOptional = Optional.ofNullable(userService.findUserByEmail(email));
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("User not found with email: " + email));
+        }
+
+        User user = userOptional.get();
+        String verificationCode = user.getVerificationCode();
+
+        if (verificationCode == null || !verificationCode.equals(code)) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Incorrect verification code"));
+        }
+
+        // Update email status to valid
+        user.setEmailVerified(true);
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("Email verification successful"));
+    }
+
 
 }

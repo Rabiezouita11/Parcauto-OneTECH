@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-        this.getConducteursAndChefs();
+    this.getConducteursAndChefs();
 
   }
 
@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
     this.userService.getConducteursAndChefs().subscribe(
       (users: User[]) => {
         this.users = users;
-        console.log( this.users)
+        console.log(this.users)
       },
       (error) => {
         console.error('Error fetching conducteurs and chefs:', error);
@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
       // Reject callback
     });
   }
-  
+
   rejectUser(user: any) {
     this.userService.showConfirmationDialog(user.firstName, () => {
       this.userService.updateUserStatus(user.id, false).subscribe(() => {
@@ -62,5 +62,5 @@ export class UsersComponent implements OnInit {
       // Reject callback
     });
   }
-  
+
 }

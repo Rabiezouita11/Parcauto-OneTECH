@@ -39,7 +39,11 @@ public class User implements UserDetails {
     private String photos;
     @Enumerated(value = EnumType.STRING)
     private Role role;
+    @Column(name = "verification_code")
+    private String verificationCode; // Attribute for code verification
 
+    @Column(name = "email_verified")
+    private boolean emailVerified; // Attribute for email verification status
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;

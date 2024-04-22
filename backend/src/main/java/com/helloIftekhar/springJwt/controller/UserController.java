@@ -1,5 +1,6 @@
 package com.helloIftekhar.springJwt.controller;
 
+import com.helloIftekhar.springJwt.model.Role;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.service.JwtService;
 import com.helloIftekhar.springJwt.service.UserService;
@@ -77,5 +78,22 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PostMapping("/user/role/change")
+    public ResponseEntity<Object> changeUserRole(@RequestParam("userId") Integer userId, @RequestParam("newRole") String newRole) {
+        // Check if user exists
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
 
+        // Update user role
+        try {
+            user.setRole(Role.valueOf(newRole.toUpperCase())); // Assuming role is an enum
+            userService.saveOrUpdateUser(user);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            // Role not found
+            return ResponseEntity.badRequest().body("Invalid role");
+        }
+    }
 }
