@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
   }
 
   acceptUser(user: any) {
-    this.userService.showConfirmationDialog(user.firstName, () => {
+    this.userService.showConfirmationDialogAccepter(user.firstName, () => {
       this.userService.updateUserStatus(user.id, true).subscribe(() => {
         // Update the UI or handle success
         this.ngOnInit();
@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
   }
 
   rejectUser(user: any) {
-    this.userService.showConfirmationDialog(user.firstName, () => {
+    this.userService.showConfirmationDialogRefuser(user.firstName, () => {
       this.userService.updateUserStatus(user.id, false).subscribe(() => {
         this.ngOnInit();
         Swal.fire({

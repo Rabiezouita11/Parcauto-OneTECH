@@ -89,7 +89,7 @@ export class UserService {
         return this.http.put(`${this.baseUrl}/admin/users/${userId}/status?status=${status}`, null, { headers: headers });
       }
 
-      showConfirmationDialog(userFullName: string, acceptCallback: Function, rejectCallback: Function) {
+      showConfirmationDialogAccepter(userFullName: string, acceptCallback: Function, rejectCallback: Function) {
         Swal.fire({
           title: 'Confirmation',
           text: `Êtes-vous sûr d'accepter ${userFullName} ?`,
@@ -107,4 +107,24 @@ export class UserService {
           }
         });
       }
+      showConfirmationDialogRefuser(userFullName: string, acceptCallback: Function, rejectCallback: Function) {
+        Swal.fire({
+          title: 'Confirmation',
+          text: `Êtes-vous sûr de refuser ${userFullName} ?`, // Changed message here
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Accepter',
+          cancelButtonText: 'Annuler'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            acceptCallback();
+          } else {
+            rejectCallback();
+          }
+        });
+      }
+
+
 }
