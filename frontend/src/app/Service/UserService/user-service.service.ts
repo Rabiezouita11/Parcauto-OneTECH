@@ -155,5 +155,8 @@ export class UserService {
             })
           );
       }
-
+      sendVerificationCode(email: string): Observable<any> {
+        const params = new HttpParams().set('email', email);
+        return this.http.post<any>('http://localhost:8080/users/sendVerificationCode', {}, { params });
+    }
 }

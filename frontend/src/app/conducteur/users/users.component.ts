@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 })
 export class UsersComponent implements OnInit {
   users!: User[];
+  loading: boolean = false;
+  loadingUser: number | null = null; // Track which user's action is being processed
 
   constructor(private userService: UserService) { }
 
@@ -32,8 +34,11 @@ export class UsersComponent implements OnInit {
 
   acceptUser(user: any) {
     this.userService.showConfirmationDialogAccepter(user.firstName, () => {
+      this.loadingUser = user.id; // Set loadingUser to indicate which user's action is in progress
+      this.loading = true;
       this.userService.updateUserStatus(user.id, true).subscribe(() => {
-        // Update the UI or handle success
+        this.loading = false;
+        this.loadingUser = null; // Reset loadingUser when request is successful
         this.ngOnInit();
         Swal.fire({
           icon: 'success',
@@ -46,10 +51,14 @@ export class UsersComponent implements OnInit {
       // Reject callback
     });
   }
-
+  
   rejectUser(user: any) {
     this.userService.showConfirmationDialogRefuser(user.firstName, () => {
+      this.loadingUser = user.id; // Set loadingUser to indicate which user's action is in progress
+      this.loading = true;
       this.userService.updateUserStatus(user.id, false).subscribe(() => {
+        this.loading = false;
+        this.loadingUser = null; // Reset loadingUser when request is successful
         this.ngOnInit();
         Swal.fire({
           icon: 'success',
@@ -62,6 +71,7 @@ export class UsersComponent implements OnInit {
       // Reject callback
     });
   }
+
   changeRole(userId: number, newRole: string) {
     console.log(userId);
     const user = this.users.find(u => u.id === userId);

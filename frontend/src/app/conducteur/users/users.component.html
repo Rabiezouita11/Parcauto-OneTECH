@@ -98,3 +98,8 @@
   </table>
   <p class="text-center" *ngIf="!users || users.length === 0">Aucun utilisateur trouvé</p>
 </div>
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

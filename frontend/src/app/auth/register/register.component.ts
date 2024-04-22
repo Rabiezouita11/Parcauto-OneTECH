@@ -1,25 +1,25 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {Router} from '@angular/router';
-import {UserService} from 'src/app/Service/UserService/user-service.service';
-import {ScriptStyleLoaderService} from 'src/app/Service/script-style-loader/script-style-loader.service';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/Service/UserService/user-service.service';
+import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
 import { ScriptAuthService } from 'src/app/Service/scriptAuth/script-auth.service';
 import Swal from 'sweetalert2';
 
-@Component({selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css']})
+@Component({ selector: 'app-register', templateUrl: './register.component.html', styleUrls: ['./register.component.css'] })
 export class RegisterComponent implements OnInit {
     isLoginPage!: boolean;
 
-    user : any = {};
-    selectedImage : File | null = null; // Variable to store selected image file
+    user: any = {};
+    selectedImage: File | null = null; // Variable to store selected image file
 
-    constructor(private router : Router, private scriptStyleLoaderService : ScriptAuthService, private userService : UserService) {}
+    constructor(private router: Router, private scriptStyleLoaderService: ScriptAuthService, private userService: UserService) { }
 
     ngOnInit(): void {
-       
-        }
-        
-    
-    
+
+    }
+
+
+
 
 
     registerUser(): void {
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
         if (this.selectedImage) {
             formData.append('image', this.selectedImage, this.selectedImage.name);
         }
-        
+
         this.userService.register(formData).subscribe(
             (response) => {
                 console.log('Registration successful:', response.message);
@@ -52,6 +52,10 @@ export class RegisterComponent implements OnInit {
                         confirmButtonText: 'OK'
                     });
                 } else {
+                    console.log(this.user.email)
+                    // Registration successful, send verification code
+                    this.sendVerificationCode(this.user.email);
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Registration Successful',
@@ -60,7 +64,6 @@ export class RegisterComponent implements OnInit {
                     }).then(() => {
                         this.router.navigateByUrl('/auth/login');
                     });
-                    
                 }
             },
             (error) => {
@@ -74,7 +77,31 @@ export class RegisterComponent implements OnInit {
             }
         );
     }
-    
+
+    sendVerificationCode(email: string): void {
+        this.userService.sendVerificationCode(email).subscribe(
+            (response) => {
+                console.log('Verification code sent:', response.message);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Verification Code Sent',
+                    text: response.message,
+                    confirmButtonText: 'OK'
+                });
+            },
+            (error) => {
+                console.error('Sending verification code failed:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Send Verification Code',
+                    text: 'Failed to send verification code. Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        );
+    }
+
+
 
     onImageSelected(event: any): void {
         const file = event.target.files[0];
@@ -92,12 +119,12 @@ export class RegisterComponent implements OnInit {
                 });
                 return;
             }
-            
+
             // Set the selected image
             this.selectedImage = file;
         }
     }
     resetForm(form: any): void {
         form.resetForm();
-      }
+    }
 }
