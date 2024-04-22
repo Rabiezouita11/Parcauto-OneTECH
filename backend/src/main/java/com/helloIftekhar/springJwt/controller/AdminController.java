@@ -90,36 +90,43 @@ public class AdminController {
             user.setStatus(status);
             userService.saveOrUpdateUser(user);
 
+            // Send email notification
+            sendEmail(user.getEmail(), status);
+
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @Async
+    public void sendEmail(String userEmail, Boolean status) {
+        try {
             MimeMessage mail = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mail, true, "UTF-8");
 
             helper.setFrom("Parcauto-OneTECH");
-            helper.setTo(user.getEmail());
+            helper.setTo(userEmail);
             helper.setSubject("Account Status Update");
 
             String content;
-            if (status) { // If status is true, the account is granted
+            if (status) {
                 content = "<html><body>"
                         + "<h2 style='color: green;'>Votre compte a été accordé l'accès.</h2>"
                         + "<p>Cliquez <a href='http://localhost:4200/dashboard'>ici</a> pour accéder à votre compte.</p>"
                         + "</body></html>";
-            } else { // If status is false, the account is rejected
+            } else {
                 content = "<html><body>"
                         + "<h2 style='color: red;'>L'accès à votre compte a été refusé.</h2>"
                         + "</body></html>";
             }
 
             helper.setText(content, true);
-
-            sendEmail(mail);
-
-            return ResponseEntity.ok(user);
+            mailSender.send(mail);
         } catch (Exception e) {
-            // Log the exception or handle it as needed
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace(); // Log the exception
         }
     }
-
 
 
 }

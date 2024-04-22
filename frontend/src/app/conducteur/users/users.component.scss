@@ -1,0 +1,17 @@
+$table-border-color: #dee2e6;
+$table-bg-color: #f8f9fa;
+
+.table-bordered {
+  border: 1px solid $table-border-color;
+
+  th, td {
+    border: 1px solid $table-border-color;
+    padding: 8px;
+  }
+}
+
+.table-light {
+  th {
+    background-color: $table-bg-color;
+  }
+}

@@ -81,6 +81,9 @@ public class UserController {
     @PostMapping("/user/role/change")
     public ResponseEntity<Object> changeUserRole(@RequestParam("userId") Integer userId, @RequestParam("newRole") String newRole) {
         // Check if user exists
+      System.out.println("userIduserIduserIduserId"+userId);
+        System.out.println("newRolenewRolenewRolenewRole"+newRole);
+
         User user = userService.getUserById(userId);
         if (user == null) {
             return ResponseEntity.notFound().build();

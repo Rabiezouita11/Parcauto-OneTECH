@@ -1,8 +1,8 @@
 // user.service.ts
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 import {User} from 'src/app/model/user';
 
 import Swal from 'sweetalert2';
@@ -125,6 +125,35 @@ export class UserService {
           }
         });
       }
-
+      changeUserRole(userId: number, newRole: string): Observable<any> {
+        const token = localStorage.getItem('jwtToken');
+    
+        // Check if token exists
+        if (!token) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Token Error',
+            text: 'Token is not available',
+            confirmButtonText: 'OK'
+          });
+          return throwError('Token is not available');
+        }
+    
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${token}`
+        });
+    
+        const params = new HttpParams()
+          .set('userId', userId.toString())
+          .set('newRole', newRole);
+    
+        return this.http.post<any>('http://localhost:8080/user/role/change', {}, { headers, params })
+          .pipe(
+            catchError(error => {
+              console.error('Error changing user role:', error);
+              return throwError(error);
+            })
+          );
+      }
 
 }
