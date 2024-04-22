@@ -1,1 +1,28 @@
-<p>verifcation-email works!</p>
+<div class="fxt-main-form">
+    <div class="fxt-inner-wrap fxt-opacity fxt-transition-delay-13">
+        <h2 class="fxt-page-title">Email Verification</h2>
+        <p class="fxt-description">Enter the verification code sent to your email</p>
+        <form (ngSubmit)="verficationEmail(registerForm)" #registerForm="ngForm">
+            <div class="form-group">
+                <label for="verificationCode" class="fxt-label">Verification Code</label>
+                <input type="text" id="verificationCode" class="form-control" name="verificationCode" placeholder="Enter verification code"
+                    required [(ngModel)]="verificationCode" #verificationCodeInput="ngModel">
+                <div *ngIf="verificationCodeInput && verificationCodeInput.invalid" class="text-danger">
+                    <div *ngIf="verificationCodeInput.errors && verificationCodeInput.errors['required']">Verification code is required.</div>
+                </div>
+            </div>
+            <input type="hidden" name="token" [value]="token"> <!-- Hidden input field for token -->
+            <div class="form-group mb-3">
+                <button type="submit" class="fxt-btn-fill" [disabled]="!registerForm.valid">Verify Email</button>
+            </div>
+            <div class="form-group mb-3">
+                <button type="button" class="fxt-btn-fill ml-3" (click)="resetForm(registerForm)">Reset</button>
+            </div>
+            <div id="fxt-login-option" class="fxt-login-option">
+                <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/login"
+                        class="fxt-switcher-text">Sign In</a></div>
+                        
+            </div>
+        </form>
+    </div>
+</div>

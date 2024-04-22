@@ -43,6 +43,8 @@ public class UserController {
             userInfo.put("id", String.valueOf(user.getId()));
             userInfo.put("email", String.valueOf(user.getEmail()));
             userInfo.put("status", String.valueOf(user.getStatus())); // Get the status using the getter method
+            userInfo.put("emailVerified", String.valueOf(user.isEmailVerified()));
+
 
             userInfo.put("role", user.getRole().toString()); // Assuming role is an enum
 

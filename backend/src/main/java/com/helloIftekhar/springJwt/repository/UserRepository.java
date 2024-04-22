@@ -14,5 +14,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByResetToken(String resetToken); // New method to find user by reset token
     List<User> findByRoleIn(List<Role> roles);
     boolean existsByUsername(String username);
+    Optional<User> findByResetTokenEmail(String resetTokenEmail);
 
 }

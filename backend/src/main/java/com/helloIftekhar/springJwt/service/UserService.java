@@ -85,5 +85,9 @@ public class UserService {
     public User saveOrUpdateUser(User user) {
         return userRepository.save(user);
     }
+    public User findUserByResetTokenEmail(String resetToken) {
+        Optional<User> userOptional = userRepository.findByResetTokenEmail(resetToken);
+        return userOptional.orElse(null);
+    }
 
 }

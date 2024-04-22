@@ -4,7 +4,9 @@ import com.helloIftekhar.springJwt.model.AuthenticationResponse;
 import com.helloIftekhar.springJwt.model.MessageResponse;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.service.AuthenticationService;
+import com.helloIftekhar.springJwt.service.JwtService;
 import com.helloIftekhar.springJwt.service.UserService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +17,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,10 +24,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
+import java.security.Key;
+import java.util.Date;
 @CrossOrigin(origins = "http://localhost:4200") // Add this annotation to allow requests from specific origin
 
 @RestController
@@ -38,6 +44,8 @@ public class AuthenticationController {
     @Autowired
     PasswordEncoder passwordEncoder; // Add this import
     private final AuthenticationService authService;
+    @Autowired
+    private JwtService jwtService;
 
     public AuthenticationController(UserService userService, AuthenticationService authService) {
         this.userService = userService;
@@ -160,7 +168,7 @@ public class AuthenticationController {
         return diff.toMinutes() >= EXPIRE_TOKEN_AFTER_MINUTES;
     }
 
-    
+
     @PostMapping("/users/sendVerificationCode")
     public ResponseEntity<MessageResponse> sendVerificationCode(@RequestParam("email") String email, HttpServletRequest request) {
         Optional<User> userOptional = Optional.ofNullable(userService.findUserByEmail(email));
@@ -175,8 +183,12 @@ public class AuthenticationController {
         // Generate a random verification code
         String verificationCode = generateVerificationCode();
 
-        // Update user's verification code
+        // Generate token using username
+        String token = generateTokenForUsername(user.getUsername());
+
+        // Update user's verification code and reset token
         user.setVerificationCode(verificationCode);
+        user.setResetTokenEmail(token);
         userService.save(user);
 
         // Send verification code to the user's email
@@ -184,13 +196,33 @@ public class AuthenticationController {
         simpleMailMessage.setFrom("Parcauto-OneTECH");
         simpleMailMessage.setTo(user.getEmail());
         simpleMailMessage.setSubject("Email Verification Code");
-        simpleMailMessage.setText("Your verification code is: " + verificationCode);
+        simpleMailMessage.setText("Your verification code is: " + verificationCode +
+                "\n\nTo verify your email, please click on the following link:\n" +
+                appUrl + "/auth/verification?token=" + token);
 
         userService.sendEmail(simpleMailMessage);
 
         return ResponseEntity.ok(new MessageResponse("Verification code sent to your email address"));
     }
 
+    private String generateTokenForUsername(String username) {
+        // Your token generation logic here
+        // For example, using JWT
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+        long expirationTimeInMs = 3600000; // 1 hour expiration time
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expirationTimeInMs);
+
+        String token = Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(expiryDate)
+                .signWith(key)
+                .compact();
+
+        return token;
+    }
     /**
      * Generate a random verification code.
      * @return the generated verification code
@@ -207,22 +239,30 @@ public class AuthenticationController {
         return verificationCode.toString();
     }
     @PostMapping("/users/verifyCode")
-    public ResponseEntity<MessageResponse> verifyCode(@RequestParam("email") String email, @RequestParam("code") String code) {
-        Optional<User> userOptional = Optional.ofNullable(userService.findUserByEmail(email));
+    public ResponseEntity<MessageResponse> verifyCode(@RequestParam("token") String token,
+                                                      @RequestParam("code") String code) {
+        System.out.println("tokentokentokentokentoken"+token);
+        Optional<User> userOptional = Optional.ofNullable(userService.findUserByResetTokenEmail(token));
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("User not found with email: " + email));
+            return ResponseEntity.badRequest().body(new MessageResponse("User not found with reset token: " + token));
         }
 
         User user = userOptional.get();
         String verificationCode = user.getVerificationCode();
 
-        if (verificationCode == null || !verificationCode.equals(code)) {
+        if (verificationCode == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Verification code does not exist"));
+        }
+
+        if (!verificationCode.equals(code)) {
             return ResponseEntity.badRequest().body(new MessageResponse("Incorrect verification code"));
         }
 
         // Update email status to valid
         user.setEmailVerified(true);
+        user.setResetTokenEmail(null);
+        user.setVerificationCode(null);
         userService.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Email verification successful"));
@@ -230,3 +270,7 @@ public class AuthenticationController {
 
 
 }
+
+
+
+

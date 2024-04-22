@@ -20,10 +20,10 @@ export class GuardGuard implements CanActivate {
         map((data) => {
           const role = data.role; // Assuming the response contains a 'role' field
           const allowedRoles = ['CONDUCTEUR', 'ADMIN', 'CHEF_DEPARTEMENT'];
-          const canActivate = allowedRoles.includes(role) && data.status === 'true';
+          const canActivate = allowedRoles.includes(role) && data.status === 'true' && data.emailVerified === 'true';
           
           if (canActivate) {
-          
+            return true;
           } else {
             if (!allowedRoles.includes(role)) {
               Swal.fire({
@@ -43,11 +43,16 @@ export class GuardGuard implements CanActivate {
                 title: 'Account Status',
                 text: 'Your account is currently under review. You will be notified via email once it is processed.'
               });
+            } else if (data.emailVerified === 'false') {
+              Swal.fire({
+                icon: 'info',
+                title: 'Email Not Verified',
+                text: 'Please check your email for verification instructions.'
+              });
             }
             this.router.navigate(['/auth/login']); // Redirect to login page
+            return false;
           }
-          
-          return canActivate;
         }),
         catchError((error) => {
           console.error('Error fetching user information:', error);

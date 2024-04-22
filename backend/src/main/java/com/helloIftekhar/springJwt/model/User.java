@@ -33,6 +33,7 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
     private String resetToken;
+    private String resetTokenEmail;
     private LocalDateTime dateToken;
     @Column(name = "password")
     private String password;

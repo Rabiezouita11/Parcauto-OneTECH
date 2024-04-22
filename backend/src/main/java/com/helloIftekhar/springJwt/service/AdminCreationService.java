@@ -36,6 +36,7 @@ public class AdminCreationService {
             admin.setFirstName("admin");
             admin.setLastName("admin");
             admin.setEmail("admin@admin.com");
+            admin.setEmailVerified(true);
             admin.setPassword(passwordEncoder.encode("admin"));
             admin.setRole(Role.valueOf("ADMIN"));
             userRepository.save(admin);

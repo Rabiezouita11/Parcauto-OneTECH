@@ -159,4 +159,7 @@ export class UserService {
         const params = new HttpParams().set('email', email);
         return this.http.post<any>('http://localhost:8080/users/sendVerificationCode', {}, { params });
     }
+    verifyCode(code: string, token: string): Observable<any> {
+        return this.http.post<any>(`${this.baseUrl}/users/verifyCode?token=${token}&code=${code}`, null);
+    }
 }

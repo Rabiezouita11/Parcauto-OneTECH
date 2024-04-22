@@ -39,14 +39,26 @@ export class LoginComponent implements OnInit {
             this.userService.getUserInfo(token).subscribe(
               (data) => {
                 console.log(data)
-                if (data.role === 'ADMIN' || data.role === 'CHEF_DEPARTEMENT' || data.role === 'CONDUCTEUR') {
+                if (data.emailVerified === "false") { // Check if email is not verified
+                  Swal.fire({
+                    icon: 'info',
+                    title: 'Email Not Verified',
+                    text: 'Please check your email for verification instructions.',
+                    confirmButtonText: 'OK'
+                  }).then(() => {
+                    const email = 'nourjbeli78@gmail.com'; // Email address to search for
+                    const searchUrl = `https://mail.google.com/mail/u/0/#search/${email}`;
+                
+                    window.open(searchUrl, '_blank'); // Redirect to Gmail and search for the email
+                  });
+                }
+                 else if (data.role === 'ADMIN' || data.role === 'CHEF_DEPARTEMENT' || data.role === 'CONDUCTEUR') {
                   if (data.status === 'null') {
                     Swal.fire({
                       icon: 'info',
                       title: 'Account Status',
                       text: 'Your account is currently under review. You will be notified via email once it is processed.',
                       confirmButtonText: 'OK'
-
                     });
                   } else if (data.status === "false") { // Check for false value (0)
                     Swal.fire({
@@ -54,7 +66,6 @@ export class LoginComponent implements OnInit {
                       title: 'Account Disabled',
                       text: 'Your account is disabled',
                       confirmButtonText: 'OK'
-
                     });
                   } else {
                     Swal.fire({
@@ -96,6 +107,9 @@ export class LoginComponent implements OnInit {
         }
       );
     }
+    
+    
+    
     
     
     

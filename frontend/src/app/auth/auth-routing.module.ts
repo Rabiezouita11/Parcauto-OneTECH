@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
+import { VerifcationEmailComponent } from './verifcation-email/verifcation-email.component';
 
 const routes: Routes = [
   
@@ -11,7 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'frogetpassword', component: ForgetPasswordComponent },
   { path: 'resetpassword', component: ResetPasswordComponent},
-
+  { path: 'verification', component: VerifcationEmailComponent }, // Add this route
 ];
 
 @NgModule({
