@@ -31,6 +31,8 @@ import java.util.UUID;
 
 @RestController
 public class AuthenticationController {
+
+
     private final UserService userService; // Inject the UserService
     private static final long EXPIRE_TOKEN_AFTER_MINUTES = 30;
     @Autowired

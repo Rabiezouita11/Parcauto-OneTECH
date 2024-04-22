@@ -14,6 +14,7 @@ import { catchError } from 'rxjs/operators';
   
     getAllVehicles(): Observable<Vehicle[]> {
       const token = localStorage.getItem('jwtToken');
+      console.log(token)
       if (!token) {
         return throwError('Token is not available'); // Throw an error if token is not available
       }

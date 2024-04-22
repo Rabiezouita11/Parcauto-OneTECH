@@ -1,0 +1,60 @@
+<div class="card p-4 rounded-5 mb25">
+  <table *ngIf="users && users.length > 0" class="table de-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Statut</th>
+        <th>Nom d'utilisateur</th>
+        <th>Rôle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span [ngClass]="{
+            'text-success': user.status === true,
+            'text-danger': user.status === false,
+            'text-muted': user.status === null
+          }">
+            <ng-container *ngIf="user.status !== null">
+              <i class="fa fa-check-circle" *ngIf="user.status"></i>
+              <i class="fa fa-times-circle" *ngIf="!user.status"></i>
+            </ng-container>
+            <i class="fa fa-question-circle" *ngIf="user.status === null"></i>
+          </span>
+        </td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <ng-container>
+            <button class="btn btn-success" title="Accepter" (click)="acceptUser(user)">
+              <i class="fa fa-check"></i> 
+            </button>
+            <button class="btn btn-danger" title="Rejeter" (click)="rejectUser(user)">
+              <i class="fa fa-times"></i> 
+            </button>
+          </ng-container>
+          <ng-container *ngIf="user.status === false;">
+           
+            <span class="text-danger">Accès refusé</span>
+
+          </ng-container>
+    
+          <ng-container *ngIf="user.status === true">
+            <span class="text-success">Accès accordé</span>
+          </ng-container>
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-center" *ngIf="!users || users.length === 0">Aucun utilisateur trouvé</p>
+</div>

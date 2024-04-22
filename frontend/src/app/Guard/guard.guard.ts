@@ -3,6 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -19,18 +20,43 @@ export class GuardGuard implements CanActivate {
         map((data) => {
           const role = data.role; // Assuming the response contains a 'role' field
           const allowedRoles = ['CONDUCTEUR', 'ADMIN', 'CHEF_DEPARTEMENT'];
-          const canActivate = allowedRoles.includes(role);
+          const canActivate = allowedRoles.includes(role) && data.status === 'true';
           
-          if (!canActivate) {
-            console.error('User does not have permission to access this page');
-            this.router.navigate(['/auth/login']); // Redirect to login page if user does not have permission
+          if (canActivate) {
+          
+          } else {
+            if (!allowedRoles.includes(role)) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'User does not have permission to access this page'
+              });
+            } else if (data.status === 'false') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Account Disabled',
+                text: 'Your account is disabled'
+              });
+            } else if (data.status === 'null') {
+              Swal.fire({
+                icon: 'info',
+                title: 'Account Status',
+                text: 'Your account is currently under review. You will be notified via email once it is processed.'
+              });
+            }
+            this.router.navigate(['/auth/login']); // Redirect to login page
           }
           
           return canActivate;
         }),
         catchError((error) => {
           console.error('Error fetching user information:', error);
-          this.router.navigate(['/auth/login']); // Redirect to login page if there's an error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while fetching user information'
+          });
+          this.router.navigate(['/auth/login']); // Redirect to login page
           return of(false);
         })
       );

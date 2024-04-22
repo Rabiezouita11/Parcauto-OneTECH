@@ -1,8 +1,11 @@
 package com.helloIftekhar.springJwt.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "token")
 public class Token {
@@ -17,37 +20,21 @@ public class Token {
 
     @Column(name = "is_logged_out")
     private boolean loggedOut;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Integer getId() {
-        return id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getToken() {
-        return token;
     }
 
     public void setToken(String token) {
         this.token = token;
     }
 
-    public boolean isLoggedOut() {
-        return loggedOut;
-    }
-
     public void setLoggedOut(boolean loggedOut) {
         this.loggedOut = loggedOut;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void setUser(User user) {

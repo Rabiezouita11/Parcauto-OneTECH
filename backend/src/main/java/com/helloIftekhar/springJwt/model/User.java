@@ -16,8 +16,7 @@ import lombok.Setter;
 @Setter
 public class User implements UserDetails {
 
-    @Setter
-    @Getter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,7 +28,8 @@ public class User implements UserDetails {
     private String  email;
     @Column(name = "last_name")
     private String lastName;
-
+    @Column(name = "status", columnDefinition = "BOOLEAN DEFAULT NULL")
+    private Boolean status; // Default null
     @Column(name = "username")
     private String username;
     private String resetToken;
@@ -66,11 +66,19 @@ public class User implements UserDetails {
         return true;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.username;
+	}
 }

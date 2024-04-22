@@ -55,11 +55,12 @@ export class RegisterComponent implements OnInit {
                     Swal.fire({
                         icon: 'success',
                         title: 'Registration Successful',
-                        text: 'You have successfully registered.',
+                        text: 'You have successfully registered. Your account will be verified by the admin. You will receive an email notification once your account is verified.',
                         confirmButtonText: 'OK'
                     }).then(() => {
                         this.router.navigateByUrl('/auth/login');
                     });
+                    
                 }
             },
             (error) => {
@@ -96,5 +97,7 @@ export class RegisterComponent implements OnInit {
             this.selectedImage = file;
         }
     }
-    
+    resetForm(form: any): void {
+        form.resetForm();
+      }
 }

@@ -38,6 +38,8 @@ export class VehiculeComponent implements OnInit {
   }
 
   getAllVehicles(): void {
+
+    
     this.vehicleService.getAllVehicles()
       .subscribe(
         vehicles => {

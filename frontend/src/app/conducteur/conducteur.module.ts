@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { VehiculeUpdateModalComponent } from './vehicule/vehicule-update-modal/vehicule-update-modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FooterComponent,
     VehiculeComponent,
     VehicleDetailsModalComponent,
-    VehiculeUpdateModalComponent
+    VehiculeUpdateModalComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,

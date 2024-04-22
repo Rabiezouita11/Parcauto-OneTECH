@@ -3,7 +3,6 @@ package com.helloIftekhar.springJwt.service;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.repository.UserRepository;
 import com.helloIftekhar.springJwt.utils.FileUploadUtil;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Async;
@@ -13,11 +12,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Transactional
+
 
 public class UserService {
     @Autowired
@@ -73,6 +73,17 @@ public class UserService {
         } else {
             // Handle the case where the user with the given ID is not found
         }
+    }
+    public User getUserById(Integer id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
+    }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User saveOrUpdateUser(User user) {
+        return userRepository.save(user);
     }
 
 }
