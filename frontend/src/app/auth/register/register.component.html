@@ -55,14 +55,12 @@
             </div>
             <div class="form-group">
                 <label for="role" class="fxt-label">Role</label>
-                <select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel" required>
-                    <option value="" disabled>Select Role</option>
-                    <option value="CONDUCTEUR">Conducteur</option>
-                    <option value="CHEF_DEPARTEMENT">Chef departement</option>
-
-                </select>
-                <div *ngIf="role.errors && role.errors['required']" class="text-danger">Role is required.
-                </div>
+                <mat-select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel" required>
+                    <mat-option value="" disabled>Select Role</mat-option>
+                    <mat-option value="CONDUCTEUR">Conducteur</mat-option>
+                    <mat-option value="CHEF_DEPARTEMENT">Chef departement</mat-option>
+                </mat-select>
+                <div *ngIf="role.errors && role.errors['required']" class="text-danger">Role is required.</div>
             </div>
 
             <div class="form-group mb-3">

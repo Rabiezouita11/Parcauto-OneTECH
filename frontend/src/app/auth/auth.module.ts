@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './resetPassword/reset-password/reset-password.component';
 import { AuthComponentComponent } from './authComponent/auth-component/auth-component.component';
 import { VerifcationEmailComponent } from './verifcation-email/verifcation-email.component';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { VerifcationEmailComponent } from './verifcation-email/verifcation-email
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule ,
-    FormsModule 
+    FormsModule,
+    MatSelectModule,
+
 
   ]
   
