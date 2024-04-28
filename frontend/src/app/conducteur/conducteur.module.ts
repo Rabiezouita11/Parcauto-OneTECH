@@ -17,6 +17,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { VehiculeUpdateModalComponent } from './vehicule/vehicule-update-modal/vehicule-update-modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { UsersComponent } from './users/users.component';
+import { CalenderComponent } from './calender/calender.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -29,7 +32,8 @@ import { UsersComponent } from './users/users.component';
     VehiculeComponent,
     VehicleDetailsModalComponent,
     VehiculeUpdateModalComponent,
-    UsersComponent
+    UsersComponent,
+    CalenderComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,9 @@ import { UsersComponent } from './users/users.component';
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule, // Add MatFormFieldModule here
-    
+    FullCalendarModule, // register FullCalendar with your app
+  
+
 
   ]
 })

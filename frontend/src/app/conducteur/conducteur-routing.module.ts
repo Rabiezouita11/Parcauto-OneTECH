@@ -5,6 +5,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {GuardAdminGuard} from '../Guard/GuardAdmin/guard-admin.guard';
 import {VehiculeComponent} from './vehicule/vehicule.component';
 import { UsersComponent } from './users/users.component';
+import { CalenderComponent } from './calender/calender.component';
 
 const routes: Routes = [
     {
@@ -34,6 +35,14 @@ const routes: Routes = [
         path: 'users',
         component: UsersComponent,
         canActivate: [GuardAdminGuard], // Apply AuthGuard here
+        data: {
+            title: 'users'
+        }
+    },
+    {
+        path: 'calender',
+        component: CalenderComponent,
+        // canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {
             title: 'users'
         }
