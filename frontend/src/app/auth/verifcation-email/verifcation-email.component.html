@@ -1,28 +1,29 @@
 <div class="fxt-main-form">
     <div class="fxt-inner-wrap fxt-opacity fxt-transition-delay-13">
-        <h2 class="fxt-page-title">Email Verification</h2>
-        <p class="fxt-description">Enter the verification code sent to your email</p>
+        <h2 class="fxt-page-title">Vérification par e-mail</h2>
+        <p class="fxt-description">Entrez le code de vérification envoyé à votre e-mail</p>
         <form (ngSubmit)="verficationEmail(registerForm)" #registerForm="ngForm">
             <div class="form-group">
-                <label for="verificationCode" class="fxt-label">Verification Code</label>
-                <input type="text" id="verificationCode" class="form-control" name="verificationCode" placeholder="Enter verification code"
+                <label for="verificationCode" class="fxt-label">Code de vérification</label>
+                <input type="text" id="verificationCode" class="form-control" name="verificationCode" placeholder="Entrez le code de vérification"
                     required [(ngModel)]="verificationCode" #verificationCodeInput="ngModel">
                 <div *ngIf="verificationCodeInput && verificationCodeInput.invalid" class="text-danger">
-                    <div *ngIf="verificationCodeInput.errors && verificationCodeInput.errors['required']">Verification code is required.</div>
+                    <div *ngIf="verificationCodeInput.errors && verificationCodeInput.errors['required']">Le code de vérification est requis.</div>
                 </div>
             </div>
-            <input type="hidden" name="token" [value]="token"> <!-- Hidden input field for token -->
+            <input type="hidden" name="token" [value]="token"> <!-- Champ de saisie caché pour le jeton -->
             <div class="form-group mb-3">
-                <button type="submit" class="fxt-btn-fill" [disabled]="!registerForm.valid">Verify Email</button>
+                <button type="submit" class="fxt-btn-fill" [disabled]="!registerForm.valid">Vérifier l'e-mail</button>
             </div>
             <div class="form-group mb-3">
-                <button type="button" class="fxt-btn-fill ml-3" (click)="resetForm(registerForm)">Reset</button>
+                <button type="button" class="fxt-btn-fill ml-3" (click)="resetForm(registerForm)">Réinitialiser</button>
             </div>
             <div id="fxt-login-option" class="fxt-login-option">
-                <div class="fxt-switcher-description">Don't have an account?<a routerLink="/auth/login"
-                        class="fxt-switcher-text">Sign In</a></div>
+                <div class="fxt-switcher-description">Vous n'avez pas de compte ? <a routerLink="/auth/login"
+                        class="fxt-switcher-text">Se connecter</a></div>
                         
             </div>
         </form>
     </div>
 </div>
+
