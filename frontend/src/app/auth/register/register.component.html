@@ -1,66 +1,65 @@
 <div class="fxt-main-form">
     <div class="fxt-inner-wrap fxt-opacity fxt-transition-delay-13">
-        <h2 class="fxt-page-title">S'inscrire</h2>
+        <h2 class="fxt-page-title">Inscription</h2>
 
         <form (ngSubmit)="registerUser()" #registerForm="ngForm">
             <div class="form-group">
-                <label for="firstName" class="fxt-label">Nom d'utilisateur</label>
+                <label for="firstName" class="fxt-label">Prénom</label>
                 <input type="text" id="firstName" class="form-control" name="firstName"
-                    placeholder="Enter your first name" required [(ngModel)]="user.firstName" #firstName="ngModel">
+                    placeholder="Entrez votre prénom" required [(ngModel)]="user.firstName" #firstName="ngModel">
                 <div *ngIf="firstName && firstName.invalid" class="text-danger">
-                    <div *ngIf="firstName.errors && firstName.errors['required']">Nom d'utilisateur est requis.
-                    </div>
+                    <div *ngIf="firstName.errors && firstName.errors['required']">Le prénom est requis.</div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="lastName" class="fxt-label">Last Name</label>
-                <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Entre votre prénom"
+                <label for="lastName" class="fxt-label">Nom de famille</label>
+                <input type="text" id="lastName" class="form-control" name="lastName" placeholder="Entrez votre nom de famille"
                     required [(ngModel)]="user.lastName" #lastName="ngModel">
                 <div *ngIf="lastName && lastName.invalid" class="text-danger">
-                    <div *ngIf="lastName.errors && lastName.errors['required']">Prénom est requis.</div>
+                    <div *ngIf="lastName.errors && lastName.errors['required']">Le nom de famille est requis.</div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="image" class="fxt-label">Photo profil</label>
+                <label for="image" class="fxt-label">Photo de profil</label>
                 <input type="file" id="image" class="form-control" name="image" accept="image/*"
                     (change)="onImageSelected($event)">
             </div>
             <div class="form-group">
-                <label for="email" class="fxt-label">Email</label>
-                <input type="email" id="email" class="form-control" name="email" placeholder="Enter votre email" required
+                <label for="email" class="fxt-label">E-mail</label>
+                <input type="email" id="email" class="form-control" name="email" placeholder="Entrez votre adresse e-mail" required
                     [(ngModel)]="user.email" #email="ngModel">
                 <div *ngIf="email && email.invalid" class="text-danger">
-                    <div *ngIf="email.errors && email.errors['required']">Email est requis.</div>
-                    <div *ngIf="email.errors && email.errors['email']">forme invalide .</div>
+                    <div *ngIf="email.errors && email.errors['required']">L'e-mail est requis.</div>
+                    <div *ngIf="email.errors && email.errors['email']">Format invalide.</div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="username" class="fxt-label">Nom d'utilisateur</label>
-                <input type="text" id="username" class="form-control" name="username" placeholder="Enter votre nom"
+                <input type="text" id="username" class="form-control" name="username" placeholder="Entrez votre nom d'utilisateur"
                     required [(ngModel)]="user.username" #username="ngModel">
                 <div *ngIf="username && username.invalid " class="text-danger">
-                    <div *ngIf="username.errors && username.errors['required']">Nom d'utilisateur est requis.</div>
+                    <div *ngIf="username.errors && username.errors['required']">Le nom d'utilisateur est requis.</div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="password" class="fxt-label">mot de passe </label>
+                <label for="password" class="fxt-label">Mot de passe</label>
                 <input id="password" type="password" class="form-control" name="password"
-                    placeholder="Enter your password" required [(ngModel)]="user.password" #password="ngModel">
+                    placeholder="Entrez votre mot de passe" required [(ngModel)]="user.password" #password="ngModel">
                 <div *ngIf="password && password.invalid" class="text-danger">
-                    <div *ngIf="password.errors && password.errors['required']">mot de passe est requis.</div>
+                    <div *ngIf="password.errors && password.errors['required']">Le mot de passe est requis.</div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="role" class="fxt-label">Role</label>
+                <label for="role" class="fxt-label">Rôle</label>
                 <mat-select id="role" class="form-control" name="role" [(ngModel)]="user.role" #role="ngModel" required>
-                    <mat-option value="" disabled>Sélectionner votre rôle</mat-option>
+                    <mat-option value="" disabled>Sélectionnez votre rôle</mat-option>
                     <mat-option value="CONDUCTEUR">Conducteur</mat-option>
-                    <mat-option value="CHEF_DEPARTEMENT">Chef departement</mat-option>
+                    <mat-option value="CHEF_DEPARTEMENT">Chef de département</mat-option>
                 </mat-select>
-                <div *ngIf="role.errors && role.errors['required']" class="text-danger">Rôle est requis.</div>
+                <div *ngIf="role.errors && role.errors['required']" class="text-danger">Le rôle est requis.</div>
             </div>
 
             <div class="form-group mb-3">
@@ -72,8 +71,8 @@
 
             </div>
             <div id="fxt-login-option" class="fxt-login-option">
-                <div class="fxt-switcher-description">vous n'avez pas de compte?<a routerLink="/auth/login"
-                        class="fxt-switcher-text">S'inscrire</a></div>
+                <div class="fxt-switcher-description">Vous n'avez pas de compte ? <a routerLink="/auth/login"
+                        class="fxt-switcher-text">Connectez-vous</a></div>
                         
             </div>
 
