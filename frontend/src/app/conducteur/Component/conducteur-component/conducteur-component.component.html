@@ -48,8 +48,8 @@
                                                 <li ><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i>My Profile</a></li>
                                                 <li *ngIf="role === 'ADMIN'"><a routerLink="/Vehicule" routerLinkActive="active"><i class="fa fa-car"></i>Vehicule</a></li>
                                                 <li *ngIf="role === 'ADMIN'"><a routerLink="/users" routerLinkActive="active"><i class="fa fa-user"></i>Users</a></li>
+                                                <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calender" routerLinkActive="active"><i class="fa fa-calendar"></i>calender</a></li>
 
-                                                <li><a ><i class="fa fa-calendar"></i>My Orders</a></li>
                                  
                                     <li>
                                         <a  (click)="logout()">

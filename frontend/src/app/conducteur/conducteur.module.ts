@@ -20,6 +20,7 @@ import { UsersComponent } from './users/users.component';
 import { CalenderComponent } from './calender/calender.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatButtonModule,
     MatFormFieldModule, // Add MatFormFieldModule here
     FullCalendarModule, // register FullCalendar with your app
-  
+    MatSelectModule,
 
 
   ]

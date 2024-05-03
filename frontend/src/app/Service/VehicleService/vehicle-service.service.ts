@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
   export class VehicleService {
     private baseUrl = 'http://localhost:8080/admin';
-  
+    private ChefDepartementUrl = 'http://localhost:8080/ChefDepartement';
     constructor(private http: HttpClient) {}
   
     getAllVehicles(): Observable<Vehicle[]> {
@@ -26,7 +26,19 @@ import { catchError } from 'rxjs/operators';
         })
       );
     }
-  
+    getUnavailableVehicles(): Observable<Vehicle[]> {
+      const token = localStorage.getItem('jwtToken');
+      if (!token) {
+        return throwError('Token is not available'); // Throw an error if token is not available
+      }
+      const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+      return this.http.get<Vehicle[]>(`${this.ChefDepartementUrl}/afficherVehculeNondisponibilite`, { headers }).pipe(
+        catchError(error => {
+          console.error('Error fetching unavailable vehicles:', error);
+          return throwError('Error fetching unavailable vehicles');
+        })
+      );
+    }
     createVehicle(vehicle: Vehicle): Observable<Vehicle> {
       const token = localStorage.getItem('jwtToken');
       if (!token) {

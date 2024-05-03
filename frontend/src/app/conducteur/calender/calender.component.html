@@ -1,53 +1,126 @@
-
 <div class='demo-app'>
 
+    <!-- Sidebar -->
     <div class='demo-app-sidebar'>
-      <div class='demo-app-sidebar-section'>
-        <h2>Instructions</h2>
-        <ul>
-          <li>Select dates and you will be prompted to create a new event</li>
-          <li>Drag, drop, and resize events</li>
-          <li>Click an event to delete it</li>
-        </ul>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            [checked]='calendarVisible'
-            (change)='handleCalendarToggle()'
-          />
-          toggle whole calendar
-        </label>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <label>
-          <input
-            type='checkbox'
-            [checked]='calendarOptions.weekends'
-            (change)='handleWeekendsToggle()'
-          />
-          toggle weekends
-        </label>
-      </div>
-      <div class='demo-app-sidebar-section'>
-        <h2>All Events ({{currentEvents.length}})</h2>
-        <ul>
-          <li *ngFor='let event of currentEvents'>
-            <b>{{event.startStr}}</b>
-            <i>{{event.title}}</i>
-          </li>
-        </ul>
-      </div>
+        <!-- Instructions -->
+        <div class='demo-app-sidebar-section'>
+            <h2>Instructions</h2>
+            <ul>
+                <li>Select dates and you will be prompted to create a new event</li>
+                <li>Drag, drop, and resize events</li>
+                <li>Click an event to delete it</li>
+            </ul>
+        </div>
+
+        <!-- Toggle Calendar -->
+        <div class='demo-app-sidebar-section'>
+            <label>
+                <input type='checkbox' [checked]='calendarVisible' (change)='handleCalendarToggle()' />
+                toggle whole calendar
+            </label>
+        </div>
+
+        <!-- Toggle Weekends -->
+        <div class='demo-app-sidebar-section'>
+            <label>
+                <input type='checkbox' [checked]='calendarOptions.weekends' (change)='handleWeekendsToggle()' />
+                toggle weekends
+            </label>
+        </div>
+
+        <!-- Events List -->
+        <div class='demo-app-sidebar-section'>
+            <h2>All Events ({{ currentEvents . length }})</h2>
+            <ul>
+                <li *ngFor='let event of currentEvents'>
+                    <b>{{ event . startStr }}</b>
+                    <i>{{ event . title }}</i>
+                </li>
+            </ul>
+        </div>
     </div>
-  
+
+    <!-- Main Content -->
     <div class='demo-app-main'>
-      <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
-        <ng-template #eventContent let-arg>
-          <b>{{ arg.timeText }}</b>
-          <i>{{ arg.event.title }}</i>
-        </ng-template>
-      </full-calendar>
+        <!-- FullCalendar -->
+        <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
+            <ng-template #eventContent let-arg>
+                <b>{{ arg . timeText }}</b>
+                <i>{{ arg . event . title }}</i>
+            </ng-template>
+        </full-calendar>
+
+        <!-- Modal -->
+        <!-- Modal -->
+        <div class="modal" id="calendarModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Event</h5>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                          <div class="form-group" *ngIf="unavailableVehicles && unavailableVehicles.length > 0">
+                            <label for="carSelect">Voiture</label>
+                            <div class="select-wrapper">
+                                <select class="form-control" id="carSelect">
+                                    <option *ngFor="let vehicle of unavailableVehicles" [value]="vehicle.id">
+                                        {{ vehicle.marque }} - {{ vehicle.modele }}
+                                    </option>
+                                </select>
+                                <span class="arrow"></span>
+                            </div>
+                        </div>
+                        <div class="no-vehicles" *ngIf="!unavailableVehicles || unavailableVehicles.length === 0">
+                          No vehicles available.
+                      </div>
+                            <div class="form-group">
+                                <label for="startDate">Date début</label>
+                                <input type="datetime-local" class="form-control" id="startDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">Date fin</label>
+                                <input type="datetime-local" class="form-control" id="endDate">
+                            </div>
+                            <!-- calender.component.html -->
+                           
+                            <div class="form-group" *ngIf="conducteurUsers && conducteurUsers.length > 0">
+                              <label for="carSelect">Conducteur Users</label>
+                              <div class="select-wrapper">
+                                  <select class="form-control" id="carSelect">
+                                      <option *ngFor="let user of conducteurUsers" [value]="user">
+                                          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+                                      </option>
+                                  </select>
+                                  <span class="arrow"></span>
+                              </div>
+                          </div>
+                          <div class="no-vehicles" *ngIf="!conducteurUsers || conducteurUsers.length === 0">
+                              No conducteur users found.
+                          </div>
+                                
+                            
+                            <div class="form-group">
+                                <label for="mission">Mission</label>
+                                <textarea class="form-control" id="mission" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Button to trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#calendarModal">Calendar</button>
     </div>
-  
-  </div>
+
+</div>

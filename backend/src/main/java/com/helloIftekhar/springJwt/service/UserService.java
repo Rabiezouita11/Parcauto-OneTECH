@@ -1,5 +1,6 @@
 package com.helloIftekhar.springJwt.service;
 
+import com.helloIftekhar.springJwt.model.Role;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.repository.UserRepository;
 import com.helloIftekhar.springJwt.utils.FileUploadUtil;
@@ -89,5 +90,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByResetTokenEmail(resetToken);
         return userOptional.orElse(null);
     }
-
+    public List<User> getConducteurs() {
+        return userRepository.findByRoleAndStatus(Role.CONDUCTEUR, true);
+    }
 }

@@ -20,6 +20,8 @@ public class Vehicle {
     private String historiqueReservation;
     private String type;
     private boolean disponibilite;
-
+    public Vehicle() {
+        this.disponibilite = false; // Setting disponibilite to false by default
+    }
     // Constructeurs, getters et setters
 }

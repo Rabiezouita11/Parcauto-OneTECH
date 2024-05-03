@@ -12,6 +12,7 @@ export class UserService {
 
     private baseUrl = 'http://localhost:8080';
     private UserUrl = 'http://localhost:8080/user';
+    private ChefDepartementUrl = 'http://localhost:8080/ChefDepartement';
 
     constructor(private http : HttpClient) {}
 
@@ -161,5 +162,16 @@ export class UserService {
     }
     verifyCode(code: string, token: string): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}/users/verifyCode?token=${token}&code=${code}`, null);
+    }
+
+
+    getConducteurs(): Observable<User[]> {
+      const token = localStorage.getItem('jwtToken');
+      if (!token) {
+        throw new Error('JWT token is missing.');
+      }
+  
+      const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+      return this.http.get<User[]>(`${this.ChefDepartementUrl}/getConducteurs`, { headers });
     }
 }
