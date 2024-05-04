@@ -3,6 +3,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -20,6 +22,8 @@ public class Vehicle {
     private String historiqueReservation;
     private String type;
     private boolean disponibilite;
+    @OneToMany(mappedBy = "vehicle")
+    private List<Reservation> reservations;
     public Vehicle() {
         this.disponibilite = false; // Setting disponibilite to false by default
     }
