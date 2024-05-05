@@ -1,6 +1,5 @@
 package com.helloIftekhar.springJwt.model;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 @Table(name = "reservation")
 @Getter
 @Setter
-
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +31,10 @@ public class Reservation {
 
     @Column(name = "mission")
     private String mission;
-    public Reservation() {
-    }
 
+    public Reservation() {}
+
+    // Constructor with all fields
     public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission) {
         this.user = user;
         this.vehicle = vehicle;
@@ -43,6 +42,14 @@ public class Reservation {
         this.endDate = endDate;
         this.mission = mission;
     }
-    // Constructors, getters, and setters
-}
 
+    // Getter method for userId
+    public Integer getUserId() {
+        return this.user != null ? this.user.getId() : null;
+    }
+
+    // Getter method for vehicleId
+    public Long getVehicleId() {
+        return this.vehicle != null ? this.vehicle.getId() : null;
+    }
+}

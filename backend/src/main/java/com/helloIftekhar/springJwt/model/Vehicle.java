@@ -1,4 +1,5 @@
 package com.helloIftekhar.springJwt.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Vehicle {
     private String historiqueReservation;
     private String type;
     private boolean disponibilite;
+    @JsonBackReference
     @OneToMany(mappedBy = "vehicle")
     private List<Reservation> reservations;
     public Vehicle() {

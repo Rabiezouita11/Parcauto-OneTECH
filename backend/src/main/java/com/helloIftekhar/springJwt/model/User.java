@@ -1,5 +1,6 @@
 package com.helloIftekhar.springJwt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -49,6 +50,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
 

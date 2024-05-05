@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class='demo-app-sidebar'>
         <!-- Instructions -->
-      
+
 
         <!-- Toggle Calendar -->
         <div class='demo-app-sidebar-section'>
@@ -55,65 +55,61 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                          <div class="form-group" *ngIf="unavailableVehicles && unavailableVehicles.length > 0">
-                            <label for="carSelect">Voiture</label>
-                            <div class="select-wrapper">
-                                <select class="form-control" id="carSelect">
-                                    <option *ngFor="let vehicle of unavailableVehicles" [value]="vehicle.id">
-                                        {{ vehicle.marque }} - {{ vehicle.modele }}
-                                    </option>
-                                </select>
-                                <span class="arrow"></span>
+                        <form #reservationForm="ngForm" (ngSubmit)="saveReservation(reservationForm)">
+                            <div class="form-group">
+                                <label for="vehicleSelect">Voiture</label>
+                                <div class="select-wrapper">
+                                    <select class="form-control" id="vehicleSelect" [(ngModel)]="selectedVehicleId"
+                                        name="selectedVehicleId" required>
+                                        <option *ngFor="let vehicle of unavailableVehicles" [value]="vehicle.id">
+                                            {{ vehicle . marque }} - {{ vehicle . modele }}
+                                        </option>
+                                    </select>
+                                    <span class="arrow"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="no-vehicles" *ngIf="!unavailableVehicles || unavailableVehicles.length === 0">
-                          No vehicles available.
-                      </div>
                             <div class="form-group">
                                 <label for="startDate">Date début</label>
-                                <input type="datetime-local" class="form-control" id="startDate">
+                                <input type="datetime-local" class="form-control" id="startDate"
+                                    [(ngModel)]="reservation.startDate" name="startDate" required>
                             </div>
                             <div class="form-group">
                                 <label for="endDate">Date fin</label>
-                                <input type="datetime-local" class="form-control" id="endDate">
+                                <input type="datetime-local" class="form-control" id="endDate"
+                                    [(ngModel)]="reservation.endDate" name="endDate" required>
                             </div>
-                            <!-- calender.component.html -->
-                           
-                            <div class="form-group" *ngIf="conducteurUsers && conducteurUsers.length > 0">
-                              <label for="carSelect">Conducteur Users</label>
-                              <div class="select-wrapper">
-                                  <select class="form-control" id="carSelect">
-                                      <option *ngFor="let user of conducteurUsers" [value]="user">
-                                          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
-                                      </option>
-                                  </select>
-                                  <span class="arrow"></span>
-                              </div>
-                          </div>
-                          <div class="no-vehicles" *ngIf="!conducteurUsers || conducteurUsers.length === 0">
-                              No conducteur users found.
-                          </div>
-                                
-                            
+                            <div class="form-group">
+                                <label for="userSelect">Conducteur</label>
+                                <div class="select-wrapper">
+                                    <select class="form-control" id="userSelect" [(ngModel)]="selectedUserId"
+                                        name="selectedUserId" required>
+                                        <option *ngFor="let user of conducteurUsers" [ngValue]="user.id">
+                                            {{ user . firstName }} {{ user . lastName }} ({{ user . username }})
+                                        </option>
+                                    </select>
+                                    <span class="arrow"></span>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="mission">Mission</label>
-                                <textarea class="form-control" id="mission" rows="3"></textarea>
+                                <textarea class="form-control" id="mission" rows="3" [(ngModel)]="reservation.mission" name="mission" required></textarea>
                             </div>
+                            <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                        </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
 
+
+
         <!-- Button to trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal"
-            data-target="#calendarModal">Calendar</button>
+
     </div>
 
 </div>
