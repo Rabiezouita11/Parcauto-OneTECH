@@ -80,4 +80,9 @@ public class ChefDepartementController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating reservation: " + e.getMessage());
         }
     }
+
+    @GetMapping("/reservationsByUserIdConnected/{userIdConnected}")
+    public List<Reservation> getReservationsByUserIdConnected(@PathVariable Long userIdConnected) {
+        return reservationRepository.findByUserIdConnected(userIdConnected);
+    }
 }

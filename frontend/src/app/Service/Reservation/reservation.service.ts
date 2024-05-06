@@ -22,7 +22,25 @@ export class ReservationService {
     return this.http.post<Reservation>(`${this.ChefDepartementUrl}/createReservation`, reservation, { headers })
       .pipe(
         catchError(error => {
-          return throwError('Failed to create reservation. Please try again later.'); // Throw an error if request fails
+          return throwError(error); // Throw an error if request fails
+        })
+      );
+  }
+  
+  getReservationsByUserIdConnected(userIdConnected: number): Observable<Reservation[]> {
+    const token = localStorage.getItem('jwtToken');
+    console.log(token);
+    if (!token) {
+      return throwError('Token is not available'); // Throw an error if token is not available
+    }
+
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    return this.http.get<Reservation[]>(`${this.ChefDepartementUrl}/reservationsByUserIdConnected/${userIdConnected}`, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching reservations:', error);
+          return throwError('Error fetching reservations. Please try again later.');
         })
       );
   }

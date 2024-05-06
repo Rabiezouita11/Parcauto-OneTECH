@@ -6,13 +6,14 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import {Vehicle} from 'src/app/model/Vehicle';
 import {VehicleService} from 'src/app/Service/VehicleService/vehicle-service.service';
-import { User } from 'src/app/model/user';
-import { UserService } from 'src/app/Service/UserService/user-service.service';
-import { ChangeDetectorRef } from '@angular/core';
-import { Reservation } from 'src/app/model/Reservation';
-import { NgForm } from '@angular/forms';
-import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
+import {User} from 'src/app/model/user';
+import {UserService} from 'src/app/Service/UserService/user-service.service';
+import {ChangeDetectorRef} from '@angular/core';
+import {Reservation} from 'src/app/model/Reservation';
+import {NgForm} from '@angular/forms';
+import {ReservationService} from 'src/app/Service/Reservation/reservation.service';
 import Swal from 'sweetalert2';
+import {EventInput} from '@fullcalendar/core';
 
 declare var $: any;
 
@@ -29,7 +30,7 @@ export class CalenderComponent implements OnInit {
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
         initialView: 'dayGridMonth',
-        
+
         weekends: true,
         editable: true,
         selectable: true,
@@ -37,48 +38,111 @@ export class CalenderComponent implements OnInit {
         dayMaxEvents: true,
         select: this.handleDateSelect.bind(this),
         eventClick: this.handleEventClick.bind(this),
-        eventsSet: this.handleEvents.bind(this)
+        eventsSet: this.handleEvents.bind(this),
+        
+        events: [] // Initialize events array
+
     };
 
     currentEvents : EventApi[] = [];
     unavailableVehicles : Vehicle[] = [];
- 
-    conducteurUsers: User[] = [];
-    selectedUser!: User;
 
-    selectedVehicleId!: number | null;
-    selectedUserId!: number | null;
-    reservation: Reservation = {
-      vehicle: {
-        id: 0
-      },
-      user: {
-        id: 0
-      },
-      startDate: null,
-      endDate: null,
-      mission: ''
+    conducteurUsers : User[] = [];
+    selectedUser !: User;
+
+    selectedVehicleId !: number | null;
+    selectedUserId !: number | null;
+    reservation : Reservation = {
+        id: 0,
+        vehicle: {
+            id: 0,
+            marque: '',
+            modele: ''
+        },
+        user: {
+            id: 0
+        },
+        startDate:'' ,
+        endDate: '',
+        mission: '',
+        userIdConnected: 0,
+        
     };
-  
-    constructor(private reservationService: ReservationService ,private vehicleService : VehicleService,private userService: UserService , private cdr: ChangeDetectorRef) {}
+    role : any;
+    userIdConnected : any;
 
-    ngOnInit() {
+    constructor(private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService, private cdr : ChangeDetectorRef) {}
+
+    async ngOnInit() {
+        await this.getInfo();
         this.loadUnavailableVehicles();
         this.loadConducteurUsers();
+        this.loadReservations();
+    }
 
-    }
-    loadConducteurUsers() {
-      this.userService.getConducteurs().subscribe(
-        data => {
-          this.conducteurUsers = data;
-          console.log(" this.conducteurUsers this.conducteurUsers"+  this.conducteurUsers )
-        },
-        error => {
-          console.log('Error fetching conducteur users:', error);
+    async getInfo(): Promise<void> {
+        const token = localStorage.getItem('jwtToken');
+    
+        if (token) {
+            try {
+                const data: any = await this.userService.getUserInfo(token).toPromise();
+                this.role = data.role;
+                this.userIdConnected = data.id;
+               
+            } catch (error) {
+                console.error('Error fetching user information:', error);
+            }
+        } else {
+            console.error('Token not found in localStorage');
         }
-      );
     }
-  
+    async loadReservations(): Promise<void> {
+        if (!this.userIdConnected) {
+            console.error('User ID is not available');
+            return;
+        }
+    
+        try {
+            const reservations = await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise();
+    
+            if (reservations) {
+                // Map reservations to FullCalendar events
+                const events: EventInput[] = reservations.map(reservation => ({
+                    id: reservation.id.toString(),
+                    title: `${reservation.vehicle.marque} - ${reservation.vehicle.modele} (${this.getReservationStatus(reservation)})`,
+                    start: new Date(reservation.startDate),
+                    end: new Date(reservation.endDate)
+                }));
+    
+                // Set events to calendarOptions
+                this.calendarOptions.events = events;
+            } else {
+                console.error('No reservations found');
+            }
+        } catch (error) {
+            console.error('Error fetching reservations:', error);
+        }
+    }
+    
+
+    getReservationStatus(reservation: Reservation): string {
+        if (reservation.status === null) {
+          return 'En cours';
+        } else if (reservation.status === false) {
+          return 'Refused';
+        } else {
+          return 'Accepted';
+        }
+      }
+    loadConducteurUsers() {
+        this.userService.getConducteurs().subscribe(data => {
+            this.conducteurUsers = data;
+            console.log(" this.conducteurUsers this.conducteurUsers" + this.conducteurUsers)
+        }, error => {
+            console.log('Error fetching conducteur users:', error);
+        });
+    }
+
     loadUnavailableVehicles() {
         this.vehicleService.getUnavailableVehicles().subscribe(vehicles => {
             this.unavailableVehicles = vehicles;
@@ -112,70 +176,54 @@ export class CalenderComponent implements OnInit {
     handleEvents(events : EventApi[]) {
         this.currentEvents = events;
     }
-  saveReservation(reservationForm: NgForm) {
-  // Check if the form is invalid
-  if (reservationForm.invalid) {
-    // Show error message using Swal
-    Swal.fire({
-      icon: 'error',
-      title: 'Validation Error',
-      text: 'Please fill out all required fields.'
-    });
-    return;
-  }
+    saveReservation(reservationForm : NgForm) { // Check if the form is invalid
+        if (reservationForm.invalid) { // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Validation Error', text: 'Please fill out all required fields.'});
+            return;
+        }
 
-  // Check if selectedVehicleId or selectedUserId is null
-  if (this.selectedVehicleId === null || this.selectedUserId === null) {
-    console.error('Selected vehicle ID or user ID is null');
-    // Show error message using Swal
-    Swal.fire({
-      icon: 'error',
-      title: 'Selection Error',
-      text: 'Please select a vehicle and a user.'
-    });
-    return;
-  }
+        // Check if selectedVehicleId or selectedUserId is null
+        if (this.selectedVehicleId === null || this.selectedUserId === null) {
+            console.error('Selected vehicle ID or user ID is null');
+            // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Selection Error', text: 'Please select a vehicle and a user.'});
+            return;
+        }
 
-  // Create the Reservation object
-  const reservation: Reservation = {
-    vehicle: {
-      id: this.selectedVehicleId
-    },
-    user: {
-      id: this.selectedUserId
-    },
-    startDate: this.reservation.startDate,
-    endDate: this.reservation.endDate,
-    mission: this.reservation.mission
-  };
-  console.log(reservation);
+        // Create the Reservation object
+        const reservation: Reservation = {
+            id: 0,
+            vehicle: {
+                id: this.selectedVehicleId,
+                marque: '',
+                modele: ''
+            },
+            user: {
+                id: this.selectedUserId
+            },
+            startDate: this.reservation.startDate,
+            endDate: this.reservation.endDate,
+            mission: this.reservation.mission,
+            userIdConnected: this.userIdConnected // Add userIdConnected
 
-  // Call the reservation service to create the reservation
-  this.reservationService.createReservation(reservation).subscribe(
-    () => {
-      console.log('Reservation created successfully');
-      // Show success message using Swal
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Reservation created successfully.'
-      }).then(() => {
-        // Reset form and close modal
-        reservationForm.resetForm();
-        this.closeModal();
-      });
-    },
-    error => {
-      console.error('Error creating reservation:', error);
-      // Show error message using Swal
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to create reservation. Please try again later.'
-      });
+        };
+        console.log(reservation);
+
+        // Call the reservation service to create the reservation
+        this.reservationService.createReservation(reservation).subscribe(() => {
+            console.log('Reservation created successfully');
+            // Show success message using Swal
+            Swal.fire({icon: 'success', title: 'Success', text: 'Reservation created successfully.'}).then(() => { // Reset form and close modal
+                reservationForm.resetForm();
+                this.closeModal();
+                this.ngOnInit();
+            });
+        }, error => {
+            console.error('Error creating reservation:', error);
+            // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Error', text: error.error});
+        });
     }
-  );
-}
 
-      
+
 }

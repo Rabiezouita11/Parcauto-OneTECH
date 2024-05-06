@@ -6,9 +6,11 @@ import com.helloIftekhar.springJwt.model.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findByVehicleAndStartDateAndEndDate(Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate);
+    List<Reservation> findByUserIdConnected(Long userIdConnected);
 
 }

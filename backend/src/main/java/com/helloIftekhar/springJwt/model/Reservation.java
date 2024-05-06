@@ -28,19 +28,23 @@ public class Reservation {
 
     @Column(name = "end_date")
     private LocalDateTime endDate;
-
+    @Column(name = "status") // New field
+    private Boolean status = null; // Default value is null
     @Column(name = "mission")
     private String mission;
-
+    @Column(name = "user_id_connected")
+    private Long userIdConnected;
     public Reservation() {}
 
     // Constructor with all fields
-    public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission) {
+    // Constructor with all fields including userIdConnected
+    public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission, Long userIdConnected) {
         this.user = user;
         this.vehicle = vehicle;
         this.startDate = startDate;
         this.endDate = endDate;
         this.mission = mission;
+        this.userIdConnected = userIdConnected;
     }
 
     // Getter method for userId
