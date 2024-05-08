@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")@RestController
 @RequestMapping("/ChefDepartement")
@@ -29,13 +30,22 @@ public class ChefDepartementController {
 
     @GetMapping("/afficherVehculeNondisponibilite")
     public List<Vehicle> getUnavailableVehicles() {
-        return vehicleRepository.findByDisponibiliteFalse();
+        return vehicleRepository.findByDisponibiliteTrue();
     }
 
     @GetMapping("/getConducteurs")
     public List<User> getConductors() {
-        return userService.getConducteurs();
+        // Get all conductors from the user repository
+        List<User> conductors = userService.getConducteurs();
+
+        // Filter out conductors who have reservations with status null or true
+        List<User> filteredConductors = conductors.stream()
+                .filter(conductor -> !reservationRepository.existsByUserAndStatusIsNullTrue(conductor))
+                .collect(Collectors.toList());
+
+        return filteredConductors;
     }
+
 
     @PostMapping("/createReservation")
     public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
@@ -59,7 +69,8 @@ public class ChefDepartementController {
             }
 
             // Set the vehicle for the reservation
-            reservation.setVehicle(vehicleOptional.get());
+            Vehicle vehicle = vehicleOptional.get();
+            reservation.setVehicle(vehicle);
 
             // Check if userId is not null
             if (reservation.getUserId() != null) {
@@ -74,6 +85,10 @@ public class ChefDepartementController {
 
             // Save the reservation
             reservationRepository.save(reservation);
+
+            // Update vehicle disponibilite to false
+            vehicle.setDisponibilite(false);
+            vehicleRepository.save(vehicle);
 
             return ResponseEntity.ok(reservation);
         } catch (Exception e) {

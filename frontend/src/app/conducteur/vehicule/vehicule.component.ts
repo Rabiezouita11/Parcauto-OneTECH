@@ -66,15 +66,19 @@ export class VehiculeComponent implements OnInit {
     this.vehicleService.createVehicle(this.vehicle).subscribe(
       (response) => {
         Swal.fire('Success', 'Vehicle added successfully', 'success');
-        this.ngOnInit();
-        
+        this.ngOnInit(); // Assuming ngOnInit is a method in the component
       },
       (error) => {
-        this.errorMessage = error;
-        Swal.fire('Error', this.errorMessage, 'error');
+        if (error === 'Marque already exists') {
+          Swal.fire('Error', 'Marque already exists', 'error');
+        } else {
+          Swal.fire('Error', 'An error occurred while adding the vehicle', 'error');
+        }
       }
     );
   }
+
+
 
   updateVehicle(id: number, vehicle: Vehicle): void {
     this.vehicleService.updateVehicle(id, vehicle)

@@ -29,5 +29,7 @@ public class VehicleService {
     public void deleteVehicle(Long id) {
         vehicleRepository.deleteById(id);
     }
-
+    public Vehicle findByMarque(String marque) {
+        return vehicleRepository.findByMarque(marque);
+    }
 }

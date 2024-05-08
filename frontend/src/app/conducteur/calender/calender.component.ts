@@ -43,7 +43,9 @@ export class CalenderComponent implements OnInit {
         events: [] // Initialize events array
 
     };
-
+    pendingReservations: any[] = [];
+    acceptedReservations: any[] = [];
+    refusedReservations: any[] = [];
     currentEvents : EventApi[] = [];
     unavailableVehicles : Vehicle[] = [];
 
@@ -51,7 +53,7 @@ export class CalenderComponent implements OnInit {
     selectedUser !: User;
 
     selectedVehicleId !: number | null;
-    selectedUserId !: number | null;
+    selectedUserId: number | null = null; // Initialize selectedUserId to null
     reservation : Reservation = {
         id: 0,
         vehicle: {
@@ -96,6 +98,57 @@ export class CalenderComponent implements OnInit {
             console.error('Token not found in localStorage');
         }
     }
+     saveReservation(reservationForm : NgForm) { // Check if the form is invalid
+
+
+        console.log(this.selectedUserId);
+        if (reservationForm.invalid) { // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Validation Error', text: 'Please fill out all required fields.'});
+            return;
+        }
+
+        // Check if selectedVehicleId or selectedUserId is null
+        if (this.selectedVehicleId === null || this.selectedUserId === null) {
+            console.error('Selected vehicle ID or user ID is null');
+            // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Selection Error', text: 'Please select a vehicle and a user.'});
+            return;
+        }
+
+        // Create the Reservation object
+        const reservation: Reservation = {
+            id: 0,
+            vehicle: {
+                id: this.selectedVehicleId,
+                marque: '',
+                modele: ''
+            },
+            user: {
+                id: this.selectedUserId
+            },
+            startDate: this.reservation.startDate,
+            endDate: this.reservation.endDate,
+            mission: this.reservation.mission,
+            userIdConnected: this.userIdConnected // Add userIdConnected
+
+        };
+      
+
+        // Call the reservation service to create the reservation
+        this.reservationService.createReservation(reservation).subscribe(() => {
+            console.log('Reservation created successfully');
+            // Show success message using Swal
+            Swal.fire({icon: 'success', title: 'Success', text: 'Reservation created successfully.'}).then(() => { // Reset form and close modal
+                reservationForm.resetForm();
+                this.closeModal();
+                this.ngOnInit();
+            });
+        }, error => {
+            console.error('Error creating reservation:', error);
+            // Show error message using Swal
+            Swal.fire({icon: 'error', title: 'Error', text: error.error});
+        });
+    }
     async loadReservations(): Promise<void> {
         if (!this.userIdConnected) {
             console.error('User ID is not available');
@@ -106,6 +159,10 @@ export class CalenderComponent implements OnInit {
             const reservations = await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise();
     
             if (reservations) {
+                this.pendingReservations = reservations.filter(reservation => reservation.status === null);
+                this.acceptedReservations = reservations.filter(reservation => reservation.status === true);
+                this.refusedReservations = reservations.filter(reservation => reservation.status === false);
+    
                 // Map reservations to FullCalendar events
                 const events: EventInput[] = reservations.map(reservation => ({
                     id: reservation.id.toString(),
@@ -176,54 +233,7 @@ export class CalenderComponent implements OnInit {
     handleEvents(events : EventApi[]) {
         this.currentEvents = events;
     }
-    saveReservation(reservationForm : NgForm) { // Check if the form is invalid
-        if (reservationForm.invalid) { // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Validation Error', text: 'Please fill out all required fields.'});
-            return;
-        }
-
-        // Check if selectedVehicleId or selectedUserId is null
-        if (this.selectedVehicleId === null || this.selectedUserId === null) {
-            console.error('Selected vehicle ID or user ID is null');
-            // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Selection Error', text: 'Please select a vehicle and a user.'});
-            return;
-        }
-
-        // Create the Reservation object
-        const reservation: Reservation = {
-            id: 0,
-            vehicle: {
-                id: this.selectedVehicleId,
-                marque: '',
-                modele: ''
-            },
-            user: {
-                id: this.selectedUserId
-            },
-            startDate: this.reservation.startDate,
-            endDate: this.reservation.endDate,
-            mission: this.reservation.mission,
-            userIdConnected: this.userIdConnected // Add userIdConnected
-
-        };
-        console.log(reservation);
-
-        // Call the reservation service to create the reservation
-        this.reservationService.createReservation(reservation).subscribe(() => {
-            console.log('Reservation created successfully');
-            // Show success message using Swal
-            Swal.fire({icon: 'success', title: 'Success', text: 'Reservation created successfully.'}).then(() => { // Reset form and close modal
-                reservationForm.resetForm();
-                this.closeModal();
-                this.ngOnInit();
-            });
-        }, error => {
-            console.error('Error creating reservation:', error);
-            // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Error', text: error.error});
-        });
-    }
+   
 
 
 }

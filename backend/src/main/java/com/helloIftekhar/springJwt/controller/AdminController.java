@@ -46,9 +46,18 @@ public class AdminController {
     }
 
     @PostMapping("/admin/vehicles")
-    public Vehicle createOrUpdateVehicle(@RequestBody Vehicle vehicle) {
-        return vehicleService.saveOrUpdateVehicle(vehicle);
+    public ResponseEntity<?> createOrUpdateVehicle(@RequestBody Vehicle vehicle) {
+        // Check if a vehicle with the same marque already exists
+        Vehicle existingVehicle = vehicleService.findByMarque(vehicle.getMarque());
+        if (existingVehicle != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Marque already exists");
+        }
+
+        // Save or update the vehicle
+        Vehicle savedVehicle = vehicleService.saveOrUpdateVehicle(vehicle);
+        return ResponseEntity.ok(savedVehicle);
     }
+
     @PutMapping("/admin/vehicles/{id}") // Use PUT method for updates
     public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
         // Ensure that the ID of the vehicle matches the path variable ID

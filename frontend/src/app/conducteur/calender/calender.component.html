@@ -1,37 +1,49 @@
 <div class='demo-app'>
 
     <!-- Sidebar -->
-    <div class='demo-app-sidebar'>
-        <!-- Instructions -->
+   <!-- Sidebar -->
+<div class='demo-app-sidebar'>
+    <!-- Instructions -->
+    <!-- Toggle Calendar -->
+    <div class='demo-app-sidebar-section'>
+        <label>
+            <input type='checkbox' [checked]='calendarVisible' (change)='handleCalendarToggle()' />
+            toggle whole calendar
+        </label>
+    </div>
 
+    <!-- Toggle Weekends -->
+    <div class='demo-app-sidebar-section'>
+        <label>
+            <input type='checkbox' [checked]='calendarOptions.weekends' (change)='handleWeekendsToggle()' />
+            toggle weekends
+        </label>
+    </div>
 
-        <!-- Toggle Calendar -->
+    <!-- Reservation Sections Container -->
+    <div class="reservation-sections">
+        <!-- Total Reservations -->
         <div class='demo-app-sidebar-section'>
-            <label>
-                <input type='checkbox' [checked]='calendarVisible' (change)='handleCalendarToggle()' />
-                toggle whole calendar
-            </label>
+            <h2>Total Reservations: {{ currentEvents.length }}</h2>
         </div>
 
-        <!-- Toggle Weekends -->
+        <!-- Reservations En Attente -->
         <div class='demo-app-sidebar-section'>
-            <label>
-                <input type='checkbox' [checked]='calendarOptions.weekends' (change)='handleWeekendsToggle()' />
-                toggle weekends
-            </label>
+            <h2>Reservations en Attente: {{ pendingReservations.length }}</h2>
         </div>
 
-        <!-- Events List -->
+        <!-- Reservations Accepter -->
         <div class='demo-app-sidebar-section'>
-            <h2>Nombre reservations ({{ currentEvents . length }})</h2>
-            <ul>
-                <li *ngFor='let event of currentEvents'>
-                    <b>{{ event . startStr }}</b>
-                    <i>{{ event . title }}</i>
-                </li>
-            </ul>
+            <h2>Reservations Accepter: {{ acceptedReservations.length }}</h2>
+        </div>
+
+        <!-- Reservations Refuser -->
+        <div class='demo-app-sidebar-section'>
+            <h2>Reservations Refuser: {{ refusedReservations.length }}</h2>
         </div>
     </div>
+</div>
+
 
     <!-- Main Content -->
     <div class='demo-app-main'>
