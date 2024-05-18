@@ -4,30 +4,34 @@ import com.helloIftekhar.springJwt.model.Reservation;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.model.Vehicle;
 import com.helloIftekhar.springJwt.repository.ReservationRepository;
+import com.helloIftekhar.springJwt.repository.UserRepository;
 import com.helloIftekhar.springJwt.repository.VehicleRepository;
+import com.helloIftekhar.springJwt.service.EmailService;
 import com.helloIftekhar.springJwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")@RestController
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
 @RequestMapping("/ChefDepartement")
 public class ChefDepartementController {
 
     @Autowired
     private VehicleRepository vehicleRepository;
-
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private UserService userService;
 
     @Autowired
     private ReservationRepository reservationRepository;
-
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping("/afficherVehculeNondisponibilite")
     public List<Vehicle> getUnavailableVehicles() {
         return vehicleRepository.findByDisponibiliteTrue();
@@ -100,4 +104,51 @@ public class ChefDepartementController {
     public List<Reservation> getReservationsByUserIdConnected(@PathVariable Long userIdConnected) {
         return reservationRepository.findByUserIdConnected(userIdConnected);
     }
+    @GetMapping("/reservations")
+    public ResponseEntity<List<Reservation>> getAllReservations() {
+        List<Reservation> reservations = reservationRepository.findAll();
+        return ResponseEntity.ok(reservations);
+    }
+
+    @PutMapping("/updateReservationStatus/{id}")
+    public ResponseEntity<?> updateReservationStatus(@PathVariable Long id, @RequestBody Boolean status) {
+        try {
+            Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+            if (reservationOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reservation not found");
+            }
+
+            Reservation reservation = reservationOptional.get();
+            reservation.setStatus(status);
+            reservationRepository.save(reservation);
+
+            // Generate PDF content
+            String pdfContent = "Reservation ID: " + reservation.getId() + "\n" +
+                    "User: " + reservation.getUser().getUsername() + "\n" +
+                    "Status: " + (status ? "Accepted" : "Rejected");
+
+            // Send email with PDF attachment
+            emailService.sendEmailWithAttachment(reservation.getUser().getEmail(), "Reservation Status Update",
+                    "Your reservation status has been updated.", pdfContent.getBytes(), "reservation.pdf");
+
+            return ResponseEntity.ok(reservation);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating reservation status: " + e.getMessage());
+        }
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<Map<String, String>> getUsernameById(@PathVariable Integer userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Map<String, String> response = new HashMap<>();
+            response.put("username", user.getUsername());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", "User not found"));
+        }
+    }
+
+
 }

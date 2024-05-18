@@ -21,7 +21,9 @@ import { CalenderComponent } from './calender/calender.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
+import { ReservationComponent } from './reservation/reservation.component';
 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MatSelectModule } from '@angular/material/select';
     VehicleDetailsModalComponent,
     VehiculeUpdateModalComponent,
     UsersComponent,
-    CalenderComponent
+    CalenderComponent,
+    ReservationComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +51,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule, // Add MatFormFieldModule here
     FullCalendarModule, // register FullCalendar with your app
     MatSelectModule,
+    MatButtonToggleModule
 
 
   ]

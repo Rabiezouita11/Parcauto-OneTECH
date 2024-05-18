@@ -6,6 +6,7 @@ import {GuardAdminGuard} from '../Guard/GuardAdmin/guard-admin.guard';
 import {VehiculeComponent} from './vehicule/vehicule.component';
 import { UsersComponent } from './users/users.component';
 import { CalenderComponent } from './calender/calender.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 const routes: Routes = [
     {
@@ -46,9 +47,15 @@ const routes: Routes = [
         data: {
             title: 'users'
         }
+    },
+    {
+        path: 'reservation',
+        component: ReservationComponent,
+        // canActivate: [GuardAdminGuard], // Apply AuthGuard here
+        data: {
+            title: 'users'
+        }
     }
-
-
 ];
 
 @NgModule({

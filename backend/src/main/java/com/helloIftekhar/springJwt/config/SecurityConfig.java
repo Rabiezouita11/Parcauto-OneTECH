@@ -46,7 +46,7 @@ public class SecurityConfig {
                         req->req.requestMatchers("/login/**","/register/**","/users/verif/**" ,"/users/rest/**" ,"/users/sendVerificationCode/**","/users/verifyCode")
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                .requestMatchers("/ChefDepartement/**").hasAuthority("CHEF_DEPARTEMENT")
+                                .requestMatchers("/ChefDepartement/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN")
                                 .requestMatchers("/user/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN", "CONDUCTEUR")
 
                                 .requestMatchers("/conducteur/**").hasAuthority("CONDUCTEUR")

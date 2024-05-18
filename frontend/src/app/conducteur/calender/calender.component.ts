@@ -62,7 +62,8 @@ export class CalenderComponent implements OnInit {
             modele: ''
         },
         user: {
-            id: 0
+            id: 0,
+            username:''
         },
         startDate:'' ,
         endDate: '',
@@ -124,7 +125,9 @@ export class CalenderComponent implements OnInit {
                 modele: ''
             },
             user: {
-                id: this.selectedUserId
+                id: this.selectedUserId,
+                username:''
+
             },
             startDate: this.reservation.startDate,
             endDate: this.reservation.endDate,

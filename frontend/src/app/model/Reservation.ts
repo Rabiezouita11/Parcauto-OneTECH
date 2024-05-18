@@ -7,10 +7,14 @@ export interface Reservation {
     };
     user: {
         id: number;
+        username:string;
     };
+        
     startDate: string ;
     endDate: string ;
     mission: string;
     userIdConnected:number;
     status ?:Boolean;
+    connectedUserName?: { username: string }; // Define connectedUserName as an object with a username property
+
 }
