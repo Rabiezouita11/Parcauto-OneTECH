@@ -50,8 +50,8 @@ public class EmailService {
 
     public byte[] generatePDFContent(String usernameConnectedFirstname, String usernameConnectedlastname,  String firstname, String lastname , String startDate, String endDate , Vehicle vehicle) throws IOException {
         // Contenu du PDF avec les variables dynamiques
-        String pdfContent = "Je soussigné, " + usernameConnectedFirstname  + usernameConnectedlastname + " de la société Onetech Business Solutions,\n" +
-                "sise au 16 Rue des entrepreneurs Z.I Charguia II, déclare que " + firstname + lastname + ",\n" +
+        String pdfContent = "Je soussigné, " + usernameConnectedFirstname  +" " + usernameConnectedlastname + " de la société Onetech Business Solutions,\n" +
+                "sise au 16 Rue des entrepreneurs Z.I Charguia II, déclare que " + firstname +" " +  lastname + ",\n" +
                 "est(sont) chargé(s) d'effectuer une mission   "    + ",\n" +    " à et ce à partir du " + startDate + " au " + endDate + " dans le cadre du projet."+
                  ",\n" +  "Détails du véhicule:\n" +
                 "Marque: " + vehicle.getMarque() + "\n" +
