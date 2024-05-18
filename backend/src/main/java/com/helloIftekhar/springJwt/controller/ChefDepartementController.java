@@ -122,14 +122,23 @@ public class ChefDepartementController {
             reservation.setStatus(status);
             reservationRepository.save(reservation);
 
-            // Generate PDF content
-            String pdfContent = "Reservation ID: " + reservation.getId() + "\n" +
-                    "User: " + reservation.getUser().getUsername() + "\n" +
-                    "Status: " + (status ? "Accepted" : "Rejected");
+            // Récupérer les informations nécessaires
+            User userConnected = userService.getUserById(Math.toIntExact(reservation.getUserIdConnected())); // Méthode pour récupérer l'utilisateur connecté
+            String usernameConnectedFirstname = userConnected.getUsername();
+            String usernameConnectedlastname = userConnected.getLastName();
 
-            // Send email with PDF attachment
-            emailService.sendEmailWithAttachment(reservation.getUser().getEmail(), "Reservation Status Update",
-                    "Your reservation status has been updated.", pdfContent.getBytes(), "reservation.pdf");
+            String firstname = reservation.getUser().getFirstName();
+            String lastname = reservation.getUser().getLastName();
+
+            String startDate = reservation.getStartDate().toString();
+            String endDate = reservation.getEndDate().toString();
+
+            // Générer le contenu du PDF
+            byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname,usernameConnectedlastname, firstname,lastname, startDate, endDate, reservation.getVehicle());
+
+            // Envoyer un email avec la pièce jointe PDF
+            emailService.sendEmailWithPDFAttachment(reservation.getUser().getEmail(), "Reservation Status Update",
+                    "Your reservation status has been updated.", pdfBytes);
 
             return ResponseEntity.ok(reservation);
         } catch (Exception e) {
@@ -137,6 +146,8 @@ public class ChefDepartementController {
                     .body("Error updating reservation status: " + e.getMessage());
         }
     }
+
+
     @GetMapping("/{userId}")
     public ResponseEntity<Map<String, String>> getUsernameById(@PathVariable Integer userId) {
         Optional<User> userOptional = userRepository.findById(userId);
