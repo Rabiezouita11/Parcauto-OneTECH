@@ -139,15 +139,55 @@ public class ChefDepartementController {
             String endDate = reservation.getEndDate().toString();
             if (status) {
                 // Retrieve necessary information
+                String emailSubject = "Confirmation de Réservation";
+                String emailBody = "Bonjour [Nom du Chef de Département],\n\n"
+                        + "Je vous informe que la réservation de véhicule avec conducteur vous avez passée a été acceptée.\n\n"
+                        + "Voici les détails de la mission :\n\n"
+                        + "Date et Heure de Prise en Destination : [+21670102400]\n"
+                        + "Véhicule Assigné: [contact.otbs@onetech-group.com]\n"
+                        + "Conducteur Assigné : Conducteur Assignéee\n"
+                        + "Le conducteur été informé de cette mission et se prépare à effectuer le service conformément aux instructions fournies.\n\n"
+                        + "Si vous avez besoin de plus d'informations ou de modifications, n'hésitez pas à me contacter..\n\n"
+                        + "Cordialement,";
 
-
+                emailBody = emailBody.replace("[Nom du Chef de Département]", usernameConnectedFirstname + " " + usernameConnectedlastname);
+                emailBody = emailBody.replace("[+21670102400]", destination);
+                emailBody = emailBody.replace("[contact.otbs@onetech-group.com]", reservation.getVehicle().getMarque());
+                emailBody = emailBody.replace("Conducteur Assignéee", reservation.getUser().getFirstName() + " "+ reservation.getUser().getLastName());
 
                 // Generate PDF content
                 byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname, usernameConnectedlastname, firstname, lastname, startDate, endDate, reservation.getVehicle(), destination, accompagnateur);
 
                 // Send email with PDF attachment
-                emailService.sendEmailWithPDFAttachment(usernameConnectedEmail, "Reservation Status Update",
-                        "Your reservation status has been updated.", pdfBytes);
+                emailService.sendEmailWithPDFAttachment(usernameConnectedEmail, emailSubject,
+                        emailBody, pdfBytes);
+
+
+
+
+
+
+                String emailSubject2 = " Ordre de Mission ";
+                String emailBody2 = "Bonjour [Nom du Conducteur],\n\n"
+                        + "Nous vous informons que vous avez été assigné à une nouvelle mission . Voici les détails de la mission :\n\n"
+                        + "Date et Heure de Prise en Charge :    [Date et heure]       \n\n"
+                        + "Véhicule : [+21670102400]\n"
+                        + "Veuillez vous assurer que le véhicule est en parfait état et que toutes les préparations nécessaires sont effectuées avant le début de cette mission.\n"
+                        + "Merci de confirmer la réception de cet ordre de mission.\n\n"
+                        + "Pour toute question ou clarification, n'hésitez pas à me contacter.\n\n\n"
+                        + "Cordialement,";
+
+                emailBody2 = emailBody2.replace("[Nom du Conducteur]", reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName());
+                emailBody2 = emailBody2.replace("[Date et heure] ", reservation.getStartDate().toString() +" "+reservation.getEndDate().toString());
+                emailBody2= emailBody2.replace(" [+21670102400]", reservation.getVehicle().getMarque());
+                emailBody2 = emailBody2.replace("Conducteur Assignéee", reservation.getUser().getFirstName() + " "+ reservation.getUser().getLastName());
+
+
+
+                // Send email with PDF attachment
+                emailService.sendEmailWithPDFAttachment(reservation.getUser().getEmail(), emailSubject2,
+                        emailBody2, pdfBytes);
+
             }else{
                 String emailSubject = "Refus de Réservation et Demande de Contact avec l'Administration";
                 String emailBody = "Madame, Monsieur,\n\n"
