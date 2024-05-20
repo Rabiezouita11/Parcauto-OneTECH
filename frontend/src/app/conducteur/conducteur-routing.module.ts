@@ -26,14 +26,14 @@ const routes: Routes = [
             title: 'profile'
         }
     }, {
-        path: 'Vehicule',
+        path: 'vehicule',
         component: VehiculeComponent,
         canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {
             title: 'Vehicule'
         }
     },{
-        path: 'users',
+        path: 'utilisateurs',
         component: UsersComponent,
         canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {
