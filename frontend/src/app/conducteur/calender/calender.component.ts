@@ -125,24 +125,22 @@ export class CalenderComponent implements OnInit {
         return (num < 10 ? '0' : '') + num;
     }
 
-     saveReservation(reservationForm : NgForm) { // Check if the form is invalid
-
-
+    saveReservation(formReservation: NgForm) { // Vérifier si le formulaire est invalide
         console.log(this.selectedUserId);
-        if (reservationForm.invalid) { // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Validation Error', text: 'Please fill out all required fields.'});
+        if (formReservation.invalid) { // Afficher un message d'erreur en utilisant Swal
+            Swal.fire({icon: 'error', title: 'Erreur de validation', text: 'Veuillez remplir tous les champs obligatoires.'});
             return;
         }
-
-        // Check if selectedVehicleId or selectedUserId is null
+    
+        // Vérifier si selectedVehicleId ou selectedUserId est nul
         if (this.selectedVehicleId === null || this.selectedUserId === null) {
-            console.error('Selected vehicle ID or user ID is null');
-            // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Selection Error', text: 'Please select a vehicle and a user.'});
+            console.error('L\'identifiant du véhicule sélectionné ou l\'identifiant de l\'utilisateur est nul');
+            // Afficher un message d'erreur en utilisant Swal
+            Swal.fire({icon: 'error', title: 'Erreur de sélection', text: 'Veuillez sélectionner un véhicule et un utilisateur.'});
             return;
         }
-
-        // Create the Reservation object
+    
+        // Créer l'objet Réservation
         const reservation: Reservation = {
             id: 0,
             vehicle: {
@@ -152,33 +150,32 @@ export class CalenderComponent implements OnInit {
             },
             user: {
                 id: this.selectedUserId,
-                username:''
-
+                username: ''
             },
             startDate: this.reservation.startDate,
             endDate: this.reservation.endDate,
             mission: this.reservation.mission,
-            userIdConnected: this.userIdConnected ,
-            distiantion:this.reservation.distiantion,
-            accompagnateur:this.reservation.accompagnateur,
+            userIdConnected: this.userIdConnected,
+            distiantion: this.reservation.distiantion,
+            accompagnateur: this.reservation.accompagnateur,
         };
-      
-
-        // Call the reservation service to create the reservation
+    
+        // Appeler le service de réservation pour créer la réservation
         this.reservationService.createReservation(reservation).subscribe(() => {
-            console.log('Reservation created successfully');
-            // Show success message using Swal
-            Swal.fire({icon: 'success', title: 'Success', text: 'Reservation created successfully.'}).then(() => { // Reset form and close modal
-                reservationForm.resetForm();
+            console.log('Réservation créée avec succès');
+            // Afficher un message de succès en utilisant Swal
+            Swal.fire({icon: 'success', title: 'Succès', text: 'Réservation créée avec succès.'}).then(() => { // Réinitialiser le formulaire et fermer la fenêtre modale
+                formReservation.resetForm();
                 this.closeModal();
                 this.ngOnInit();
             });
         }, error => {
-            console.error('Error creating reservation:', error);
-            // Show error message using Swal
-            Swal.fire({icon: 'error', title: 'Error', text: error.error});
+            console.error('Erreur lors de la création de la réservation :', error);
+            // Afficher un message d'erreur en utilisant Swal
+            Swal.fire({icon: 'error', title: 'Erreur', text: error.error});
         });
     }
+    
     async loadReservations(): Promise<void> {
         if (!this.userIdConnected) {
             console.error('User ID is not available');
@@ -214,13 +211,14 @@ export class CalenderComponent implements OnInit {
 
     getReservationStatus(reservation: Reservation): string {
         if (reservation.status === null) {
-          return 'En cours';
+            return 'En cours';
         } else if (reservation.status === false) {
-          return 'Refused';
+            return 'Refusée';
         } else {
-          return 'Accepted';
+            return 'Acceptée';
         }
-      }
+    }
+    
     loadConducteurUsers() {
         this.userService.getConducteurs().subscribe(data => {
             this.conducteurUsers = data;

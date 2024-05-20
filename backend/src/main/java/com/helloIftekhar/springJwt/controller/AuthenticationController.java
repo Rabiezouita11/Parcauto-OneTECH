@@ -72,8 +72,7 @@ public class AuthenticationController {
         String appUrl = request.getScheme() + "://" + request.getServerName() + ":4200";
         if (user.isEmpty()) {
             System.out.println("We didn't find an account for that e-mail address.");
-            return ResponseEntity.badRequest().body(new MessageResponse("We didn't find an account for that e-mail address"));
-
+            return ResponseEntity.badRequest().body(new MessageResponse("Nous n'avons trouvé aucun compte pour cette adresse e-mail"));
         } else {
             User userr = user.get();
 
@@ -83,12 +82,12 @@ public class AuthenticationController {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             simpleMailMessage.setFrom("Parcauto-OneTECH");
             simpleMailMessage.setTo(userr.getEmail());
-            simpleMailMessage.setSubject("Password Reset Request");
-            simpleMailMessage.setText("Pou récupérer votre Mot De passe cliquer sur ce Lien :\n" + appUrl
-                    + "/auth/resetpassword?token=" + userr.getResetToken());
+            simpleMailMessage.setSubject("Demande de réinitialisation de mot de passe");
+            simpleMailMessage.setText("Pour réinitialiser votre mot de passe, cliquez sur ce lien :\n" + appUrl + "/auth/resetpassword?token=" + userr.getResetToken());
+
             System.out.println(userr.getResetToken());
             userService.sendEmail(simpleMailMessage);
-            return ResponseEntity.ok(new MessageResponse("Password reset link has been sent to your email address"));
+            return ResponseEntity.ok(new MessageResponse("Le lien de réinitialisation de mot de passe a été envoyé à votre adresse e-mail"));
 
         }
     }
@@ -101,7 +100,7 @@ public class AuthenticationController {
         Optional<User> user = Optional.ofNullable(userService.findUserByResetToken(resetToken));
         if (!user.isPresent()) {
             System.out.println("We didn't find an account for that Token");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("We didn't find an account for that Token"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("Nous n'avons trouvé aucun compte pour ce jeton"));
 
 
         } else {
@@ -110,7 +109,7 @@ public class AuthenticationController {
 
             if (isTokenExpired(tokenCreationDate)) {
                 System.out.println("Token expired.");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Token expired"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Le jeton a expiré"));
 
             }
             String encodedPassword = passwordEncoder.encode(password);
@@ -121,7 +120,7 @@ public class AuthenticationController {
             userr.setDateToken(null);
             userService.save(userr);
 
-            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Password reset successful"));
+            return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("Réinitialisation de mot de passe réussie"));
 
         }
     }
@@ -130,7 +129,7 @@ public class AuthenticationController {
 
         Optional<User> userOptional = userService.findById(userId);
         if (userOptional.isEmpty()) {
-            String errorMessage = "User not found with ID: " + userId;
+            String errorMessage = "Utilisateur non trouvé avec l'ID : " + userId;
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage.getBytes());
         }
         // Construct the path to the image file
@@ -138,7 +137,7 @@ public class AuthenticationController {
         Path path = Paths.get(filePath);
 
         if (!Files.exists(path)) {
-            String errorMessage = "Image not found for user ID: " + userId + " and file name: " + fileName;
+            String errorMessage = "Image non trouvée pour l'ID utilisateur : " + userId + " et le nom de fichier : " + fileName;
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage.getBytes());
         }
 
@@ -174,7 +173,7 @@ public class AuthenticationController {
         Optional<User> userOptional = Optional.ofNullable(userService.findUserByEmail(email));
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("User not found with email: " + email));
+            return ResponseEntity.badRequest().body(new MessageResponse("Utilisateur non trouvé avec l'email : " + email));
         }
 
         User user = userOptional.get();
@@ -195,14 +194,15 @@ public class AuthenticationController {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("Parcauto-OneTECH");
         simpleMailMessage.setTo(user.getEmail());
-        simpleMailMessage.setSubject("Email Verification Code");
-        simpleMailMessage.setText("Your verification code is: " + verificationCode +
-                "\n\nTo verify your email, please click on the following link:\n" +
+        simpleMailMessage.setSubject("Code de vérification par email");
+        simpleMailMessage.setText("Votre code de vérification est : " + verificationCode +
+                "\n\nPour vérifier votre email, veuillez cliquer sur le lien suivant :\n" +
                 appUrl + "/auth/verification?token=" + token);
+
 
         userService.sendEmail(simpleMailMessage);
 
-        return ResponseEntity.ok(new MessageResponse("Verification code sent to your email address"));
+        return ResponseEntity.ok(new MessageResponse("Code de vérification envoyé à votre adresse e-mail"));
     }
 
     private String generateTokenForUsername(String username) {
@@ -245,18 +245,18 @@ public class AuthenticationController {
         Optional<User> userOptional = Optional.ofNullable(userService.findUserByResetTokenEmail(token));
 
         if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MessageResponse("User not found with reset token: " + token));
+            return ResponseEntity.badRequest().body(new MessageResponse("Utilisateur non trouvé avec le jeton de réinitialisation : " + token));
         }
 
         User user = userOptional.get();
         String verificationCode = user.getVerificationCode();
 
         if (verificationCode == null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Verification code does not exist"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Le code de vérification n'existe pas"));
         }
 
         if (!verificationCode.equals(code)) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Incorrect verification code"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Code de vérification incorrect"));
         }
 
         // Update email status to valid
@@ -265,7 +265,7 @@ public class AuthenticationController {
         user.setVerificationCode(null);
         userService.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("Email verification successful"));
+        return ResponseEntity.ok(new MessageResponse("Vérification de l'email réussie"));
     }
 
 

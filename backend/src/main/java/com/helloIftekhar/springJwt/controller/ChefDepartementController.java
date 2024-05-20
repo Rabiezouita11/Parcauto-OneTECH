@@ -58,22 +58,22 @@ public class ChefDepartementController {
         try {
             // Check if the start date and end date are the same
             if (reservation.getStartDate().isEqual(reservation.getEndDate())) {
-                return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
+                return ResponseEntity.badRequest().body("La date de début et la date de fin ne peuvent pas être identiques");
             }
             if (reservation.getStartDate().isAfter(reservation.getEndDate())) {
-                return ResponseEntity.badRequest().body("Start date cannot be after end date");
+                return ResponseEntity.badRequest().body("La date de début ne peut pas être postérieure à la date de fin");
             }
             // Check if the reservation already exists for the given vehicle and time period
             Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
                     reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
             if (existingReservation.isPresent()) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Reservation already exists for the given time period");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
             }
 
             // Retrieve the vehicle from the database
             Optional<Vehicle> vehicleOptional = vehicleRepository.findById(reservation.getVehicleId());
             if (vehicleOptional.isEmpty()) {
-                return ResponseEntity.badRequest().body("Vehicle not found");
+                return ResponseEntity.badRequest().body("Véhicule non trouvé");
             }
 
             // Set the vehicle for the reservation
@@ -85,7 +85,7 @@ public class ChefDepartementController {
                 // Retrieve the user from the database
                 Optional<User> userOptional = userService.findById(reservation.getUserId());
                 if (userOptional.isEmpty()) {
-                    return ResponseEntity.badRequest().body("User not found");
+                    return ResponseEntity.badRequest().body("Utilisateur non trouvé");
                 }
                 // Set the user for the reservation
                 reservation.setUser(userOptional.get());
@@ -120,7 +120,7 @@ public class ChefDepartementController {
         try {
             Optional<Reservation> reservationOptional = reservationRepository.findById(id);
             if (reservationOptional.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reservation not found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Réservation non trouvée");
             }
 
             Reservation reservation = reservationOptional.get();

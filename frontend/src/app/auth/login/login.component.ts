@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
                 if (data.emailVerified === "false") { // Check if email is not verified
                   Swal.fire({
                     icon: 'info',
-                    title: 'Email Not Verified',
-                    text: 'Please check your email for verification instructions.',
+                    title: 'Email non vérifié',
+                    text: 'Veuillez vérifier votre email pour les instructions de vérification.',
                     confirmButtonText: 'OK'
                   }).then(() => {
                     const email = 'nourjbeli78@gmail.com'; // Email address to search for
@@ -56,22 +56,22 @@ export class LoginComponent implements OnInit {
                   if (data.status === 'null') {
                     Swal.fire({
                       icon: 'info',
-                      title: 'Account Status',
-                      text: 'Your account is currently under review. You will be notified via email once it is processed.',
+                      title: 'Statut du compte',
+                      text: 'Votre compte est actuellement en cours de révision. Vous serez notifié par email une fois qu\'il sera traité.',
                       confirmButtonText: 'OK'
                     });
                   } else if (data.status === "false") { // Check for false value (0)
                     Swal.fire({
                       icon: 'error',
-                      title: 'Account Disabled',
-                      text: 'Your account is disabled',
+                      title: 'Compte désactivé',
+                      text: 'Votre compte est désactivé',
                       confirmButtonText: 'OK'
                     });
                   } else {
                     Swal.fire({
                       icon: 'success',
-                      title: 'Access Granted',
-                      text: 'You have accepted the terms and can now access this page',
+                      title: 'Accès accordé',
+                      text: 'Vous avez accepté les termes et pouvez maintenant accéder à cette page',
                       confirmButtonText: 'OK'
                     }).then(() => {
                       this.router.navigateByUrl('/dashboard', { skipLocationChange: false });
@@ -80,8 +80,8 @@ export class LoginComponent implements OnInit {
                 } else {
                   Swal.fire({
                     icon: 'error',
-                    title: 'Access Denied',
-                    text: 'You do not have permission to access this page.',
+                    title: 'Accès refusé',
+                    text: 'Vous n\'avez pas la permission d\'accéder à cette page.',
                     confirmButtonText: 'OK'
                   });
                 }
@@ -100,13 +100,14 @@ export class LoginComponent implements OnInit {
           console.error('Login failed:', error);
           Swal.fire({
             icon: 'error',
-            title: 'Login Failed',
-            text: 'Failed to log in. Please check your credentials and try again.',
+            title: 'Échec de la connexion',
+            text: 'Échec de la connexion. Veuillez vérifier vos identifiants et réessayer.',
             confirmButtonText: 'OK'
           });
         }
       );
     }
+    
     
     
     

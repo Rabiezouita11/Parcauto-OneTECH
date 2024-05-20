@@ -74,7 +74,7 @@ public class UserController {
         userService.updateUserProfile(userId, username, firstName, lastName, email, multipartFile);
 
         // Create a JSON object with a response message
-        String message = "Profile updated successfully";
+        String message = "Profil mis à jour avec succès";
         Map<String, Object> response = new HashMap<>();
         response.put("message", message);
 
@@ -82,9 +82,6 @@ public class UserController {
     }
     @PostMapping("/user/role/change")
     public ResponseEntity<Object> changeUserRole(@RequestParam("userId") Integer userId, @RequestParam("newRole") String newRole) {
-        // Check if user exists
-      System.out.println("userIduserIduserIduserId"+userId);
-        System.out.println("newRolenewRolenewRolenewRole"+newRole);
 
         User user = userService.getUserById(userId);
         if (user == null) {

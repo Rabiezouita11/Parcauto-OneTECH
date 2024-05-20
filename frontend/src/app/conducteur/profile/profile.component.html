@@ -4,46 +4,45 @@
             <form (ngSubmit)="updateProfile()" #updateForm="ngForm" enctype="multipart/form-data">
                 <div class="de_tab tab_simple">
                     <ul class="de_nav">
-                        <li class="active"><span>Profile</span></li>
-                        <li><span>Notifications</span></li>
+                        <li class="active"><span>Profil</span></li>
                     </ul>
                     <div class="de_tab_content">                            
                         <div class="tab-1">
                             <div class="row">
                                 <div class="col-lg-6 mb20">
-                                    <h5>Username</h5>
-                                    <input type="text" name="username" id="username" class="form-control" placeholder="Enter username" [(ngModel)]="userName" readonly/>
+                                    <h5>Nom d'utilisateur</h5>
+                                    <input type="text" name="username" id="username" class="form-control" placeholder="Entrez le nom d'utilisateur" [(ngModel)]="userName" readonly/>
                                 </div>
                                 <div class="col-lg-6 mb20">
-                                    <h5>Email Address</h5>
-                                    <input type="text" name="email_address" id="email_address" class="form-control" placeholder="Enter email" [(ngModel)]="email" />
+                                    <h5>Adresse e-mail</h5>
+                                    <input type="text" name="email_address" id="email_address" class="form-control" placeholder="Entrez l'e-mail" [(ngModel)]="email" />
                                 </div>
                                 <div class="col-md-6 mb20">
-                                    <h5>First Name</h5>
-                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter first name" [(ngModel)]="firstName" />
+                                    <h5>Prénom</h5>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Entrez le prénom" [(ngModel)]="firstName" />
                                 </div>
                                 <div class="col-md-6 mb20">
-                                    <h5>Last Name</h5>
-                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter last name" [(ngModel)]="lastName" />
+                                    <h5>Nom de famille</h5>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Entrez le nom de famille" [(ngModel)]="lastName" />
                                 </div>
                                 <div class="col-md-6 mb20">
-                                    <h5>Profile Image</h5>
+                                    <h5>Image de profil</h5>
                                     <input type="file" name="image" id="image" class="form-control" (change)="onFileSelected($event)" />
                                 </div>
                                 <div class="col-md-6 mb20">
-                                    <h5>Role</h5>
-                                    <input type="text" name="role" id="role" class="form-control" placeholder="Enter role" [(ngModel)]="role" readonly />
+                                    <h5>Rôle</h5>
+                                    <input type="text" name="role" id="role" class="form-control" placeholder="Entrez le rôle" [(ngModel)]="role" readonly />
                                 </div>
                             </div>
                         </div>
                         <div class="tab-2">
                             <div class="row">
-                                <!-- Add additional settings here if needed -->
+                                <!-- Ajoutez ici des paramètres supplémentaires si nécessaire -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
             </form>
         </div>
     </div>

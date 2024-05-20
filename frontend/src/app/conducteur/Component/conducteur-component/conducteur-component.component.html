@@ -35,29 +35,28 @@
 
                                     <div class="profile_name">
                                         <h4>
-                                            {{ role }}: {{ firstName }} {{ lastName }}
-                                            
+                                            {{ role === 'CHEF_DEPARTEMENT' ? 'CHEF DEPARTEMENT' : role }}: {{ firstName }} {{ lastName }}
                                             <span class="profile_username text-gray">({{ email }})</span>
                                         </h4>
                                     </div>
+                                    
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a routerLink="/dashboard" routerLinkActive="active"><i
-                                                class="fa fa-home"></i>Dashboard</a></li>
-                                                <li ><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i>My Profile</a></li>
-                                                <li *ngIf="role === 'ADMIN'"><a routerLink="/Vehicule" routerLinkActive="active"><i class="fa fa-car"></i>Vehicule</a></li>
-                                                <li *ngIf="role === 'ADMIN'"><a routerLink="/users" routerLinkActive="active"><i class="fa fa-user"></i>Users</a></li>
-                                                <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calender" routerLinkActive="active"><i class="fa fa-calendar"></i>calender</a></li>
-                                                <li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i>reservation</a></li>
-
-                                 
+                                    <li><a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-home"></i>Tableau de bord</a></li>
+                                    <li><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i>Mon profil</a></li>
+                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/vehicule" routerLinkActive="active"><i class="fa fa-car"></i>Véhicules</a></li>
+                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/utilisateurs" routerLinkActive="active"><i class="fa fa-user"></i>Utilisateurs</a></li>
+                                    <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calendrier" routerLinkActive="active"><i class="fa fa-calendar"></i>Calendrier</a></li>
+                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i>Réservations</a></li>
+                                
                                     <li>
-                                        <a  (click)="logout()">
-                                            <i class="fa fa-sign-out"></i>Sign Out
+                                        <a (click)="logout()">
+                                            <i class="fa fa-sign-out"></i>Déconnexion
                                         </a>
                                     </li>
                                 </ul>
+                                
                             </div>
                         </div>
                         <div class="col-lg-9">

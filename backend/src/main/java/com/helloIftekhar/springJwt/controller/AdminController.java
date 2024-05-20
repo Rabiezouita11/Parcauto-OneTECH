@@ -62,7 +62,6 @@ public class AdminController {
     public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) {
         // Ensure that the ID of the vehicle matches the path variable ID
         vehicle.setId(id);
-        System.out.println("idididididididi"+id);
         return vehicleService.saveOrUpdateVehicle(vehicle);
     }
     @DeleteMapping("/admin/vehicles/{id}")
@@ -116,7 +115,7 @@ public class AdminController {
 
             helper.setFrom("Parcauto-OneTECH");
             helper.setTo(userEmail);
-            helper.setSubject("Account Status Update");
+            helper.setSubject("Mise à jour du statut du compte");
 
             String content;
             if (status) {

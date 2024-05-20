@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   profileImage!: File | null;
   user: any = {};
 
-  constructor(private userService: UserService,private profileUpdateService: ProfileUpdateService) {
+  constructor(private userService: UserService, private profileUpdateService: ProfileUpdateService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
@@ -42,10 +42,10 @@ export class ProfileComponent implements OnInit {
         this.userName = data.username;
 
       }, (error) => {
-        console.error('Error fetching user information:', error);
+        console.error('Erreur lors de la récupération des informations utilisateur :', error);
       });
     } else {
-      console.error('Token not found in localStorage');
+      console.error('Jeton non trouvé dans le stockage local');
     }
   }
   onFileSelected(event: any): void {
@@ -56,52 +56,46 @@ export class ProfileComponent implements OnInit {
     if (!this.token || !this.userId) {
       Swal.fire({
         icon: 'error',
-        title: 'Error',
-        text: 'Token or User ID is missing',
+        title: 'Erreur',
+        text: 'Le jeton ou l\'identifiant utilisateur est manquant',
         confirmButtonText: 'OK'
       });
       return;
     }
-  
-    // Create FormData object
+
+    // Créer un objet FormData
     const formData = new FormData();
     formData.append('id', this.userId);
     formData.append('username', this.userName);
     formData.append('firstName', this.firstName);
     formData.append('lastName', this.lastName);
     formData.append('email', this.email);
-    // Append the file
+    // Ajouter le fichier
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
     }
-  
-    // Send the FormData object to the backend
+
+    // Envoyer l'objet FormData au backend
     this.userService.updateProfile(formData, this.token).subscribe(
       (response) => {
         Swal.fire({
           icon: 'success',
-          title: 'Success',
-          text: 'Profile updated successfully',
+          title: 'Succès',
+          text: 'Profil mis à jour avec succès',
           confirmButtonText: 'OK'
         });
-        // Optionally, update any UI elements or show success message
+        // Éventuellement, mettre à jour des éléments de l'interface utilisateur ou afficher un message de succès
         this.profileUpdateService.triggerProfileUpdated();
       },
       (error) => {
-        console.error('Error updating profile:', error);
+        console.error('Erreur lors de la mise à jour du profil :', error);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'Failed to update profile. Please try again later.',
+          title: 'Erreur',
+          text: 'Échec de la mise à jour du profil. Veuillez réessayer plus tard.',
           confirmButtonText: 'OK'
         });
       }
     );
   }
-  
 }
-
-
-
-
-

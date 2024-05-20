@@ -41,7 +41,7 @@ const routes: Routes = [
         }
     },
     {
-        path: 'calender',
+        path: 'calendrier',
         component: CalenderComponent,
         // canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {

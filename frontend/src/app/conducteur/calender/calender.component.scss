@@ -56,3 +56,31 @@
         }
     }
 }
+.reservation-sections {
+    .demo-app-sidebar-section {
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 10px;
+
+        h2 {
+            margin: 0; // Remove default margin
+        }
+    }
+
+    .total-reservations {
+        border-top: 4px solid #007bff; // blue
+    }
+
+    .pending-reservations {
+        border-top: 4px solid #ffc107; // yellow
+    }
+
+    .accepted-reservations {
+        border-top: 4px solid #28a745; // green
+    }
+
+    .refused-reservations {
+        border-top: 4px solid #dc3545; // red
+    }
+}
