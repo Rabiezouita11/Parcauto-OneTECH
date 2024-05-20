@@ -180,7 +180,6 @@ public class ChefDepartementController {
                 emailBody2 = emailBody2.replace("[Nom du Conducteur]", reservation.getUser().getFirstName() + " " + reservation.getUser().getLastName());
                 emailBody2 = emailBody2.replace("[Date et heure] ", reservation.getStartDate().toString() +" "+reservation.getEndDate().toString());
                 emailBody2= emailBody2.replace(" [+21670102400]", reservation.getVehicle().getMarque());
-                emailBody2 = emailBody2.replace("Conducteur Assignéee", reservation.getUser().getFirstName() + " "+ reservation.getUser().getLastName());
 
 
 
