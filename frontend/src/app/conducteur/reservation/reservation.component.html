@@ -31,8 +31,8 @@
             </ng-template>
           </td>
           <td>{{ reservation.vehicle.marque }} {{ reservation.vehicle.modele }}</td>
-          <td>{{ reservation.startDate | date: 'short' }}</td>
-          <td>{{ reservation.endDate | date: 'short' }}</td>
+          <td>{{ reservation.startDate  }}</td>
+          <td>{{ reservation.endDate }}</td>
           <td>
             {{ reservation.status === true ? 'Accepted' : (reservation.status === false ? 'Refused' : 'En cours') }}
           </td>
