@@ -57,10 +57,9 @@ public class EmailService {
                 .append("à ").append(destination).append(" et ce à partir du ").append(startDate).append(" au ").append(endDate).append(" dans le cadre du projet.\n");
 
         // Include the accompagnateur line only if accompagnateur is not null
-        if (accompagnateur != null) {
+        if (accompagnateur != null && !accompagnateur.isEmpty()) { // Check if accompagnateur is not null and not empty
             pdfContent.append("Avec l'accompagnateur ").append(accompagnateur).append(" qui va accompagner lors de cette mission\n");
         }
-
         pdfContent.append("\nDétails du véhicule:\n")
                 .append("Marque: ").append(vehicle.getMarque()).append("\n")
                 .append("Modèle: ").append(vehicle.getModele()).append("\n")
