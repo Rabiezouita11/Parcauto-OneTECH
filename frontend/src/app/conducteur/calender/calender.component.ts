@@ -101,7 +101,15 @@ export class CalenderComponent implements OnInit {
             console.error('Token not found in localStorage');
         }
     }
-
+    getCurrentDate(): string {
+        // Get the current date in YYYY-MM-DD format
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }
+      
 
     getCurrentDateTime(): string {
         // Get the current date and time
