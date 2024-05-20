@@ -36,19 +36,21 @@ public class ChefDepartementController {
     public List<Vehicle> getUnavailableVehicles() {
         return vehicleRepository.findByDisponibiliteTrue();
     }
-
     @GetMapping("/getConducteurs")
     public List<User> getConductors() {
         // Get all conductors from the user repository
         List<User> conductors = userService.getConducteurs();
 
-        // Filter out conductors who have reservations with status null or true
+        // Filter out conductors who have reservations with status not null or false
         List<User> filteredConductors = conductors.stream()
-                .filter(conductor -> !reservationRepository.existsByUserAndStatusIsNullTrue(conductor))
+                .filter(conductor -> !reservationRepository.existsByUserAndStatusIsNullOrStatusIsFalse(conductor))
                 .collect(Collectors.toList());
 
         return filteredConductors;
     }
+
+
+
 
 
     @PostMapping("/createReservation")
@@ -58,7 +60,9 @@ public class ChefDepartementController {
             if (reservation.getStartDate().isEqual(reservation.getEndDate())) {
                 return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
             }
-
+            if (reservation.getStartDate().isAfter(reservation.getEndDate())) {
+                return ResponseEntity.badRequest().body("Start date cannot be after end date");
+            }
             // Check if the reservation already exists for the given vehicle and time period
             Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
                     reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
@@ -85,6 +89,7 @@ public class ChefDepartementController {
                 }
                 // Set the user for the reservation
                 reservation.setUser(userOptional.get());
+
             }
 
             // Save the reservation
@@ -121,25 +126,41 @@ public class ChefDepartementController {
             Reservation reservation = reservationOptional.get();
             reservation.setStatus(status);
             reservationRepository.save(reservation);
-
-            // Récupérer les informations nécessaires
-            User userConnected = userService.getUserById(Math.toIntExact(reservation.getUserIdConnected())); // Méthode pour récupérer l'utilisateur connecté
+            User userConnected = userService.getUserById(Math.toIntExact(reservation.getUserIdConnected()));
             String usernameConnectedFirstname = userConnected.getUsername();
             String usernameConnectedlastname = userConnected.getLastName();
+            String usernameConnectedEmail = userConnected.getEmail();
 
             String firstname = reservation.getUser().getFirstName();
             String lastname = reservation.getUser().getLastName();
-
+            String destination = reservation.getDistiantion();
+            String accompagnateur = reservation.getAccompagnateur();
             String startDate = reservation.getStartDate().toString();
             String endDate = reservation.getEndDate().toString();
+            if (status) {
+                // Retrieve necessary information
 
-            // Générer le contenu du PDF
-            byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname,usernameConnectedlastname, firstname,lastname, startDate, endDate, reservation.getVehicle());
 
-            // Envoyer un email avec la pièce jointe PDF
-            emailService.sendEmailWithPDFAttachment(reservation.getUser().getEmail(), "Reservation Status Update",
-                    "Your reservation status has been updated.", pdfBytes);
 
+                // Generate PDF content
+                byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname, usernameConnectedlastname, firstname, lastname, startDate, endDate, reservation.getVehicle(), destination, accompagnateur);
+
+                // Send email with PDF attachment
+                emailService.sendEmailWithPDFAttachment(usernameConnectedEmail, "Reservation Status Update",
+                        "Your reservation status has been updated.", pdfBytes);
+            }else{
+                String emailSubject = "Refus de Réservation et Demande de Contact avec l'Administration";
+                String emailBody = "Madame, Monsieur,\n\n"
+                        + "Je vous écris pour vous informer que votre réservation a malheureusement été refusée.\n\n"
+                        + "Pour obtenir de plus amples informations et discuter des raisons de ce refus, nous vous invitons à contacter notre administration. Vous pouvez les joindre par téléphone ou par e-mail aux coordonnées suivantes :\n\n"
+                        + "Téléphone : [+21670102400]\n"
+                        + "E-mail : [contact.otbs@onetech-group.com]\n\n"
+                        + "Nous restons à votre disposition pour toute question ou clarification supplémentaire.\n\n"
+                        + "Cordialement,";
+
+                // Send email
+                emailService.sendEmail(usernameConnectedEmail, emailSubject, emailBody);
+            }
             return ResponseEntity.ok(reservation);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

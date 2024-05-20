@@ -1,14 +1,10 @@
 export interface Vehicle {
     id: number;
     marque: string;
+    matricule: string;
     modele: string;
-    annee: number;
+    annee?: number;
     numeroSerie: string;
-    statut: string;
-    localisation: string;
     kilometrage: number;
-    historiqueReservation: string;
-    type: string;
     disponibilite: boolean;
-  }
-  
+}

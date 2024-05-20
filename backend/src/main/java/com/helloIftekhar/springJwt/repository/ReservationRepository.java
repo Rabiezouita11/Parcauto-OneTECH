@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findByVehicleAndStartDateAndEndDate(Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate);
     List<Reservation> findByUserIdConnected(Long userIdConnected);
-    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Reservation r WHERE r.user = :user AND (r.status IS NULL OR r.status = true)")
-    boolean existsByUserAndStatusIsNullTrue(User user);
+
+
+    boolean existsByUserAndStatusIsNullOrStatusIsFalse(User user);
+
 }

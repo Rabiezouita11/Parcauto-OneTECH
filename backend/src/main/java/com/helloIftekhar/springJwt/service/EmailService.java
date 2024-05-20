@@ -39,7 +39,7 @@ public class EmailService {
             Resource pdfResource = new ByteArrayResource(pdfContent);
 
             // Ajouter la pièce jointe PDF en utilisant la Resource
-            helper.addAttachment("document.pdf", pdfResource);
+            helper.addAttachment("Reservation.pdf", pdfResource);
 
             // Envoyer l'email
             emailSender.send(message);
@@ -48,24 +48,27 @@ public class EmailService {
         }
     }
 
-    public byte[] generatePDFContent(String usernameConnectedFirstname, String usernameConnectedlastname,  String firstname, String lastname , String startDate, String endDate , Vehicle vehicle) throws IOException {
-        // Contenu du PDF avec les variables dynamiques
-        String pdfContent = "Je soussigné, " + usernameConnectedFirstname  +" " + usernameConnectedlastname + " de la société Onetech Business Solutions,\n" +
-                "sise au 16 Rue des entrepreneurs Z.I Charguia II, déclare que " + firstname +" " +  lastname + ",\n" +
-                "est(sont) chargé(s) d'effectuer une mission   "    + ",\n" +    " à et ce à partir du " + startDate + " au " + endDate + " dans le cadre du projet."+
-                 ",\n" +  "Détails du véhicule:\n" +
-                "Marque: " + vehicle.getMarque() + "\n" +
-                "Modèle: " + vehicle.getModele() + "\n" +
-                "Année: " + vehicle.getAnnee() + "\n" +
-                "Numéro de série: " + vehicle.getNumeroSerie() + "\n" +
-                "Statut: " + vehicle.getStatut() + "\n" +
-                "Localisation: " + vehicle.getLocalisation() + "\n" +
-                "Kilométrage: " + vehicle.getKilometrage() + "\n" +
-                "Historique des réservations: " + vehicle.getHistoriqueReservation() + "\n" +
-                "Type: " + vehicle.getType() + "\n" +
-                "Disponibilité: " + (vehicle.isDisponibilite() ? "Disponible" : "Non disponible");
+    public byte[] generatePDFContent(String usernameConnectedFirstname, String usernameConnectedlastname, String firstname, String lastname, String startDate, String endDate, Vehicle vehicle, String destination, String accompagnateur) throws IOException {
+        // Base content of the PDF
+        StringBuilder pdfContent = new StringBuilder();
+        pdfContent.append("Je soussigné, ").append(usernameConnectedFirstname).append(" ").append(usernameConnectedlastname).append(" de la société Onetech Business Solutions,\n")
+                .append("sise au 16 Rue des entrepreneurs Z.I Charguia II, déclare que ").append(firstname).append(" ").append(lastname).append(",\n")
+                .append("est(sont) chargé(s) d'effectuer une mission   ").append(",\n")
+                .append("à ").append(destination).append(" et ce à partir du ").append(startDate).append(" au ").append(endDate).append(" dans le cadre du projet.\n");
 
-        // Créer un document PDF en utilisant PDFBox
+        // Include the accompagnateur line only if accompagnateur is not null
+        if (accompagnateur != null) {
+            pdfContent.append("Avec l'accompagnateur ").append(accompagnateur).append(" qui va accompagner lors de cette mission\n");
+        }
+
+        pdfContent.append("\nDétails du véhicule:\n")
+                .append("Marque: ").append(vehicle.getMarque()).append("\n")
+                .append("Modèle: ").append(vehicle.getModele()).append("\n")
+                .append("Année: ").append(vehicle.getAnnee()).append("\n")
+                .append("Numéro de série: ").append(vehicle.getNumeroSerie()).append("\n")
+                .append("Kilométrage: ").append(vehicle.getKilometrage()).append("\n");
+
+        // Create a PDF document using PDFBox
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
@@ -85,7 +88,7 @@ public class EmailService {
             contentStream.newLineAtOffset(startX, startY);
 
             // Split the content into lines
-            String[] lines = pdfContent.split("\n");
+            String[] lines = pdfContent.toString().split("\n");
             for (String line : lines) {
                 // Center text
                 float textWidth = PDType1Font.HELVETICA.getStringWidth(line) / 1000 * 12;
@@ -103,4 +106,26 @@ public class EmailService {
         document.close();
         return baos.toByteArray();
     }
+    public void sendEmail(String to, String subject, String text) {
+        try {
+            // Create MimeMessage and MimeMessageHelper
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            // Set email details
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text);
+
+            // Send the email
+            emailSender.send(message);
+
+            System.out.println("Email sent successfully.");
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error: " + e.getMessage());
+        }
+    }
+
+
+
 }

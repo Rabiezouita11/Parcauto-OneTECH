@@ -10,7 +10,15 @@
                     <span class="text-gray">Total voitures</span>
                 </div>
             </div>
-            
+            <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'ADMIN'">
+                <div class="card p-4 rounded-5">
+                    <div class="symbol mb40">
+                        <i class="fa id-color fa-2x fa-calendar"></i>
+                    </div>
+                    <span class="h1 mb0">{{ reservationCount }}</span>
+                    <span class="text-gray">Total Réservations</span>
+                </div>
+            </div>
 
             <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'ADMIN'">
                 <div class="card p-4 rounded-5">
@@ -22,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-6 mb25 order-sm-1">
+            <!-- <div class="col-lg-3 col-6 mb25 order-sm-1">
                 <div class="card p-4 rounded-5">
                     <div class="symbol mb40">
                         <i class="fa id-color fa-2x fa-calendar"></i>
@@ -30,9 +38,9 @@
                     <span class="h1 mb0">58</span>
                     <span class="text-gray">Total Orders</span>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="col-lg-3 col-6 mb25 order-sm-1">
+            <!-- <div class="col-lg-3 col-6 mb25 order-sm-1">
                 <div class="card p-4 rounded-5">
                     <div class="symbol mb40">
                         <i class="fa id-color fa-2x fa-calendar-times-o"></i>
@@ -40,7 +48,7 @@
                     <span class="h1 mb0">24</span>
                     <span class="text-gray">Cancel Orders</span>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="card p-4 rounded-5 mb25">

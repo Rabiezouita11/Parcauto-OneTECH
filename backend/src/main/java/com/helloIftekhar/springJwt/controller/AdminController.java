@@ -48,9 +48,9 @@ public class AdminController {
     @PostMapping("/admin/vehicles")
     public ResponseEntity<?> createOrUpdateVehicle(@RequestBody Vehicle vehicle) {
         // Check if a vehicle with the same marque already exists
-        Vehicle existingVehicle = vehicleService.findByMarque(vehicle.getMarque());
+        Vehicle existingVehicle = vehicleService.findByMatricule(vehicle.getMatricule());
         if (existingVehicle != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Marque already exists");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("vehicle deja existe");
         }
 
         // Save or update the vehicle

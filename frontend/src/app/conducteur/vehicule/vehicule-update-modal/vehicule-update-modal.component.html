@@ -3,15 +3,59 @@
   <p>ID: {{ vehicle.id }}</p>
   <p>Marque: {{ vehicle.marque }}</p>
   <p>Modèle: {{ vehicle.modele }}</p>
+  
   <!-- Add more details here as needed -->
 
   <!-- Input fields for updating vehicle details -->
+  <mat-label>Marque : </mat-label>
+<br>
   <mat-form-field>
-    <input matInput placeholder="New Marque" [(ngModel)]="updatedVehicle.marque">
-  </mat-form-field>
+    <input class="form-control" matInput placeholder="Marque" [(ngModel)]="updatedVehicle.marque">
+  </mat-form-field> 
+  <br>
+  <mat-label>Modèle :</mat-label>
+  <br>
   <mat-form-field>
-    <input matInput placeholder="New Modèle" [(ngModel)]="updatedVehicle.modele">
+  
+    <input matInput   class="form-control"placeholder="Modèle" [(ngModel)]="updatedVehicle.modele">
   </mat-form-field>
+  <br>
+  <mat-label>Matricule</mat-label>
+  <br>
+
+  <mat-form-field>
+  
+    <input matInput  class="form-control" placeholder="Matricule" [(ngModel)]="updatedVehicle.matricule">
+  </mat-form-field>
+  
+
+
+  <br>
+  <mat-label>Année</mat-label>
+  <br>
+  <mat-form-field>
+    <mat-label>Année</mat-label>
+    <input matInput  class="form-control" type="number" placeholder="Année" [(ngModel)]="updatedVehicle.annee">
+  </mat-form-field>
+  
+
+  <br>
+  <mat-label>Numéro de série</mat-label>
+  <br>
+  <mat-form-field>
+    <mat-label>Numéro de série</mat-label>
+    <input matInput  class="form-control" placeholder="Numéro de série" [(ngModel)]="updatedVehicle.numeroSerie">
+  </mat-form-field>
+  
+  <br>
+  <mat-label>Kilométrage</mat-label>
+  <br>
+  <mat-form-field>
+    <mat-label>Kilométrage</mat-label>
+    <input matInput  class="form-control" type="number" placeholder="Kilométrage" [(ngModel)]="updatedVehicle.kilometrage">
+  </mat-form-field>
+  
+
   <!-- Add more input fields for other details as needed -->
 </div>
 <div mat-dialog-actions>

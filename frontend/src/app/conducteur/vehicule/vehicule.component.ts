@@ -4,7 +4,7 @@ import { Vehicle } from 'src/app/model/Vehicle';
 import Swal from 'sweetalert2';
 import { VehicleDetailsModalComponent } from './vehicle-details-modal/vehicle-details-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { VehiculeUpdateModalComponent } from './vehicule-update-modal/vehicule-update-modal.component';
 
 @Component({
@@ -14,26 +14,36 @@ import { VehiculeUpdateModalComponent } from './vehicule-update-modal/vehicule-u
 })
 export class VehiculeComponent implements OnInit {
   @ViewChild('exampleModal') exampleModal!: ElementRef;
-  @ViewChild('vehicleForm') vehicleForm!: NgForm;
+  vehicleForm!: FormGroup;
 
   vehicles!: Vehicle[];
   errorMessage!: string;
   vehicle: Vehicle = {
     id: 0,
     marque: '',
+    matricule: '',
     modele: '',
-    annee: 0,
+   
     numeroSerie: '',
-    statut: '',
-    localisation: '',
     kilometrage: 0,
-    historiqueReservation: '',
-    type: '',
     disponibilite: true
   };
-  constructor(private vehicleService: VehicleService ,private dialog: MatDialog) { }
+  currentYear: number;
+
+  constructor(private fb: FormBuilder ,private vehicleService: VehicleService ,private dialog: MatDialog) { 
+    this.currentYear = new Date().getFullYear();
+
+  }
 
   ngOnInit(): void {
+    this.vehicleForm = this.fb.group({
+      marque: ['', Validators.required],
+      matricule: ['', Validators.required],
+      modele: ['', Validators.required],
+      annee: ['', [Validators.required, Validators.min(1886), Validators.max(this.currentYear)]],
+      numeroSerie: ['', Validators.required],
+      kilometrage: ['', Validators.required]
+    });
     this.getAllVehicles();
   }
 
@@ -62,15 +72,21 @@ export class VehiculeComponent implements OnInit {
       data: vehicle
     });
   }
+
   addVehicle(): void {
-    this.vehicleService.createVehicle(this.vehicle).subscribe(
+    if (this.vehicleForm.invalid) {
+      Swal.fire('Error', 'All fields are required', 'error');
+      return;
+    }
+
+    this.vehicleService.createVehicle(this.vehicleForm.value).subscribe(
       (response) => {
         Swal.fire('Success', 'Vehicle added successfully', 'success');
         this.ngOnInit(); // Assuming ngOnInit is a method in the component
       },
       (error) => {
-        if (error === 'Marque already exists') {
-          Swal.fire('Error', 'Marque already exists', 'error');
+        if (error.error && error.error.message === 'vehicle deja existe') {
+          Swal.fire('Error', 'vehicle deja existe', 'error');
         } else {
           Swal.fire('Error', 'An error occurred while adding the vehicle', 'error');
         }

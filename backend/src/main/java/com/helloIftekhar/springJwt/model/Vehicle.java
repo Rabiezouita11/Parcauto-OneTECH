@@ -14,20 +14,17 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String marque;
+    private String matricule;
     private String modele;
     private int annee;
     private String numeroSerie;
-    private String statut;
-    private String localisation;
     private double kilometrage;
-    private String historiqueReservation;
-    private String type;
     private boolean disponibilite;
     @JsonBackReference
     @OneToMany(mappedBy = "vehicle")
     private List<Reservation> reservations;
     public Vehicle() {
-        this.disponibilite = false; // Setting disponibilite to false by default
+        this.disponibilite = true; // Setting disponibilite to false by default
     }
     // Constructeurs, getters et setters
 }

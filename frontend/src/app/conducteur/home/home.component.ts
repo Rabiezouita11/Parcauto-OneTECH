@@ -8,17 +8,22 @@ import { ScriptService } from 'src/app/Service/script/script.service';
 import { Vehicle } from 'src/app/model/Vehicle';
 import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.service';
 import { User } from 'src/app/model/user';
+import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
+import { Reservation } from 'src/app/model/Reservation';
 @Component({ selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'] })
 export class HomeComponent implements OnInit {
   token: string | null;
   vehicles !: Vehicle[];
+  reservations !: Reservation[];
+
   vehicleCount !: number;
   usersCount !: number;
 
   role: any;
   users!: User[];
+  reservationCount!: number;
 
-  constructor(private vehicleService: VehicleService, private userService: UserService) {
+  constructor(private reservationService: ReservationService ,private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
@@ -28,6 +33,7 @@ export class HomeComponent implements OnInit {
 
     this.getAllVehicles();
     this.countUtilisateurs();
+    this.getAllReservations();
 
   }
   getInfo(): void {
@@ -53,7 +59,15 @@ export class HomeComponent implements OnInit {
       console.error('Error fetching vehicles:', error);
     });
   }
-
+  getAllReservations(): void {
+    this.reservationService.getAllReservations().subscribe(
+      data => {
+        this.reservations = data;
+        this.reservationCount = data.length
+      },
+      error => console.error('Error fetching reservations', error)
+    );
+  }
   countUtilisateurs(): void {
     this.userService.getConducteursAndChefs().subscribe(
       (users: User[]) => {

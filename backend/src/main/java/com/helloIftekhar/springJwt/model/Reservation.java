@@ -34,17 +34,21 @@ public class Reservation {
     private String mission;
     @Column(name = "user_id_connected")
     private Long userIdConnected;
+    private Boolean statusReservation = null; // Default value is null
+    private String distiantion;
+    private String accompagnateur = null;
     public Reservation() {}
 
     // Constructor with all fields
     // Constructor with all fields including userIdConnected
-    public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission, Long userIdConnected) {
+    public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission, Long userIdConnected , String  distiantion) {
         this.user = user;
         this.vehicle = vehicle;
         this.startDate = startDate;
         this.endDate = endDate;
         this.mission = mission;
         this.userIdConnected = userIdConnected;
+        this.distiantion = distiantion;
     }
 
     // Getter method for userId

@@ -16,5 +16,6 @@ export interface Reservation {
     userIdConnected:number;
     status ?:Boolean;
     connectedUserName?: { username: string }; // Define connectedUserName as an object with a username property
-
+    distiantion : string,
+    accompagnateur : string
 }

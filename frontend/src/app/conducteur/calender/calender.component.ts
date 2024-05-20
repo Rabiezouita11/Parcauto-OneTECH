@@ -69,6 +69,8 @@ export class CalenderComponent implements OnInit {
         endDate: '',
         mission: '',
         userIdConnected: 0,
+        distiantion:'',
+        accompagnateur:''
         
     };
     role : any;
@@ -99,6 +101,30 @@ export class CalenderComponent implements OnInit {
             console.error('Token not found in localStorage');
         }
     }
+
+
+    getCurrentDateTime(): string {
+        // Get the current date and time
+        const currentDateTime: Date = new Date();
+    
+        // Format the date and time as required by the datetime-local input (YYYY-MM-DDTHH:MM)
+        const year: number = currentDateTime.getFullYear();
+        const month: number = currentDateTime.getMonth() + 1; // Month starts from 0
+        const day: number = currentDateTime.getDate();
+        const hours: number = currentDateTime.getHours();
+        const minutes: number = currentDateTime.getMinutes();
+    
+        // Format the date and time as required by the datetime-local input
+        const formattedDateTime: string =
+            `${year}-${this.padNumber(month)}-${this.padNumber(day)}T${this.padNumber(hours)}:${this.padNumber(minutes)}`;
+    
+        return formattedDateTime;
+    }
+    
+    private padNumber(num: number): string {
+        return (num < 10 ? '0' : '') + num;
+    }
+
      saveReservation(reservationForm : NgForm) { // Check if the form is invalid
 
 
@@ -132,8 +158,9 @@ export class CalenderComponent implements OnInit {
             startDate: this.reservation.startDate,
             endDate: this.reservation.endDate,
             mission: this.reservation.mission,
-            userIdConnected: this.userIdConnected // Add userIdConnected
-
+            userIdConnected: this.userIdConnected ,
+            distiantion:this.reservation.distiantion,
+            accompagnateur:this.reservation.accompagnateur,
         };
       
 

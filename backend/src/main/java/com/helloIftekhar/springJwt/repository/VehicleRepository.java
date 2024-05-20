@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByDisponibiliteTrue();
-    Vehicle findByMarque(String marque);
+    Vehicle findByMatricule(String matricule);
 
 }
