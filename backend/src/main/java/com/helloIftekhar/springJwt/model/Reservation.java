@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "reservation")
@@ -24,10 +25,10 @@ public class Reservation {
     private Vehicle vehicle;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private Date startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private Date endDate;
     @Column(name = "status") // New field
     private Boolean status = null; // Default value is null
     @Column(name = "mission")
@@ -41,7 +42,7 @@ public class Reservation {
 
     // Constructor with all fields
     // Constructor with all fields including userIdConnected
-    public Reservation(User user, Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate, String mission, Long userIdConnected , String  distiantion) {
+    public Reservation(User user, Vehicle vehicle, Date startDate, Date endDate, String mission, Long userIdConnected , String  distiantion) {
         this.user = user;
         this.vehicle = vehicle;
         this.startDate = startDate;

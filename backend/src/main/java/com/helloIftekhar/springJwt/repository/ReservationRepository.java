@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    Optional<Reservation> findByVehicleAndStartDateAndEndDate(Vehicle vehicle, LocalDateTime startDate, LocalDateTime endDate);
+    Optional<Reservation> findByVehicleAndStartDateAndEndDate(Vehicle vehicle, Date startDate, Date endDate);
     List<Reservation> findByUserIdConnected(Long userIdConnected);
 
 

@@ -57,10 +57,10 @@ public class ChefDepartementController {
     public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
         try {
             // Check if the start date and end date are the same
-            if (reservation.getStartDate().isEqual(reservation.getEndDate())) {
+            if (reservation.getStartDate().equals(reservation.getEndDate())) {
                 return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
             }
-            if (reservation.getStartDate().isAfter(reservation.getEndDate())) {
+            if (reservation.getStartDate().after(reservation.getEndDate())) {
                 return ResponseEntity.badRequest().body("Start date cannot be after end date");
             }
             // Check if the reservation already exists for the given vehicle and time period
