@@ -14,8 +14,9 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Optional<Reservation> findByVehicleAndStartDateAndEndDate(Vehicle vehicle, Date startDate, Date endDate);
     List<Reservation> findByUserIdConnected(Long userIdConnected);
+    List<Reservation> findByUserAndStatusIsTrue(User user);
 
-
-    boolean existsByUserAndStatusIsNullOrStatusIsFalse(User user);
+    List<Reservation> findByUser(User user);
+    boolean existsByUserAndStatusIsFalse(User user);
 
 }

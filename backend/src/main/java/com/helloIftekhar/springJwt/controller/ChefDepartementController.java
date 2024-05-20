@@ -41,13 +41,35 @@ public class ChefDepartementController {
         // Get all conductors from the user repository
         List<User> conductors = userService.getConducteurs();
 
-        // Filter out conductors who have reservations with status not null or false
-        List<User> filteredConductors = conductors.stream()
-                .filter(conductor -> !reservationRepository.existsByUserAndStatusIsNullOrStatusIsFalse(conductor))
+        // Filter out conductors who have reservations with status false
+        List<User> conductorsWithFalseReservations = conductors.stream()
+                .filter(conductor -> reservationRepository.existsByUserAndStatusIsFalse(conductor))
                 .collect(Collectors.toList());
 
-        return filteredConductors;
+        // Get conductors who don't have any reservations
+        List<User> conductorsWithoutReservations = conductors.stream()
+                .filter(conductor -> {
+                    List<Reservation> reservations = reservationRepository.findByUser(conductor);
+                    return reservations.isEmpty();
+                })
+                .collect(Collectors.toList());
+
+        // Get conductors who have reservations with status true
+        List<User> conductorsWithTrueReservations = conductors.stream()
+                .filter(conductor -> !reservationRepository.findByUserAndStatusIsTrue(conductor).isEmpty())
+                .collect(Collectors.toList());
+
+        // Combine all lists
+        List<User> result = new ArrayList<>();
+        result.addAll(conductorsWithFalseReservations);
+        result.addAll(conductorsWithoutReservations);
+        result.addAll(conductorsWithTrueReservations);
+
+        return result;
     }
+
+
+
 
 
 
