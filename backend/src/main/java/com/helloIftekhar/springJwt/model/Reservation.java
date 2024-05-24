@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-
 @Entity
 @Table(name = "reservation")
 @Getter
@@ -29,20 +28,29 @@ public class Reservation {
 
     @Column(name = "end_date")
     private Date endDate;
+
     @Column(name = "status") // New field
     private Boolean status = null; // Default value is null
+
     @Column(name = "mission")
     private String mission;
+
     @Column(name = "user_id_connected")
     private Long userIdConnected;
+
     private Boolean statusReservation = null; // Default value is null
+
     private String distiantion;
+
     private String accompagnateur = null;
+
+    @Column(name = "montant")
+    private Double montant; // New attribute
+
     public Reservation() {}
 
     // Constructor with all fields
-    // Constructor with all fields including userIdConnected
-    public Reservation(User user, Vehicle vehicle, Date startDate, Date endDate, String mission, Long userIdConnected , String  distiantion) {
+    public Reservation(User user, Vehicle vehicle, Date startDate, Date endDate, String mission, Long userIdConnected, String distiantion, Double montant) {
         this.user = user;
         this.vehicle = vehicle;
         this.startDate = startDate;
@@ -50,6 +58,20 @@ public class Reservation {
         this.mission = mission;
         this.userIdConnected = userIdConnected;
         this.distiantion = distiantion;
+        this.montant = montant;
+    }
+
+    // Constructor with all fields including userIdConnected
+    public Reservation(User user, Vehicle vehicle, Date startDate, Date endDate, String mission, Long userIdConnected, String distiantion, Double montant, String accompagnateur) {
+        this.user = user;
+        this.vehicle = vehicle;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.mission = mission;
+        this.userIdConnected = userIdConnected;
+        this.distiantion = distiantion;
+        this.montant = montant;
+        this.accompagnateur = accompagnateur;
     }
 
     // Getter method for userId

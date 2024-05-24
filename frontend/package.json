@@ -27,7 +27,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/list": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
-    "bootstrap": "^5.3.0",
+    "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
     "pdfmake": "^0.2.10",
     "rxjs": "~7.4.0",

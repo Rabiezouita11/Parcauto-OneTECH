@@ -1,6 +1,7 @@
 package com.helloIftekhar.springJwt.controller;
 
 import com.helloIftekhar.springJwt.model.Reservation;
+import com.helloIftekhar.springJwt.model.Role;
 import com.helloIftekhar.springJwt.model.User;
 import com.helloIftekhar.springJwt.model.Vehicle;
 import com.helloIftekhar.springJwt.repository.ReservationRepository;
@@ -34,39 +35,64 @@ public class ChefDepartementController {
     private UserRepository userRepository;
     @GetMapping("/afficherVehculeNondisponibilite")
     public List<Vehicle> getUnavailableVehicles() {
-        return vehicleRepository.findByDisponibiliteTrue();
-    }
-    @GetMapping("/getConducteurs")
-    public List<User> getConductors() {
-        // Get all conductors from the user repository
-        List<User> conductors = userService.getConducteurs();
+        // Get vehicles associated with reservations with statusReservation = true
+        List<Reservation> reservationsWithTrueStatus = reservationRepository.findByStatusReservationTrue();
 
-        // Filter out conductors who have reservations with status false
-        List<User> conductorsWithFalseReservations = conductors.stream()
-                .filter(conductor -> reservationRepository.existsByUserAndStatusIsFalse(conductor))
+        // Extract vehicle IDs from reservations
+        List<Long> vehicleIdsFromReservations = reservationsWithTrueStatus.stream()
+                .map(reservation -> reservation.getVehicle().getId())
                 .collect(Collectors.toList());
 
-        // Get conductors who don't have any reservations
-        List<User> conductorsWithoutReservations = conductors.stream()
+        // Get vehicles with disponibilite = true
+        List<Vehicle> vehiclesWithTrueDisponibilite = vehicleRepository.findByDisponibiliteTrue();
+
+        // Combine both lists of vehicles
+        List<Long> allUnavailableVehicleIds = new ArrayList<>();
+        allUnavailableVehicleIds.addAll(vehicleIdsFromReservations);
+        allUnavailableVehicleIds.addAll(vehiclesWithTrueDisponibilite.stream()
+                .map(Vehicle::getId)
+                .collect(Collectors.toList()));
+
+        // Retrieve unique vehicles based on the combined IDs
+        Set<Long> uniqueVehicleIds = new HashSet<>(allUnavailableVehicleIds);
+
+        return vehicleRepository.findByIdIn(new ArrayList<>(uniqueVehicleIds));
+    }
+
+
+
+
+
+    @GetMapping("/getConducteurs")
+    public List<User> getConductors() {
+        // Get all conducteurs from the user repository
+        List<User> conducteurs = userService.getConducteurs();
+
+        // Get conductors who are of role CONDUCTEUR and meet the specific conditions
+        List<User> conductorsWithReservations = conducteurs.stream()
+                .filter(conductor -> conductor.getRole() == Role.CONDUCTEUR)
                 .filter(conductor -> {
+                    // Check if the conductor has any reservations
                     List<Reservation> reservations = reservationRepository.findByUser(conductor);
-                    return reservations.isEmpty();
+                    if (reservations.isEmpty()) {
+                        // Include the conductor if they have no reservations
+                        return true;
+                    } else {
+                        // Check if any reservation meets the specific conditions
+                        boolean hasValidReservations = reservations.stream()
+                                .noneMatch(reservation ->
+                                        (reservation.getStatus() != null && reservation.getStatus()) && // status true
+                                                (reservation.getStatusReservation() == null)); // status_reservation null
+
+                        return hasValidReservations;
+                    }
                 })
                 .collect(Collectors.toList());
 
-        // Get conductors who have reservations with status true
-        List<User> conductorsWithTrueReservations = conductors.stream()
-                .filter(conductor -> !reservationRepository.findByUserAndStatusIsTrue(conductor).isEmpty())
-                .collect(Collectors.toList());
-
-        // Combine all lists
-        List<User> result = new ArrayList<>();
-        result.addAll(conductorsWithFalseReservations);
-        result.addAll(conductorsWithoutReservations);
-        result.addAll(conductorsWithTrueReservations);
-
-        return result;
+        return conductorsWithReservations;
     }
+
+
 
 
 
@@ -82,15 +108,24 @@ public class ChefDepartementController {
             if (reservation.getStartDate().equals(reservation.getEndDate())) {
                 return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
             }
-            if (reservation.getStartDate().equals(reservation.getEndDate())) {
-                return ResponseEntity.badRequest().body("Start date cannot be after end date");
-            }
+
             // Check if the reservation already exists for the given vehicle and time period
-            Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
-                    reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
-            if (existingReservation.isPresent()) {
+            if (reservation.getStartDate() != null && reservation.getEndDate() != null) {
+                Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
+                        reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
+
+                if (existingReservation.isPresent()) {
+                    if (existingReservation.get().getUserIdConnected() == reservation.getUserIdConnected()
+                            && (reservation.getStatus() == null || existingReservation.get().getStatus() == null
+                            || existingReservation.get().getStatus().equals(reservation.getStatus()))) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
+                    }
+                }
+            } else {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
             }
+
+
 
             // Retrieve the vehicle from the database
             Optional<Vehicle> vehicleOptional = vehicleRepository.findById(reservation.getVehicleId());
@@ -160,6 +195,10 @@ public class ChefDepartementController {
             String startDate = reservation.getStartDate().toString();
             String endDate = reservation.getEndDate().toString();
             if (status) {
+
+                Vehicle vehicle = reservation.getVehicle();
+                vehicle.setDisponibilite(false); // Set disponibilite to true
+                vehicleRepository.save(vehicle);
                 // Retrieve necessary information
                 String emailSubject = "Confirmation de Réservation";
                 String emailBody = "Bonjour [Nom du Chef de Département],\n\n"
@@ -210,6 +249,10 @@ public class ChefDepartementController {
                         emailBody2, pdfBytes);
 
             }else{
+
+                Vehicle vehicle = reservation.getVehicle();
+                vehicle.setDisponibilite(true); // Set disponibilite to true
+                vehicleRepository.save(vehicle);
                 String emailSubject = "Refus de Réservation et Demande de Contact avec l'Administration";
                 String emailBody = "Madame, Monsieur,\n\n"
                         + "Je vous écris pour vous informer que votre réservation a malheureusement été refusée.\n\n"

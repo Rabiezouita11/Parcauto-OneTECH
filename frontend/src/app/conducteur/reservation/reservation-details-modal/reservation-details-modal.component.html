@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Reservation Details</h2>
+<mat-dialog-content class="reservation-details">
+    <div class="detail-item">
+        <span class="label">ID:</span>
+        <span class="value">{{ reservation.id }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Conducteur:</span>
+        <span class="value">{{ reservation.user.username }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Chef département:</span>
+        <span class="value">{{ reservation.connectedUserName?.username || 'N/A' }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Destination:</span>
+        <span class="value">{{ reservation.distiantion }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Accompagnateur:</span>
+        <span class="value">{{ reservation.accompagnateur || 'No accompagnateur' }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Véhicule:</span>
+        <span class="value">{{ reservation.vehicle.marque }} {{ reservation.vehicle.modele }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Date de début:</span>
+        <span class="value">{{ reservation.startDate }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Date de fin:</span>
+        <span class="value">{{ reservation.endDate }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Statut:</span>
+        <span class="value">{{ reservation.status === true ? 'Accepted' : (reservation.status === false ? 'Refused' : 'En cours') }}</span>
+    </div>
+    <div class="detail-item">
+        <span class="label">Mission:</span>
+        <span class="value">{{ reservation.mission }}</span>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

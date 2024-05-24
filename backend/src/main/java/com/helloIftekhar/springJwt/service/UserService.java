@@ -93,4 +93,9 @@ public class UserService {
     public List<User> getConducteurs() {
         return userRepository.findByRoleAndStatus(Role.CONDUCTEUR, true);
     }
+    public List<User> getUsersByRole(String role) {
+        // Assuming you have a method in your userService or userRepository to retrieve users by role
+        return userRepository.findByRole(role);
+    }
+
 }

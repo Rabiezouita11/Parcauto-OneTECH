@@ -8,5 +8,6 @@ import java.util.List;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByDisponibiliteTrue();
     Vehicle findByMatricule(String matricule);
+    List<Vehicle> findByIdIn(List<Long> vehicleIds);
 
 }

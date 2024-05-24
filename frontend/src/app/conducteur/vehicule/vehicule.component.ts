@@ -88,7 +88,7 @@ export class VehiculeComponent implements OnInit {
         if (error.error && error.error.message === 'vehicle deja existe') {
           Swal.fire('Error', 'vehicle deja existe', 'error');
         } else {
-          Swal.fire('Error', 'An error occurred while adding the vehicle', 'error');
+          Swal.fire('Error', 'vehicle deja existe', 'error');
         }
       }
     );

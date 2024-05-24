@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReservationComponent } from './reservation/reservation.component';
 
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ReservationDetailsModalComponent } from './reservation/reservation-details-modal/reservation-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     VehiculeUpdateModalComponent,
     UsersComponent,
     CalenderComponent,
-    ReservationComponent
+    ReservationComponent,
+    ReservationDetailsModalComponent
   ],
   imports: [
     CommonModule,

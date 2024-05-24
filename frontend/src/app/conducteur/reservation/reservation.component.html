@@ -6,11 +6,10 @@
           <th>ID</th>
           <th>Conducteur</th>
           <th>Chef département</th>
-          <th>Destination</th>
-          <th>Accompagnateur</th>
+
+
           <th>Véhicule</th>
-          <th>Date de début</th>
-          <th>Date de fin</th>
+
           <th>Statut</th>
           <th>Mission</th>
           <th>Action</th>
@@ -21,18 +20,10 @@
           <td>{{ reservation.id }}</td>
           <td>{{ reservation.user.username }}</td>
           <td>{{ reservation.connectedUserName?.username }}</td>
-          <td>{{ reservation.distiantion }}</td>
-          <td>
-            <ng-container *ngIf="reservation.accompagnateur; else noAccompagnateur">
-                {{ reservation.accompagnateur }}
-            </ng-container>
-            <ng-template #noAccompagnateur>
-                No accompagnateur
-            </ng-template>
-          </td>
+
+
           <td>{{ reservation.vehicle.marque }} {{ reservation.vehicle.modele }}</td>
-          <td>{{ reservation.startDate  }}</td>
-          <td>{{ reservation.endDate }}</td>
+
           <td>
             {{ reservation.status === true ? 'Accepted' : (reservation.status === false ? 'Refused' : 'En cours') }}
           </td>
@@ -40,22 +31,25 @@
           <td>
             <ng-container *ngIf="reservation.status === null">
               <button mat-icon-button color="primary" (click)="confirmAcceptReservation(reservation)">
-                <mat-icon>check</mat-icon> 
+                <mat-icon>check</mat-icon>
               </button>
               <button mat-icon-button color="warn" (click)="confirmRejectReservation(reservation)">
-                <mat-icon>clear</mat-icon> 
+                <mat-icon>clear</mat-icon>
               </button>
             </ng-container>
             <ng-container *ngIf="reservation.status === true">
               <button mat-icon-button color="primary" disabled>
-                <mat-icon>check</mat-icon> 
+                <mat-icon>check</mat-icon>
               </button>
             </ng-container>
             <ng-container *ngIf="reservation.status === false">
               <button mat-icon-button color="warn" disabled>
-                <mat-icon>clear</mat-icon> 
+                <mat-icon>clear</mat-icon>
               </button>
             </ng-container>
+            <button mat-icon-button color="primary" (click)="openDetailsModal(reservation)">
+              <mat-icon>visibility</mat-icon> <!-- Use the appropriate icon for details -->
+            </button>
           </td>
         </tr>
       </tbody>

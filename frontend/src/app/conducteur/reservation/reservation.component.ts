@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { Reservation } from 'src/app/model/Reservation';
 import Swal from 'sweetalert2';
+import { ReservationDetailsModalComponent } from './reservation-details-modal/reservation-details-modal.component';
 
 @Component({
   selector: 'app-reservation',
@@ -12,12 +14,20 @@ import Swal from 'sweetalert2';
 export class ReservationComponent implements OnInit {
   reservations: Reservation[] = [];
 
-  constructor(private reservationService: ReservationService, private userService: UserService) { } // Inject UserService
+  constructor(private dialog: MatDialog,private reservationService: ReservationService, private userService: UserService) { } // Inject UserService
 
   ngOnInit(): void {
         this.getAllReservations();
 
   }
+
+  openDetailsModal(reservation: any): void {
+    this.dialog.open(ReservationDetailsModalComponent, {
+      width: '400px',
+      data: reservation
+    });
+  }
+
   getAllReservations(): void {
     this.reservationService.getAllReservations().subscribe(
       data => {
@@ -41,7 +51,7 @@ export class ReservationComponent implements OnInit {
   confirmAcceptReservation(reservation: Reservation): void {
     Swal.fire({
       title: 'Accepter la réservation?',
-      text: `Voulez-vous vraiment accepter la réservation pour ${reservation.user.username}?`,
+      text: `Voulez-vous vraiment accepter la réservation pour ${reservation.connectedUserName?.username}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, accepter',
@@ -63,7 +73,7 @@ export class ReservationComponent implements OnInit {
   confirmRejectReservation(reservation: Reservation): void {
     Swal.fire({
       title: 'Refuser la réservation?',
-      text: `Voulez-vous vraiment refuser la réservation pour ${reservation.user.username}?`,
+      text: `Voulez-vous vraiment refuser la réservation pour ${reservation.connectedUserName?.username}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, refuser',

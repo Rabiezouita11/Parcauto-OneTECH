@@ -1,21 +1,23 @@
 export interface Reservation {
-    id : number
+    id: number;
     vehicle: {
         id: number;
-        marque:string;
-        modele : string ;
+        marque: string;
+        modele: string;
     };
     user: {
         id: number;
-        username:string;
+        username: string;
     };
-        
-    startDate: string ;
-    endDate: string ;
+    startDate: string;
+    endDate: string;
     mission: string;
-    userIdConnected:number;
-    status ?:Boolean;
-    connectedUserName?: { username: string }; // Define connectedUserName as an object with a username property
-    distiantion : string,
-    accompagnateur : string
+    userIdConnected: number;
+    status?: boolean;
+    connectedUserName?: {
+        username: string;
+    }; // Define connectedUserName as an object with a username property
+    distiantion: string;
+    accompagnateur: string;
+    montant: number; // New attribute
 }

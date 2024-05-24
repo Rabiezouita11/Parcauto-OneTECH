@@ -37,7 +37,7 @@ export class CalenderComponent implements OnInit {
         selectMirror: true,
         dayMaxEvents: true,
         select: this.handleDateSelect.bind(this),
-        eventClick: this.handleEventClick.bind(this),
+        
         eventsSet: this.handleEvents.bind(this),
         
         events: [] // Initialize events array
@@ -70,7 +70,8 @@ export class CalenderComponent implements OnInit {
         mission: '',
         userIdConnected: 0,
         distiantion:'',
-        accompagnateur:''
+        accompagnateur:'',
+        montant:0
         
     };
     role : any;
@@ -160,6 +161,7 @@ export class CalenderComponent implements OnInit {
                 id: this.selectedUserId,
                 username: ''
             },
+            montant:0,
             startDate: this.reservation.startDate,
             endDate: this.reservation.endDate,
             mission: this.reservation.mission,
