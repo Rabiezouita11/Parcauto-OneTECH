@@ -40,8 +40,10 @@ export class CalenderComponent implements OnInit {
         
         eventsSet: this.handleEvents.bind(this),
         
-        events: [] // Initialize events array
-
+        events: [] , // Initialize events array
+        // validRange: {
+        //     start: new Date().toISOString().split('T')[0] // Set the start date to today
+        // }
     };
     pendingReservations: any[] = [];
     acceptedReservations: any[] = [];

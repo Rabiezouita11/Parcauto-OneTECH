@@ -11,7 +11,6 @@
           <th>Véhicule</th>
 
           <th>Statut</th>
-          <th>Mission</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -27,7 +26,6 @@
           <td>
             {{ reservation.status === true ? 'Accepted' : (reservation.status === false ? 'Refused' : 'En cours') }}
           </td>
-          <td>{{ reservation.mission }}</td>
           <td>
             <ng-container *ngIf="reservation.status === null">
               <button mat-icon-button color="primary" (click)="confirmAcceptReservation(reservation)">

@@ -35,30 +35,11 @@ public class ChefDepartementController {
     private UserRepository userRepository;
     @GetMapping("/afficherVehculeNondisponibilite")
     public List<Vehicle> getUnavailableVehicles() {
-        // Get vehicles associated with reservations with statusReservation = true
-        List<Reservation> reservationsWithTrueStatus = reservationRepository.findByStatusReservationTrue();
-
-        // Extract vehicle IDs from reservations
-        List<Long> vehicleIdsFromReservations = reservationsWithTrueStatus.stream()
-                .map(reservation -> reservation.getVehicle().getId())
-                .collect(Collectors.toList());
-
-        // Get vehicles with disponibilite = true
+        // Retrieve vehicles with disponibilite = true
         List<Vehicle> vehiclesWithTrueDisponibilite = vehicleRepository.findByDisponibiliteTrue();
 
-        // Combine both lists of vehicles
-        List<Long> allUnavailableVehicleIds = new ArrayList<>();
-        allUnavailableVehicleIds.addAll(vehicleIdsFromReservations);
-        allUnavailableVehicleIds.addAll(vehiclesWithTrueDisponibilite.stream()
-                .map(Vehicle::getId)
-                .collect(Collectors.toList()));
-
-        // Retrieve unique vehicles based on the combined IDs
-        Set<Long> uniqueVehicleIds = new HashSet<>(allUnavailableVehicleIds);
-
-        return vehicleRepository.findByIdIn(new ArrayList<>(uniqueVehicleIds));
+        return vehiclesWithTrueDisponibilite;
     }
-
 
 
 
@@ -84,7 +65,12 @@ public class ChefDepartementController {
                                         (reservation.getStatus() != null && reservation.getStatus()) && // status true
                                                 (reservation.getStatusReservation() == null)); // status_reservation null
 
-                        return hasValidReservations;
+                        // Exclude the conductor if any reservation has both status and statusReservation null
+                        boolean hasNullStatusAndNullStatusReservation = reservations.stream()
+                                .anyMatch(reservation ->
+                                        reservation.getStatus() == null && reservation.getStatusReservation() == null);
+
+                        return hasValidReservations && !hasNullStatusAndNullStatusReservation;
                     }
                 })
                 .collect(Collectors.toList());
@@ -105,12 +91,12 @@ public class ChefDepartementController {
     public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
         try {
             // Check if the start date and end date are the same
-            if (reservation.getStartDate().equals(reservation.getEndDate())) {
-                return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
-            }
+           // if (reservation.getStartDate().equals(reservation.getEndDate())) {
+          //      return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
+       //     }
 
             // Check if the reservation already exists for the given vehicle and time period
-            if (reservation.getStartDate() != null && reservation.getEndDate() != null) {
+       /*     if (reservation.getStartDate() != null && reservation.getEndDate() != null) {
                 Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
                         reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
 
@@ -123,7 +109,7 @@ public class ChefDepartementController {
                 }
             } else {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
-            }
+            } */
 
 
 

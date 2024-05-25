@@ -27,4 +27,8 @@ public class Vehicle {
         this.disponibilite = true; // Setting disponibilite to false by default
     }
     // Constructeurs, getters et setters
+
+    public boolean isDisponibilite() {
+        return disponibilite;
+    }
 }
