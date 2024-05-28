@@ -20,4 +20,5 @@ export interface Reservation {
     distiantion: string;
     accompagnateur: string;
     montant: number; // New attribute
+    statusReservation?:boolean
 }

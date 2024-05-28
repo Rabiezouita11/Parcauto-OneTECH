@@ -105,5 +105,21 @@ export class ReservationService {
     );
   }
   
+
+  updateReservationStatusifstatusTrue(reservationId: number, status: boolean): Observable<Reservation> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      return throwError('Token is not available'); // Throw an error if token is not available
+    }
+
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    return this.http.put<Reservation>(`${this.ChefDepartementUrl}/updateReservationStatusReservation/${reservationId}`, status, { headers }).pipe(
+      catchError(error => {
+        console.error('Error updating reservation status:', error);
+        return throwError(error);
+      })
+    );
+  }
   
 }

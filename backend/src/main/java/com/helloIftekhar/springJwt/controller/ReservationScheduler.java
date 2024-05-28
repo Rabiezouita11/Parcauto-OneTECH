@@ -20,7 +20,7 @@ public class ReservationScheduler {
     private VehicleRepository vehicleRepository;
 
 
-    @Scheduled(cron = "*/5 * * * * *") // Runs every 5 seconds
+    @Scheduled(cron = "*/7 * * * * *") // Runs every 7 seconds
     public void updateReservationsAndVehicles() {
         LocalDate today = LocalDate.now();
         System.out.println("today"+today);
@@ -31,7 +31,7 @@ public class ReservationScheduler {
             System.out.println("end date"+reservation.getEndDate());
             System.out.println("reservation.getEndDate().equals(today)"+reservation.getEndDate().equals(today));
 
-            if (reservation.getEndDate().equals(today)) {
+            if (reservation.getEndDate().toLocalDate().isEqual(today)) {
                 // Update the reservation's statusReservation to true
                 reservation.setStatusReservation(true);
                 reservationRepository.save(reservation);

@@ -74,6 +74,8 @@
                                 <div class="select-wrapper">
                                     <select class="form-control" id="vehicleSelect" [(ngModel)]="selectedVehicleId"
                                         name="selectedVehicleId" required>
+                                        <option value="">--Please choose an option--</option>
+
                                         <option *ngFor="let vehicle of unavailableVehicles" [value]="vehicle.id">
                                             {{ vehicle . marque }} - {{ vehicle . modele }}
                                         </option>
@@ -99,6 +101,8 @@
                                 <div class="select-wrapper">
                                     <select class="form-control" id="userSelect" [(ngModel)]="selectedUserId"
                                         name="selectedUserId" required>
+                                        <option value="">--Please choose an option--</option>
+
                                         <option *ngFor="let user of conducteurUsers" [ngValue]="user.id">
                                             {{ user . firstName }} {{ user . lastName }} ({{ user . username }})
                                         </option>

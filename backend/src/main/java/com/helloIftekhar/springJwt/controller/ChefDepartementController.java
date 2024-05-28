@@ -271,6 +271,38 @@ public class ChefDepartementController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", "User not found"));
         }
     }
+    @PutMapping("/updateReservationStatusReservation/{id}")
+    public ResponseEntity<?> updateReservationStatusReservation(@PathVariable Long id, @RequestBody Boolean status) {
+        try {
+            Optional<Reservation> reservationOptional = reservationRepository.findById(id);
+            if (reservationOptional.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Réservation non trouvée");
+            }
+
+            Reservation reservation = reservationOptional.get();
+            reservation.setStatusReservation(status);
+
+            // Get the associated vehicle
+            Vehicle vehicle = reservation.getVehicle();
+            if (vehicle != null) {
+                // Set disponibilite to true
+                vehicle.setDisponibilite(true);
+            }
+
+            // Save the updated reservation and vehicle
+            reservationRepository.save(reservation);
+
+            // Optional: Save the updated vehicle separately if needed
+            if (vehicle != null) {
+                vehicleRepository.save(vehicle);
+            }
+
+            return ResponseEntity.ok(reservation);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error updating reservation statusReservation: " + e.getMessage());
+        }
+    }
 
 
 }
