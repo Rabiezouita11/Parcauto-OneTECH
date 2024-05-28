@@ -22,26 +22,31 @@ export class HomeComponent implements OnInit {
   role: any;
   users!: User[];
   reservationCount!: number;
-
-  constructor(private reservationService: ReservationService ,private vehicleService: VehicleService, private userService: UserService) {
+  userIdConnected : any;
+  pendingReservations: any[] = [];
+  acceptedReservations: any[] = [];
+  refusedReservations: any[] = [];
+  constructor(private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
 
-  ngOnInit(): void {
-    this.getInfo();
+  async ngOnInit() {
+    await this.getInfo();
+
 
     this.getAllVehicles();
     this.countUtilisateurs();
     this.getAllReservations();
-
+    this.loadReservations();
   }
-  getInfo(): void {
+  async getInfo():  Promise<void>{
 
     if (this.token) {
       this.userService.getUserInfo(this.token).subscribe((data) => { // Assuming the response contains the user information in JSON format
 
         this.role = data.role;
+        this.userIdConnected = data.id;
 
 
       }, (error) => {
@@ -80,5 +85,31 @@ export class HomeComponent implements OnInit {
         console.error('Error fetching conducteurs and chefs:', error);
       }
     );
+  }
+
+  async loadReservations(): Promise<void> {
+    if (!this.userIdConnected) {
+      console.error('User ID is not available');
+      return;
+    }
+
+    try {
+      const reservations = await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise();
+
+      if (reservations) {
+        this.pendingReservations = reservations.filter(reservation => reservation.status === null);
+        this.acceptedReservations = reservations.filter(reservation => reservation.status === true);
+        this.refusedReservations = reservations.filter(reservation => reservation.status === false);
+
+        // Map reservations to FullCalendar events
+       
+
+        // Set events to calendarOptions
+      } else {
+        console.error('No reservations found');
+      }
+    } catch (error) {
+      console.error('Error fetching reservations:', error);
+    }
   }
 }
