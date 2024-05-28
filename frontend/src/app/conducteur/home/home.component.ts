@@ -40,22 +40,22 @@ export class HomeComponent implements OnInit {
     this.getAllReservations();
     this.loadReservations();
   }
-  async getInfo():  Promise<void>{
+  async getInfo(): Promise<void> {
+    const token = localStorage.getItem('jwtToken');
 
-    if (this.token) {
-      this.userService.getUserInfo(this.token).subscribe((data) => { // Assuming the response contains the user information in JSON format
-
-        this.role = data.role;
-        this.userIdConnected = data.id;
-
-
-      }, (error) => {
-        console.error('Error fetching user information:', error);
-      });
+    if (token) {
+        try {
+            const data: any = await this.userService.getUserInfo(token).toPromise();
+            this.role = data.role;
+            this.userIdConnected = data.id;
+           
+        } catch (error) {
+            console.error('Error fetching user information:', error);
+        }
     } else {
-      console.error('Token not found in localStorage');
+        console.error('Token not found in localStorage');
     }
-  }
+}
   getAllVehicles(): void {
     this.vehicleService.getAllVehicles().subscribe(vehicles => {
       this.vehicles = vehicles;
@@ -88,6 +88,7 @@ export class HomeComponent implements OnInit {
   }
 
   async loadReservations(): Promise<void> {
+    console.log(this.userIdConnected);
     if (!this.userIdConnected) {
       console.error('User ID is not available');
       return;
