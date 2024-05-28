@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProfileUpdateService } from 'src/app/Service/ProfileUpdateService/profile-update-service.service';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
 import Swal from 'sweetalert2';
@@ -20,10 +21,60 @@ export class ProfileComponent implements OnInit {
   selectedFile: File | null = null;
   profileImage!: File | null;
   user: any = {};
+  isAdmin: boolean = false; // Add a property to track if the user is an admin
 
-  constructor(private userService: UserService, private profileUpdateService: ProfileUpdateService) {
+  constructor(private userService: UserService, private profileUpdateService: ProfileUpdateService, private router: Router) {
     this.token = localStorage.getItem('jwtToken');
+    this.checkUserRole(); // Call the method to check user role when the component is initialized
 
+  }
+
+
+
+
+  deleteAccount(): void {
+    // Show a confirmation dialog before deleting the account
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Vous ne pourrez pas revenir en arrière!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the deleteUser method if user confirms
+        this.userService.deleteUser(this.userId).subscribe(
+          () => {
+            // If deletion is successful, show a success message
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: 'Votre compte a été supprimé avec succès',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              // After success, navigate to login page
+              this.router.navigate(['/auth/login']).then(() => {
+                // After navigation, force a page reload
+                window.location.reload();
+              });
+            });
+          },
+          (error) => {
+            // If an error occurs during deletion, show an error message
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: 'Une erreur s\'est produite lors de la suppression du compte. Veuillez réessayer plus tard.',
+              confirmButtonText: 'OK'
+            });
+            console.error('Error deleting account:', error);
+          }
+        );
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -97,5 +148,11 @@ export class ProfileComponent implements OnInit {
         });
       }
     );
+  }
+  checkUserRole(): void {
+    // Check the user's role
+    if (this.role === 'ADMIN') {
+      this.isAdmin = true;
+    }
   }
 }

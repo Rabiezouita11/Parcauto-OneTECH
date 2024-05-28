@@ -26,5 +26,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     boolean existsByUserAndStatusAndStatusReservation(User user, boolean status, boolean statusReservation);
     Optional<Reservation> findByVehicleAndStartDateAndEndDateAndStatus(Vehicle vehicle, Date startDate, Date endDate, Boolean status);
     List<Reservation> findByStatusTrueAndStatusReservationNull();
+    void deleteByUser_Id(Long userId);
 
 }

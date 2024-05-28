@@ -40,10 +40,22 @@
                                 <!-- Ajoutez ici des paramètres supplémentaires si nécessaire -->
                             </div>
                         </div>
+
+                        
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
             </form>
+            <br>
+
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row" *ngIf="!isAdmin && (role === 'CHEF_DEPARTEMENT' || role === 'CONDUCTEUR')">
+                            <!-- Show the button only if the user is not an admin and has role CHEF_DEPARTEMENT or CONDUCTEUR -->
+                            <button class="btn btn-danger float-end" (click)="deleteAccount()">Supprimer le compte</button>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

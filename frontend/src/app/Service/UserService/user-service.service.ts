@@ -13,6 +13,7 @@ export class UserService {
     private baseUrl = 'http://localhost:8080';
     private UserUrl = 'http://localhost:8080/user';
     private ChefDepartementUrl = 'http://localhost:8080/ChefDepartement';
+    private delteUser = 'http://localhost:8080/delete';
 
     constructor(private http : HttpClient) {}
 
@@ -174,4 +175,24 @@ export class UserService {
       const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
       return this.http.get<User[]>(`${this.ChefDepartementUrl}/getConducteurs`, { headers });
     }
+    deleteUser(userId: number): Observable<any> {
+      const token = localStorage.getItem('jwtToken');
+      if (!token) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Token Error',
+          text: 'Token is not available',
+          confirmButtonText: 'OK'
+        });
+      }
+  
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+  
+      return this.http.delete(`${this.delteUser}/${userId}`, { headers });
+    }
+
+
+
 }

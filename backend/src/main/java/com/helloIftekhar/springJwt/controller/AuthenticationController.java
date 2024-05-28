@@ -3,11 +3,15 @@ package com.helloIftekhar.springJwt.controller;
 import com.helloIftekhar.springJwt.model.AuthenticationResponse;
 import com.helloIftekhar.springJwt.model.MessageResponse;
 import com.helloIftekhar.springJwt.model.User;
+import com.helloIftekhar.springJwt.repository.ReservationRepository;
+import com.helloIftekhar.springJwt.repository.TokenRepository;
+import com.helloIftekhar.springJwt.repository.UserRepository;
 import com.helloIftekhar.springJwt.service.AuthenticationService;
 import com.helloIftekhar.springJwt.service.JwtService;
 import com.helloIftekhar.springJwt.service.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,7 +50,12 @@ public class AuthenticationController {
     private final AuthenticationService authService;
     @Autowired
     private JwtService jwtService;
-
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private TokenRepository tokenRepository;
+    @Autowired
+    private ReservationRepository reservationRepository; // Autowire ReservationRepository
     public AuthenticationController(UserService userService, AuthenticationService authService) {
         this.userService = userService;
         this.authService = authService;
@@ -266,6 +275,26 @@ public class AuthenticationController {
         userService.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Vérification de l'email réussie"));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Transactional // Ensure that the transaction is properly managed
+    public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
+        try {
+            // Delete associated tokens first
+            tokenRepository.deleteByUserId(Long.valueOf(id)); // Assuming you have a method to delete tokens by user ID
+            reservationRepository.deleteByUser_Id(Long.valueOf(id)); // Assuming you have a method to delete reservations by user ID
+
+            // Then delete the user
+            userRepository.deleteById(id);
+
+            // Return success message
+            return ResponseEntity.ok().body("{\"message\": \"User deleted successfully\"}");
+        } catch (Exception e) {
+            // Return error message
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\": \"Error deleting user: " + e.getMessage() + "\"}");
+        }
     }
 
 

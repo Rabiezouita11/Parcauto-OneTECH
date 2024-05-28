@@ -17,4 +17,6 @@ where t.user.id = :userId and t.loggedOut = false
     List<Token> findAllTokensByUser(Integer userId);
 
     Optional<Token> findByToken(String token);
+    void deleteByUserId(Long userId);
+
 }

@@ -34,9 +34,11 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     await this.getInfo();
 
+    if (this.role === 'ADMIN') {
+      this.getAllVehicles();
+      this.countUtilisateurs();
 
-    this.getAllVehicles();
-    this.countUtilisateurs();
+  }
     this.getAllReservations();
     this.loadReservations();
   }
