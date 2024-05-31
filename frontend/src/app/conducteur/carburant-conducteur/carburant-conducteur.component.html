@@ -51,6 +51,8 @@
       <div class="modal-body">
         <!-- Add fuel management form -->
         <form (ngSubmit)="submitFuelManagementForm()" #fuelForm="ngForm">
+          <input type="hidden" id="reservationId" name="reservationId" [value]="selectedReservation?.id">
+
           <div class="mb-3">
             <label for="kilometrageDebut" class="form-label">Kilométrage Début:</label>
             <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required>

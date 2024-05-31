@@ -14,10 +14,9 @@ public class Carburant {
     private Long id;
 
 
-    @JsonIgnore
-    @ManyToOne
+
     @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+    private Integer reservation_id;
 
     @Column(name = "kilometrage_debut")
     private Integer kilometrageDebut;
@@ -29,15 +28,15 @@ public class Carburant {
     private Double quantiteCarburantUtiliser;
 
     @Column(name = "carburant_consome")
-    private Integer carburantConsome;
+    private Double carburantConsome;
 
     // No-argument constructor
     public Carburant() {
     }
 
     // Parameterized constructor
-    public Carburant(Reservation reservation, Integer kilometrageDebut, Integer kilometrageFin, Double quantiteCarburantUtiliser, Integer carburantConsome) {
-        this.reservation = reservation;
+    public Carburant(Integer reservation_id, Integer kilometrageDebut, Integer kilometrageFin, Double quantiteCarburantUtiliser, Double carburantConsome) {
+        this.reservation_id = reservation_id;
         this.kilometrageDebut = kilometrageDebut;
         this.kilometrageFin = kilometrageFin;
         this.quantiteCarburantUtiliser = quantiteCarburantUtiliser;

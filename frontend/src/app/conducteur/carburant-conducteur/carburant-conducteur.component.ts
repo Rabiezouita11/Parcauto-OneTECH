@@ -85,7 +85,9 @@ export class CarburantConducteurComponent implements OnInit {
     this.selectedReservation = reservation;
 
     if (reservation && reservation.montant) {
-      this.fuelData.quantiteCarburantUtiliser = reservation.montant / 2525;
+      this.fuelData.quantiteCarburantUtiliser = (reservation.montant / 2525).toFixed(4);
+
+
       // Trigger change detection
       this.cdr.detectChanges();
     } else {
@@ -95,48 +97,54 @@ export class CarburantConducteurComponent implements OnInit {
 
     console.log(this.fuelData)
   }
-  submitFuelManagementForm(): void {
-    console.log(this.fuelData.quantiteCarburantUtiliser)
-    if (!this.selectedReservation) {
+submitFuelManagementForm(): void {
+  if (!this.selectedReservation) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No reservation selected!'
+    });
+    return;
+  }
+
+  // Retrieve the ID of the selected reservation
+  const reservationId = this.selectedReservation.id;
+
+  // Calculate carburantConsome based on the formula
+  const carburantConsome = this.fuelData.quantiteCarburantUtiliser / (this.fuelData.kilometrageDebut + this.fuelData.kilometrageFin) * 100;
+  console.log(carburantConsome);
+  // Create a Carburant object from the form data
+  const carburantData: Carburant = {
+    reservation_id: reservationId, // Assign the reservation ID here
+    kilometrageDebut: this.fuelData.kilometrageDebut,
+    kilometrageFin: this.fuelData.kilometrageFin,
+    quantiteCarburantUtiliser: this.fuelData.quantiteCarburantUtiliser,
+    carburantConsome: carburantConsome, // Assign the calculated value here
+  };
+
+  // Call the service to save carburant data
+  this.ConducteurService.saveCarburant(carburantData).subscribe(
+    (result) => {
+      // Handle success
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Carburant data saved successfully!'
+      });
+      // Optionally, reset form data or perform any other actions
+    },
+    (error) => {
+      // Handle error
       Swal.fire({
         icon: 'error',
-        title: 'Oops...',
-        text: 'No reservation selected!'
+        title: 'Error',
+        text: error.message
       });
-      return;
     }
+  );
+}
+
   
-    // Create a Carburant object from the form data
-    const carburantData: Carburant = {
-      reservation: this.selectedReservation,
-      kilometrageDebut: this.fuelData.kilometrageDebut,
-      kilometrageFin: this.fuelData.kilometrageFin,
-      quantiteCarburantUtiliser: this.fuelData.quantiteCarburantUtiliser,
-      carburantConsome: this.fuelData.carburantConsome,
-  
-    };
-  
-    // Call the service to save carburant data
-    this.ConducteurService.saveCarburant(carburantData).subscribe(
-      (result) => {
-        // Handle success
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Carburant data saved successfully!'
-        });
-        // Optionally, reset form data or perform any other actions
-      },
-      (error) => {
-        // Handle error
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.message
-        });
-      }
-    );
-  }
   
   
 }
