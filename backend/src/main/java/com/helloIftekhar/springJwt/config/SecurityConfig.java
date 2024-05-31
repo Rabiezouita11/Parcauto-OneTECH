@@ -49,10 +49,10 @@ public class SecurityConfig {
                                 .requestMatchers("/delete/**").hasAnyAuthority("CHEF_DEPARTEMENT", "CONDUCTEUR")
 
 
-                                .requestMatchers("/ChefDepartement/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN")
+                                .requestMatchers("/ChefDepartement/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN","CONDUCTEUR")
                                 .requestMatchers("/user/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN", "CONDUCTEUR")
 
-                                .requestMatchers("/conducteur/**").hasAuthority("CONDUCTEUR")
+                                .requestMatchers("/conducteur/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN","CONDUCTEUR")
 
                                 .anyRequest()
                                 .authenticated()

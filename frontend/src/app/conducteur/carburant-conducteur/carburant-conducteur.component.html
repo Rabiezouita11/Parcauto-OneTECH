@@ -1,0 +1,75 @@
+<!-- Table displaying reservations -->
+<div class="card p-4 rounded-5 mb25">
+  <table *ngIf="reservations && reservations.length > 0" class="table de-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Chef département</th>
+        <th>Vehicle Marque</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Mission</th>
+        <th>Montant</th>
+        <th>action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.connectedUserName?.username }}</td>
+        <td>{{ reservation.vehicle.marque }}</td>
+        <td>{{ reservation.startDate }}</td>
+        <td>{{ reservation.endDate }}</td>
+        <td>{{ reservation.mission }}</td>
+        <td>{{ reservation.montant }}</td>
+        <td>
+          <!-- Button to trigger the fuel management modal -->
+          <button type="button" class="btn btn-primary" (click)="openFuelManagementModal(reservation)" data-bs-toggle="modal" data-bs-target="#fuelManagementModal">
+            Gérer Carburant
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!(reservations && reservations.length > 0)" class="text-center mt-4">
+    <p>Aucune réservation trouvée.</p>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- Modal for fuel management -->
+<!-- Modal for fuel management -->
+<div class="modal fade" id="fuelManagementModal" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fuelManagementModalLabel">Gestion du Carburant</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add fuel management form -->
+        <form (ngSubmit)="submitFuelManagementForm()" #fuelForm="ngForm">
+          <div class="mb-3">
+            <label for="kilometrageDebut" class="form-label">Kilométrage Début:</label>
+            <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required>
+          </div>
+          <div class="mb-3">
+            <label for="kilometrageFin" class="form-label">Kilométrage Fin:</label>
+            <input type="number" class="form-control" id="kilometrageFin" [(ngModel)]="fuelData.kilometrageFin" name="kilometrageFin" required>
+          </div>
+          <div class="mb-3">
+            <label for="quantiteCarburant" class="form-label">Quantité de Carburant Utilisée:</label>
+            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required>
+          </div>
+         
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,7 +49,8 @@
                                     <li *ngIf="role === 'ADMIN'"><a routerLink="/utilisateurs" routerLinkActive="active"><i class="fa fa-user"></i>Utilisateurs</a></li>
                                     <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calendrier" routerLinkActive="active"><i class="fa fa-calendar"></i>Calendrier</a></li>
                                     <li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i>Réservations</a></li>
-                                
+                                    <li *ngIf="role === 'CONDUCTEUR'"><a routerLink="/CarburantConducteur" routerLinkActive="active"><i class="fa fa-calendar"></i>Réservations</a></li>
+
                                     <li>
                                         <a (click)="logout()">
                                             <i class="fa fa-sign-out"></i>Déconnexion

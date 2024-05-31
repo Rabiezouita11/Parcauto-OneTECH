@@ -27,5 +27,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Optional<Reservation> findByVehicleAndStartDateAndEndDateAndStatus(Vehicle vehicle, Date startDate, Date endDate, Boolean status);
     List<Reservation> findByStatusTrueAndStatusReservationNull();
     void deleteByUser_Id(Long userId);
+    List<Reservation> findByUser_IdAndStatus(Long userId, Boolean status);
 
 }

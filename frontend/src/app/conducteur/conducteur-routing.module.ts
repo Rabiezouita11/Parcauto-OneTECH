@@ -7,6 +7,7 @@ import {VehiculeComponent} from './vehicule/vehicule.component';
 import { UsersComponent } from './users/users.component';
 import { CalenderComponent } from './calender/calender.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { CarburantConducteurComponent } from './carburant-conducteur/carburant-conducteur.component';
 
 const routes: Routes = [
     {
@@ -51,6 +52,14 @@ const routes: Routes = [
     {
         path: 'reservation',
         component: ReservationComponent,
+        // canActivate: [GuardAdminGuard], // Apply AuthGuard here
+        data: {
+            title: 'users'
+        }
+    },
+    {
+        path: 'CarburantConducteur',
+        component: CarburantConducteurComponent,
         // canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {
             title: 'users'

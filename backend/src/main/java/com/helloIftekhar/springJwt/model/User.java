@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "user")
 @Getter
 @Setter
-public class User implements UserDetails {
+public class User implements UserDetails  {
 
 
     @Id
