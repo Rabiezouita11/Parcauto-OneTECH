@@ -32,7 +32,25 @@
                 </div>
             </div>
 
-
+            <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'CONDUCTEUR'">
+                <div class="card p-4 rounded-5">
+                    <div class="symbol mb40">
+                        <i class="fas fa-gas-pump fa-2x"></i> <!-- Update the icon to a gas pump icon -->
+                    </div>
+                    <span class="h1 mb0">{{ carburantsCount }}</span>
+                    <span class="text-gray">Total de carburant</span> <!-- Update the text to "Total de carburant" -->
+                </div>
+            </div>
+            <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'CONDUCTEUR'">
+                <div class="card p-4 rounded-5">
+                    <div class="symbol mb40">
+                        <i class="fas fa-file-alt fa-2x"></i>
+                    </div>
+                    <span class="h1 mb0">{{ reportCount }}</span>
+                    <span class="text-gray">Total rapports</span>
+                </div>
+            </div>
+                        
 
             <div class="col-lg-3 col-6 mb25 order-sm-1" *ngIf="role === 'ADMIN'">
                 <div class="card p-4 rounded-5">

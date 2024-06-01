@@ -29,17 +29,21 @@ public class Carburant {
 
     @Column(name = "carburant_consome")
     private Double carburantConsome;
+    @Column(name = "user_id") // New field
+    private Long userId;
 
     // No-argument constructor
     public Carburant() {
     }
 
     // Parameterized constructor
-    public Carburant(Integer reservation_id, Integer kilometrageDebut, Integer kilometrageFin, Double quantiteCarburantUtiliser, Double carburantConsome) {
+    public Carburant(Integer reservation_id, Integer kilometrageDebut, Integer kilometrageFin, Double quantiteCarburantUtiliser, Double carburantConsome, Long userId) {
         this.reservation_id = reservation_id;
         this.kilometrageDebut = kilometrageDebut;
         this.kilometrageFin = kilometrageFin;
         this.quantiteCarburantUtiliser = quantiteCarburantUtiliser;
         this.carburantConsome = carburantConsome;
+        this.userId = userId;
+
     }
 }

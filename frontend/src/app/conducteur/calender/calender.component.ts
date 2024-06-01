@@ -74,7 +74,7 @@ export class CalenderComponent implements OnInit {
         userIdConnected: 0,
         distiantion: '',
         accompagnateur: '',
-        montant: 0
+       
 
     };
     role: any;
@@ -164,7 +164,7 @@ export class CalenderComponent implements OnInit {
                 id: this.selectedUserId,
                 username: ''
             },
-            montant: 0,
+            montant: this.reservation.montant,
             startDate: this.reservation.startDate,
             endDate: this.reservation.endDate,
             mission: this.reservation.mission,

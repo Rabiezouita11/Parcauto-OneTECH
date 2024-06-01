@@ -19,6 +19,6 @@ export interface Reservation {
     }; // Define connectedUserName as an object with a username property
     distiantion: string;
     accompagnateur: string;
-    montant: number; // New attribute
+    montant?: number; // New attribute
     statusReservation?:boolean
 }

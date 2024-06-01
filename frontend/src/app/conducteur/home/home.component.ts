@@ -10,6 +10,8 @@ import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.s
 import { User } from 'src/app/model/user';
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 import { Reservation } from 'src/app/model/Reservation';
+import { ConducteurService } from 'src/app/Service/Conducteur/conducteur.service';
+import { Carburant } from 'src/app/model/Carburant';
 @Component({ selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'] })
 export class HomeComponent implements OnInit {
   token: string | null;
@@ -26,7 +28,12 @@ export class HomeComponent implements OnInit {
   pendingReservations: any[] = [];
   acceptedReservations: any[] = [];
   refusedReservations: any[] = [];
-  constructor(private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
+  carburants: Carburant[] = []; // To store carburant data
+  carburantsCount: number = 0;
+  reports!: import("c:/Users/bouden/Desktop/projet nour jbali pfe/frontend/src/app/model/report").Report[];
+  reportCount: number=0;
+
+  constructor( private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
@@ -41,7 +48,13 @@ export class HomeComponent implements OnInit {
   }
     this.getAllReservations();
     this.loadReservations();
+    this.loadCarburants();
+    this.loadReports();
+   
   }
+  
+
+
   async getInfo(): Promise<void> {
     const token = localStorage.getItem('jwtToken');
 
@@ -115,4 +128,33 @@ export class HomeComponent implements OnInit {
       console.error('Error fetching reservations:', error);
     }
   }
+  async loadCarburants(): Promise<void> {
+    this.ConducteurService.getAllCarburants().subscribe(carburants => {
+        this.carburants = carburants;
+     
+        this.carburantsCount = this.countCarburantselonUserid(this.userIdConnected); // Assuming userId is already defined
+   console.log( this.carburantsCount)
+    }, error => {
+        console.error('Error loading carburants:', error);
+    });
+}
+countCarburantselonUserid(userId: number): number {
+  console.log("userId"+userId)
+  return this.carburants.filter(carburant => carburant.userId == userId).length;
+}
+
+async loadReports(): Promise<void> {
+  this.ConducteurService.getAllReport().subscribe(reports => {
+      this.reports = reports;
+      console.log(this.reports);
+      this.reportCount = this.countReportsByUserId(this.userIdConnected); // Assuming userId is already defined
+      console.log(this.reportCount);
+  }, error => {
+      console.error('Error loading reports:', error);
+  });
+}
+
+countReportsByUserId(userId: number): number {
+  return this.reports.filter(report => report.userId == userId).length;
+}
 }

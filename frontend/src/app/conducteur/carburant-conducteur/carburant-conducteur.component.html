@@ -18,16 +18,29 @@
         <td>{{ reservation.id }}</td>
         <td>{{ reservation.connectedUserName?.username }}</td>
         <td>{{ reservation.vehicle.marque }}</td>
+    
         <td>{{ reservation.startDate }}</td>
         <td>{{ reservation.endDate }}</td>
         <td>{{ reservation.mission }}</td>
         <td>{{ reservation.montant }}</td>
         <td>
           <!-- Button to trigger the fuel management modal -->
-          <button type="button" class="btn btn-primary" (click)="openFuelManagementModal(reservation)" data-bs-toggle="modal" data-bs-target="#fuelManagementModal">
+          <button *ngIf="!isCarburantExists(reservation.id)" type="button" class="btn btn-primary me-2" (click)="openFuelManagementModal(reservation)" data-bs-toggle="modal" data-bs-target="#fuelManagementModal">
             Gérer Carburant
           </button>
+          
+          <button *ngIf="isCarburantExists(reservation.id)" type="button" class="btn btn-primary me-2" (click)="openFuelManagementModal(reservation)" data-bs-toggle="modal" data-bs-target="#fuelManagementModal2">
+            <i class="fas fa-gas-pump"></i> 
+          </button>
+        
+          <button *ngIf="reservation.statusReservation && !isReportsExists(reservation.id)" type="button" class="btn btn-primary me-2" (click)="prepareCreateReport(reservation.id)" data-bs-toggle="modal" data-bs-target="#createReport">
+            <i class="fas fa-file-alt"></i>
+          </button>
+          <button *ngIf="isReportsExists(reservation.id)" type="button" class="btn btn-primary me-2" (click)="showReportDetails(reservation)" data-bs-toggle="modal" data-bs-target="#fuelManagementModal3">
+            Voici son rapport
+          </button>
         </td>
+        
       </tr>
     </tbody>
   </table>
@@ -39,7 +52,7 @@
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
-<!-- Modal for fuel management -->
+
 <!-- Modal for fuel management -->
 <div class="modal fade" id="fuelManagementModal" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -66,7 +79,7 @@
             <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required>
           </div>
          
-          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Enregistrer</button>
         </form>
       </div>
       <div class="modal-footer">
@@ -75,3 +88,126 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="fuelManagementModal3" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fuelManagementModalLabel">Rapport de réservation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add report details here -->
+        <ng-container *ngIf="selectedReservation && reports">
+          <ng-container *ngFor="let report of reports">
+            <ng-container *ngIf="report.reservationId === selectedReservation.id">
+              <p *ngIf="report.category">Catégorie: {{ report.category }}</p>
+              <p *ngIf="report.description">Description: {{ report.description }}</p>
+              <p *ngIf="report.location">Location: {{ report.location }}</p>
+              <p *ngIf="report.type">Type: {{ report.type }}</p>
+              <p *ngIf="report.date">Date: {{ report.date }}</p>
+
+              <!-- Add more fields as needed -->
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="fuelManagementModal2" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fuelManagementModalLabel">Gestion du Carburant</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add fuel management form -->
+        <h1>Carburants pour cette réservation :</h1>
+        
+        <ng-container *ngIf="selectedReservation && carburants">
+          <ng-container *ngFor="let carburant of carburants">
+            <ng-container *ngIf="carburant.reservation_id === selectedReservation.id">
+              <p>Réservation ID: {{ carburant.reservation_id }}</p>
+              <p>Kilométrage Début: {{ carburant.kilometrageDebut }}</p>
+              <p>Kilométrage Fin: {{ carburant.kilometrageFin }}</p>
+              <p>Quantité de Carburant Utilisée: {{ carburant.quantiteCarburantUtiliser }}</p>
+              <p>Carburant Consommé: {{ carburant.carburantConsome }}</p>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createReport" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fuelManagementModalLabel">Create Report</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="categorySelect" class="form-label">Select Report Category:</label>
+            <select class="form-select" id="categorySelect" [(ngModel)]="rapport.selectedCategory" name="selectedCategory">
+              <option value="panneVoiture">Panne Voiture</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="accident">Accident</option>
+              <!-- Add more options for different report categories -->
+            </select>
+          </div>
+
+          <!-- Inputs for specific report categories -->
+          <div *ngIf="rapport.selectedCategory === 'panneVoiture'">
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="panneVoitureDescription"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Location:</label>
+              <input type="text" class="form-control" id="location" name="location" [(ngModel)]="panneVoitureLocation">
+            </div>
+          </div>
+          <div *ngIf="rapport.selectedCategory === 'maintenance'">
+            <div class="mb-3">
+              <label for="type" class="form-label">Type:</label>
+              <input type="text" class="form-control" id="type" name="type" [(ngModel)]="maintenanceType">
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Date:</label>
+              <input type="date" class="form-control" id="date" name="date" [(ngModel)]="maintenanceDate">
+            </div>
+          </div>
+          <div *ngIf="rapport.selectedCategory === 'accident'">
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="accidentDescription"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="date" class="form-label">Date:</label>
+              <input type="date" class="form-control" id="date" name="date" [(ngModel)]="accidentDate">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="createReport()">Create Report</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
