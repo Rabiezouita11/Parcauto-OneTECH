@@ -6,6 +6,7 @@ import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.service';
 import { Carburant } from 'src/app/model/Carburant';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-carburant-admin',
@@ -34,18 +35,42 @@ export class CarburantAdminComponent implements OnInit {
     });
 }
 openReservationModal(reservationId: number): void {
-  // Appel à votre service pour récupérer toutes les réservations
+  // Call your service to retrieve all reservations
   this.reservationService.getAllReservations().subscribe(reservations => {
-    // Recherche de la réservation correspondant à l'ID donné
+    // Find the reservation corresponding to the given ID
     const selectedReservation = reservations.find(reservation => reservation.id === reservationId);
-    this.dialog.open(ReservationDetailsComponent, {
-      width: '400px',
-      data: selectedReservation
-    });
+
     if (selectedReservation) {
-      // Si une réservation correspondante est trouvée, affichez ses détails dans la console (ou effectuez toute autre logique que vous souhaitez)
-      console.log(selectedReservation);
-      // Vous pouvez ajouter ici la logique pour afficher les détails de la réservation dans la modale
+      // Call your service to populate connectedUserName for each reservation
+      const observables = [
+        ...reservations
+          .filter(reservation => reservation.userIdConnected)
+          .map(reservation => this.reservationService.getUsernameById(reservation.userIdConnected)),
+        this.reservationService.getUsernameById(selectedReservation.user.id)
+      ];
+
+      // Wait for all observables to complete
+   // Wait for all observables to complete
+forkJoin(observables).subscribe(usernames => {
+  const connectedUserNames = usernames.slice(0, -1);
+  const mainUserName = usernames.slice(-1)[0];
+
+  reservations.forEach((reservation, index) => {
+    reservation.connectedUserName = connectedUserNames[index];
+  });
+
+  // Check if the main username is an object { username: string } or a string directly
+  selectedReservation.user.username = typeof mainUserName === 'object' ? mainUserName.username : mainUserName;
+
+  // Now that all reservations have their connectedUserName populated and the main username is set, open the dialog
+  this.dialog.open(ReservationDetailsComponent, {
+    width: '400px',
+    data: selectedReservation
+  });
+}, error => {
+  console.error('Error fetching user details', error);
+});
+
     } else {
       console.error('Reservation not found');
     }
@@ -53,5 +78,6 @@ openReservationModal(reservationId: number): void {
     console.error('Error loading reservations:', error);
   });
 }
+
 
 }

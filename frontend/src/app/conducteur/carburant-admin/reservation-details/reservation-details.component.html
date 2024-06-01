@@ -4,13 +4,11 @@
   <p>Vehicle ID: {{ reservation.vehicle.id }}</p>
   <p>Marque: {{ reservation.vehicle.marque }}</p>
   <p>Modèle: {{ reservation.vehicle.modele }}</p>
-  <p>User ID: {{ reservation.user.id }}</p>
-  <p>Username: {{ reservation.user.username }}</p>
+  <p>Conducteur: {{ reservation.user.username }}</p>
   <p>Start Date: {{ reservation.startDate }}</p>
   <p>End Date: {{ reservation.endDate }}</p>
   <p>Mission: {{ reservation.mission }}</p>
-  <p>User ID Connected: {{ reservation.userIdConnected }}</p>
-  <p>Connected User Name: {{ reservation.connectedUserName?.username }}</p>
+  <p>Chef département: {{ reservation.connectedUserName?.username }}</p>
   <p>Destination: {{ reservation.distiantion }}</p>
   <p>Accompagnateur: {{ reservation.accompagnateur }}</p>
   <p>Montant: {{ reservation.montant }}</p>
