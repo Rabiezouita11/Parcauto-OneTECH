@@ -13,6 +13,7 @@ import { Carburant } from 'src/app/model/Carburant';
 export class CarburantAdminComponent implements OnInit {
   carburants: Carburant[] = []; // To store carburant data
   token: string | null;
+  selectedReservationId: number | null = null;
 
   constructor( private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
