@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
@@ -11,7 +11,12 @@ import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/sc
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+    isScrolled = false;
+    @HostListener('window:scroll', [])
+    onWindowScroll() {
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        this.isScrolled = scrollPosition > 0; // Set isScrolled to true if the page is scrolled
+    }
     userId: any;
     fileName: any;
     token: string | null;
