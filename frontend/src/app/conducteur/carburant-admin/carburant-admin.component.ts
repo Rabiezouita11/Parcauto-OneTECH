@@ -30,4 +30,22 @@ export class CarburantAdminComponent implements OnInit {
         console.error('Error loading carburants:', error);
     });
 }
+openReservationModal(reservationId: number): void {
+  // Appel à votre service pour récupérer toutes les réservations
+  this.reservationService.getAllReservations().subscribe(reservations => {
+    // Recherche de la réservation correspondant à l'ID donné
+    const selectedReservation = reservations.find(reservation => reservation.id === reservationId);
+
+    if (selectedReservation) {
+      // Si une réservation correspondante est trouvée, affichez ses détails dans la console (ou effectuez toute autre logique que vous souhaitez)
+      console.log(selectedReservation);
+      // Vous pouvez ajouter ici la logique pour afficher les détails de la réservation dans la modale
+    } else {
+      console.error('Reservation not found');
+    }
+  }, error => {
+    console.error('Error loading reservations:', error);
+  });
+}
+
 }
