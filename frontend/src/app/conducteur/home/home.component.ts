@@ -63,7 +63,71 @@ AfterViewInit {
 
 
     }
-
+    loadUsers(): void {
+      this.userService.getConducteursAndChefs().subscribe(
+        (users: User[]) => {
+          this.users = users;
+          this.usersCount = users.length;
+          this.createChartUser();
+        },
+        (error) => {
+          console.error('Error fetching users:', error);
+        }
+      );
+    }
+    createChartUser(): void {
+      // Count the number of users for each role
+      const roleCountsMap = new Map<string, number>();
+      this.users.forEach(user => {
+        const count = roleCountsMap.get(user.role) || 0;
+        roleCountsMap.set(user.role, count + 1);
+      });
+    
+      // Extract role labels and counts from the map
+      const roleLabels = Array.from(roleCountsMap.keys());
+      const roleCounts = Array.from(roleCountsMap.values());
+    
+      // Define background colors for each role
+      const backgroundColors = roleLabels.map(role => {
+        if (role === 'CHEF_DEPARTEMENT') {
+          return '#78ca5c'; // Green for CHEF_DEPARTEMENT
+        } else if (role === 'CONDUCTEUR') {
+          return 'orange'; // Orange for CONDUCTEUR
+        } else {
+          return 'rgba(54, 162, 235, 0.2)'; // Default color
+        }
+      });
+    
+      const ctx = this.rapportsChartRef.nativeElement.getContext('2d');
+      if (!ctx) {
+        console.error('Canvas context is null.');
+        return;
+      }
+    
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: roleLabels,
+          datasets: [{
+            label: 'User Count',
+            data: roleCounts,
+            backgroundColor: backgroundColors, // Use the defined background colors
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+    
+    
+  
     async ngOnInit() {
 
         await this.getInfo();
@@ -76,7 +140,9 @@ AfterViewInit {
         this.getAllReservations();
         this.loadReservations();
         this.loadCarburants();
-        this.loadReports();
+       
+        this.loadUsers();
+
 
     }
 
@@ -132,7 +198,7 @@ AfterViewInit {
             type: 'pie',
             data: {
                 labels: [
-                    'Pending', 'Accepted', 'Refused'
+                    'En cours', 'accepteé', 'refuseé'
                 ],
                 datasets: [
                     {
@@ -258,7 +324,6 @@ AfterViewInit {
             console.log(this.reports);
             this.reportCountNoUserId = reports.length;
             this.reportCount = this.countReportsByUserId(this.userIdConnected); // Assuming userId is already defined
-            this.createReportsChart();
 
         }, error => {
             console.error('Error loading reports:', error);
@@ -269,47 +334,6 @@ AfterViewInit {
         return this.reports.filter(report => report.userId == userId).length;
     }
 
-    createReportsChart(): void {
-      const ctx = this.rapportsChartRef.nativeElement.getContext('2d');
-      if (!ctx) {
-          console.error('Canvas context is null.');
-          return;
-      }
-  
-      // Extract unique categories and their counts
-      const uniqueCategories = new Set(this.reports.map(report => report.category));
-      const categoryCounts = Array.from(uniqueCategories).map(category => {
-          return {
-              category: category,
-              count: this.reports.filter(report => report.category === category).length
-          };
-      });
-  
-      // Extract labels and data for the chart
-      const labels = categoryCounts.map(item => item.category);
-      const data = categoryCounts.map(item => item.count);
-  
-      // Create the pie chart using the extracted data
-      new Chart(ctx, {
-          type: 'pie',
-          data: {
-              labels: labels,
-              datasets: [{
-                  label: 'Number of Reports',
-                  data: data,
-                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
-  }
+ 
   
 }
