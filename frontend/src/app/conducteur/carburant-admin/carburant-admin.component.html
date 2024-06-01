@@ -1,0 +1,32 @@
+<div class="card p-7 rounded-1 mb25">
+    <table *ngIf="carburants && carburants.length > 0"class="table table-striped table-hover">
+      <!-- En-tête du tableau -->
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Réservation ID</th>
+          <th>Kilométrage Début</th>
+          <th>Kilométrage Fin</th>
+          <th>Quantité Carburant Utilisée</th>
+          <th>Carburant Consommé</th>
+          <th>User ID</th>
+        </tr>
+      </thead>
+      <!-- Corps du tableau -->
+      <tbody>
+        <tr *ngFor="let carburant of carburants">
+          <!-- Données de carburant -->
+          <td>{{ carburant.id }}</td>
+          <td>{{ carburant.reservation_id }}</td>
+          <td>{{ carburant.kilometrageDebut }}</td>
+          <td>{{ carburant.kilometrageFin }}</td>
+          <td>{{ carburant.quantiteCarburantUtiliser }}</td>
+          <td>{{ carburant.carburantConsome }}</td>
+          <td>{{ carburant.userId }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Message si aucun carburant n'est trouvé -->
+    <p class="text-center" *ngIf="!carburants || carburants.length === 0">Aucun carburant trouvé</p>
+  </div>
+  

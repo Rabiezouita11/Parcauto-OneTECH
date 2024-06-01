@@ -1,0 +1,74 @@
+<div class="card p-7 rounded-1 mb25">
+    <table *ngIf="reports && reports.length > 0"  class="table table-striped table-hover">
+      <!-- En-tête du tableau -->
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Réservation</th>
+          <th>Catégorie</th>
+          <th>Description</th>
+          <th>Emplacement</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>ID Utilisateur</th>
+        </tr>
+      </thead>
+      <!-- Corps du tableau -->
+      <tbody>
+        <!-- Pour chaque rapport dans la liste -->
+        <ng-container *ngFor="let report of reports">
+            <tr>
+                <!-- Données du rapport -->
+                <td>{{ report.id }}</td>
+                <td>{{ report.reservationId }}</td>
+                <td>{{ report.category }}</td>
+                <td>
+                    <!-- Vérifier si la valeur de la colonne description est vide -->
+                    <ng-container *ngIf="!report.description">
+                        <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
+                    </ng-container>
+                    <!-- Afficher la valeur de la colonne description -->
+                    {{ report.description }}
+                </td>
+                <td>
+                    <!-- Vérifier si la valeur de la colonne location est vide -->
+                    <ng-container *ngIf="!report.location">
+                        <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
+                    </ng-container>
+                    <!-- Afficher la valeur de la colonne location -->
+                    {{ report.location }}
+                </td>
+                <td>
+                    <!-- Vérifier si la valeur de la colonne type est vide -->
+                    <ng-container *ngIf="!report.type">
+                        <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
+                    </ng-container>
+                    <!-- Afficher la valeur de la colonne type -->
+                    {{ report.type }}
+                </td>
+                <td>
+                    <!-- Vérifier si la valeur de la colonne date est vide -->
+                    <ng-container *ngIf="!report.date">
+                        <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
+                    </ng-container>
+                    <!-- Afficher la valeur de la colonne date -->
+                    {{ report.date | date: 'yyyy-MM-dd' }}
+
+                </td>
+                <td>
+                    <!-- Vérifier si la valeur de la colonne userId est vide -->
+                    <ng-container *ngIf="!report.userId">
+                        <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
+                    </ng-container>
+                    <!-- Afficher la valeur de la colonne userId -->
+                    {{ report.userId }}
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+    
+    </table>
+    <p class="text-center" class="text-center mt-4" *ngIf="!reports || reports.length === 0">Aucun rapport trouvé</p>
+  </div>
+  
+  

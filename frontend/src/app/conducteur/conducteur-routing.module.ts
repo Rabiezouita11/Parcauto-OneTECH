@@ -8,6 +8,8 @@ import { UsersComponent } from './users/users.component';
 import { CalenderComponent } from './calender/calender.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { CarburantConducteurComponent } from './carburant-conducteur/carburant-conducteur.component';
+import { CarburantAdminComponent } from './carburant-admin/carburant-admin.component';
+import { RaportsAdminComponent } from './raports-admin/raports-admin.component';
 
 const routes: Routes = [
     {
@@ -60,6 +62,21 @@ const routes: Routes = [
     {
         path: 'CarburantConducteur',
         component: CarburantConducteurComponent,
+        // canActivate: [GuardAdminGuard], // Apply AuthGuard here
+        data: {
+            title: 'users'
+        }
+    },
+    {
+        path: 'CarburantAdmin',
+        component: CarburantAdminComponent,
+        // canActivate: [GuardAdminGuard], // Apply AuthGuard here
+        data: {
+            title: 'users'
+        }
+    },  {
+        path: 'RaportsAdmin',
+        component: RaportsAdminComponent,
         // canActivate: [GuardAdminGuard], // Apply AuthGuard here
         data: {
             title: 'users'

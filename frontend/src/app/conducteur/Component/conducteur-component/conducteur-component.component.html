@@ -43,13 +43,15 @@
                                 </div>
                                 <div class="spacer-20"></div>
                                 <ul class="menu-col">
-                                    <li><a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-home"></i>Tableau de bord</a></li>
-                                    <li><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i>Mon profil</a></li>
-                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/vehicule" routerLinkActive="active"><i class="fa fa-car"></i>Véhicules</a></li>
-                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/utilisateurs" routerLinkActive="active"><i class="fa fa-user"></i>Utilisateurs</a></li>
-                                    <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calendrier" routerLinkActive="active"><i class="fa fa-calendar"></i>Calendrier</a></li>
-                                    <li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i>Réservations</a></li>
-                                    <li *ngIf="role === 'CONDUCTEUR'"><a routerLink="/CarburantConducteur" routerLinkActive="active"><i class="fa fa-calendar"></i>Réservations</a></li>
+                                    <li><a routerLink="/dashboard" routerLinkActive="active"><i class="fa fa-home"></i> Tableau de bord</a></li>
+<li><a routerLink="/profile" routerLinkActive="active"><i class="fa fa-user"></i> Mon profil</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/vehicule" routerLinkActive="active"><i class="fa fa-car"></i> Véhicules</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/utilisateurs" routerLinkActive="active"><i class="fa fa-users"></i> Utilisateurs</a></li>
+<li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calendrier" routerLinkActive="active"><i class="fa fa-calendar"></i> Calendrier</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i> Réservations</a></li>
+<li *ngIf="role === 'CONDUCTEUR'"><a routerLink="/CarburantConducteur" routerLinkActive="active"><i class="fa fa-calendar"></i> Réservations</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/CarburantAdmin" routerLinkActive="active"><i class="fa fa-gas-pump"></i> Gérer carburant</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/RaportsAdmin" routerLinkActive="active"><i class="fa fa-file-alt"></i> Gérer rapports</a></li>
 
                                     <li>
                                         <a (click)="logout()">
