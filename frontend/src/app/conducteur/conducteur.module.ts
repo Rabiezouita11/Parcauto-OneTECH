@@ -28,6 +28,7 @@ import { ReservationDetailsModalComponent } from './reservation/reservation-deta
 import { CarburantConducteurComponent } from './carburant-conducteur/carburant-conducteur.component';
 import { CarburantAdminComponent } from './carburant-admin/carburant-admin.component';
 import { RaportsAdminComponent } from './raports-admin/raports-admin.component';
+import { ReservationDetailsComponent } from './carburant-admin/reservation-details/reservation-details.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { RaportsAdminComponent } from './raports-admin/raports-admin.component';
     ReservationDetailsModalComponent,
     CarburantConducteurComponent,
     CarburantAdminComponent,
-    RaportsAdminComponent
+    RaportsAdminComponent,
+    ReservationDetailsComponent,
+    
   ],
   imports: [
     CommonModule,
