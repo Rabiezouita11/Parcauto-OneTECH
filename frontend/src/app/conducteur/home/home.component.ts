@@ -129,7 +129,7 @@ AfterViewInit {
         }
         // Create the chart after the view has been initialized
         const myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: {
                 labels: [
                     'Pending', 'Accepted', 'Refused'
@@ -216,9 +216,9 @@ AfterViewInit {
       const dataQuantiteCarburant = this.carburants.map(carburant => carburant.quantiteCarburantUtiliser);
       const dataCarburantConsome = this.carburants.map(carburant => carburant.carburantConsome);
     
-      // Create the bar chart using carburants data
+      // Create the pie chart using carburants data
       new Chart(ctx, {
-        type: 'bar',
+        type: 'pie',
         data: {
           labels: labels,
           datasets: [{
@@ -289,9 +289,9 @@ AfterViewInit {
       const labels = categoryCounts.map(item => item.category);
       const data = categoryCounts.map(item => item.count);
   
-      // Create the bar chart using the extracted data
+      // Create the pie chart using the extracted data
       new Chart(ctx, {
-          type: 'bar',
+          type: 'pie',
           data: {
               labels: labels,
               datasets: [{
