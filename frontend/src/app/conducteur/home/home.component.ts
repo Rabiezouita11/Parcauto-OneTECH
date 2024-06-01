@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
   carburantsCount: number = 0;
   reports!: import("c:/Users/bouden/Desktop/projet nour jbali pfe/frontend/src/app/model/report").Report[];
   reportCount: number=0;
+  reportCountNoUserId:  number=0;
+  CarburantsCountNoUserId:number=0;
 
   constructor( private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
@@ -131,7 +133,7 @@ export class HomeComponent implements OnInit {
   async loadCarburants(): Promise<void> {
     this.ConducteurService.getAllCarburants().subscribe(carburants => {
         this.carburants = carburants;
-     
+        this.CarburantsCountNoUserId = carburants.length;
         this.carburantsCount = this.countCarburantselonUserid(this.userIdConnected); // Assuming userId is already defined
    console.log( this.carburantsCount)
     }, error => {
@@ -147,6 +149,7 @@ async loadReports(): Promise<void> {
   this.ConducteurService.getAllReport().subscribe(reports => {
       this.reports = reports;
       console.log(this.reports);
+      this.reportCountNoUserId = reports.length;
       this.reportCount = this.countReportsByUserId(this.userIdConnected); // Assuming userId is already defined
       console.log(this.reportCount);
   }, error => {
