@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Chart, registerables } from 'chart.js/auto';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -14,7 +15,7 @@ import { ConducteurService } from 'src/app/Service/Conducteur/conducteur.service
 import { Carburant } from 'src/app/model/Carburant';
 import { Report } from 'src/app/model/Report';
 @Component({ selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'] })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit ,AfterViewInit {
   token: string | null;
   vehicles !: Vehicle[];
   reservations !: Reservation[];
@@ -36,12 +37,21 @@ export class HomeComponent implements OnInit {
   reportCountNoUserId:  number=0;
   CarburantsCountNoUserId:number=0;
 
+
+  @Input() chartData: any;
+  @ViewChild('chart') chartRef!: ElementRef;
+
   constructor( private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
-
+  ngAfterViewInit() {
+    // Call getAllReservations to fetch reservation data and update chartData
+    this.getAllReservations();
+  }
+  
   async ngOnInit() {
+  
     await this.getInfo();
 
     if (this.role === 'ADMIN') {
@@ -86,10 +96,61 @@ export class HomeComponent implements OnInit {
     this.reservationService.getAllReservations().subscribe(
       data => {
         this.reservations = data;
-        this.reservationCount = data.length
+        this.reservationCount = data.length;
+        this.pendingReservations = data.filter(reservation => reservation.status === null);
+        this.acceptedReservations = data.filter(reservation => reservation.status === true);
+        this.refusedReservations = data.filter(reservation => reservation.status === false);
+  
+        // Update chartData with counts
+        this.chartData = [
+          this.pendingReservations.length,
+          this.acceptedReservations.length,
+          this.refusedReservations.length
+        ];
+  
+        // Call a separate method to create the chart
+        this.createChart();
       },
       error => console.error('Error fetching reservations', error)
     );
+  }
+  
+  createChart(): void {
+    // Access the native element inside ngAfterViewInit
+    const ctx = this.chartRef.nativeElement.getContext('2d');
+    if (!ctx) {
+      console.error('Canvas context is null.');
+      return;
+    }
+    // Create the chart after the view has been initialized
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Pending', 'Accepted', 'Refused'],
+        datasets: [{
+          label: 'Reservations',
+          data: this.chartData, // Use the updated chartData
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
   }
   countUtilisateurs(): void {
     this.userService.getConducteursAndChefs().subscribe(
