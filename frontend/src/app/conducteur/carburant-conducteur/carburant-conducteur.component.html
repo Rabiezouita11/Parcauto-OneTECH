@@ -76,7 +76,7 @@
           </div>
           <div class="mb-3">
             <label for="quantiteCarburant" class="form-label">Quantité de Carburant Utilisée:</label>
-            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required>
+            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" readonly name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required>
           </div>
          
           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Enregistrer</button>

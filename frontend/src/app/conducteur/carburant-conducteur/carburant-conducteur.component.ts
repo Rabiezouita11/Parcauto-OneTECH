@@ -94,7 +94,7 @@ export class CarburantConducteurComponent implements OnInit {
         this.selectedReservation = reservation;
 
         if (reservation && reservation.montant) {
-            this.fuelData.quantiteCarburantUtiliser = (reservation.montant / 2525).toFixed(4);
+            this.fuelData.quantiteCarburantUtiliser = (reservation.montant / 2.525).toFixed(4);
 
 
             // Trigger change detection
