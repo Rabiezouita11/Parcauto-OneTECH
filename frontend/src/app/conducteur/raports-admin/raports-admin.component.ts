@@ -3,6 +3,7 @@ import { ConducteurService } from 'src/app/Service/Conducteur/conducteur.service
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.service';
+import { Report } from 'src/app/model/Report';
 
 @Component({
   selector: 'app-raports-admin',
@@ -11,7 +12,7 @@ import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.s
 })
 export class RaportsAdminComponent implements OnInit {
   token: string | null;
-  reports!: import("c:/Users/bouden/Desktop/projet nour jbali pfe/frontend/src/app/model/report").Report[];
+  reports: Report[] = []; // To store carburant data
 
 
   constructor( private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {

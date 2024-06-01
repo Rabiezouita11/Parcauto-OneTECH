@@ -4,7 +4,7 @@ import {ReservationService} from 'src/app/Service/Reservation/reservation.servic
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {Carburant} from 'src/app/model/Carburant';
 import {Reservation} from 'src/app/model/Reservation';
-import { Report } from 'src/app/model/report';
+import { Report } from 'src/app/model/Report';
 import Swal from 'sweetalert2';
 
 @Component({selector: 'app-carburant-conducteur', templateUrl: './carburant-conducteur.component.html', styleUrls: ['./carburant-conducteur.component.scss']})

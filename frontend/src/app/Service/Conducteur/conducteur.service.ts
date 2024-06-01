@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Carburant } from 'src/app/model/Carburant';
 import { Reservation } from 'src/app/model/Reservation';
-import { Report } from 'src/app/model/report';
+import { Report } from 'src/app/model/Report';
 
 @Injectable({
   providedIn: 'root'

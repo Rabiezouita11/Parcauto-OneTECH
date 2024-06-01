@@ -12,6 +12,7 @@ import { ReservationService } from 'src/app/Service/Reservation/reservation.serv
 import { Reservation } from 'src/app/model/Reservation';
 import { ConducteurService } from 'src/app/Service/Conducteur/conducteur.service';
 import { Carburant } from 'src/app/model/Carburant';
+import { Report } from 'src/app/model/Report';
 @Component({ selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss'] })
 export class HomeComponent implements OnInit {
   token: string | null;
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
   refusedReservations: any[] = [];
   carburants: Carburant[] = []; // To store carburant data
   carburantsCount: number = 0;
-  reports!: import("c:/Users/bouden/Desktop/projet nour jbali pfe/frontend/src/app/model/report").Report[];
+  reports!: Report[];
   reportCount: number=0;
   reportCountNoUserId:  number=0;
   CarburantsCountNoUserId:number=0;
