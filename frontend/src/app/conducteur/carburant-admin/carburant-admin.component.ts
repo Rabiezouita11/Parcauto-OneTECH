@@ -28,12 +28,29 @@ export class CarburantAdminComponent implements OnInit {
   }
   async loadCarburants(): Promise<void> {
     this.ConducteurService.getAllCarburants().subscribe(carburants => {
-        this.carburants = carburants;
-        
+      this.carburants = carburants.map(carburant => {
+        // Call your service to retrieve all reservations
+        this.reservationService.getAllReservations().subscribe(reservations => {
+          // Find the reservation corresponding to the given ID
+          const selectedReservation = reservations.find(reservation => reservation.id === carburant.reservation_id);
+  
+          if (selectedReservation) {
+            // Extract the vehicle ID from the selected reservation
+            const vehicleId = selectedReservation.vehicle.id;
+            // Assign the vehicleId to the carburant object
+            carburant.vehicleId = vehicleId;
+          } else {
+            console.error('Reservation not found');
+          }
+        }, error => {
+          console.error('Error loading reservations:', error);
+        });
+        return carburant;
+      });
     }, error => {
-        console.error('Error loading carburants:', error);
+      console.error('Error loading carburants:', error);
     });
-}
+  }
 openReservationModal(reservationId: number): void {
   // Call your service to retrieve all reservations
   this.reservationService.getAllReservations().subscribe(reservations => {
@@ -41,6 +58,9 @@ openReservationModal(reservationId: number): void {
     const selectedReservation = reservations.find(reservation => reservation.id === reservationId);
 
     if (selectedReservation) {
+      const vehicleId = selectedReservation.vehicle.id;
+      console.log('Vehicle ID:', vehicleId);
+
       // Call your service to populate connectedUserName for each reservation
       const observables = [
         ...reservations

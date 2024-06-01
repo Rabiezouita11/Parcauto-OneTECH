@@ -186,7 +186,7 @@
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Date:</label>
-              <input type="date" class="form-control" id="date" name="date" [(ngModel)]="maintenanceDate">
+              <input type="datetime-local" class="form-control" id="date" name="date" [(ngModel)]="maintenanceDate">
             </div>
           </div>
           <div *ngIf="rapport.selectedCategory === 'accident'">
@@ -196,7 +196,7 @@
             </div>
             <div class="mb-3">
               <label for="date" class="form-label">Date:</label>
-              <input type="date" class="form-control" id="date" name="date" [(ngModel)]="accidentDate">
+              <input type="datetime-local " class="form-control" id="date" name="date" [(ngModel)]="accidentDate">
             </div>
           </div>
         </form>

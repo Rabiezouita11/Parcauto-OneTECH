@@ -7,6 +7,7 @@ export interface Carburant {
     kilometrageFin: number;
     quantiteCarburantUtiliser: number;
     carburantConsome: number;
-    userId :number
+    userId :number,
+    vehicleId?:number
   }
   

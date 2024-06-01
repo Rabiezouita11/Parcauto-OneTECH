@@ -83,18 +83,18 @@
                                     <span class="arrow"></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="startDate">Date début</label>
-                                <input type="date" class="form-control" id="startDate"
-                                       [(ngModel)]="reservation.startDate" name="startDate" required
-                                       [min]="getCurrentDate()">
-                            </div>
-                            <div class="form-group">
-                                <label for="endDate">Date fin</label>
-                                <input type="date" class="form-control" id="endDate"
-                                       [(ngModel)]="reservation.endDate" name="endDate" required
-                                       [min]="reservation.startDate | date:'yyyy-MM-dd'">
-                            </div>
+                                <div class="form-group">
+                                    <label for="startDate">Date début</label>
+                                    <input type="date" class="form-control" id="startDate"
+                                        [(ngModel)]="reservation.startDate" name="startDate" required
+                                        [min]="getCurrentDate()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="endDate">Date fin</label>
+                                    <input type="date" class="form-control" id="endDate"
+                                        [(ngModel)]="reservation.endDate" name="endDate" required
+                                        [min]="reservation.startDate | date:'yyyy-MM-dd'">
+                                </div>
                             
                             <div class="form-group">
                                 <label for="userSelect">Conducteur</label>

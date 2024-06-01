@@ -20,7 +20,8 @@
             <tr>
                 <!-- Données du rapport -->
                 <td>{{ report.id }}</td>
-                <td>{{ report.reservationId }}</td>
+                <td (click)="openReservationModal(report.reservationId)">{{ report.reservationId }}</td>
+
                 <td>{{ report.category }}</td>
                 <td>
                     <!-- Vérifier si la valeur de la colonne description est vide -->
@@ -52,7 +53,8 @@
                         <i class="fa fa-exclamation-circle"></i> <!-- Afficher l'icône -->
                     </ng-container>
                     <!-- Afficher la valeur de la colonne date -->
-                    {{ report.date | date: 'yyyy-MM-dd' }}
+                    {{ report.date | date:'yyyy-MM-dd HH:mm:ss' }}
+
 
                 </td>
                 <td>

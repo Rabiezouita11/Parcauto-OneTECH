@@ -1,19 +1,29 @@
 <h2 mat-dialog-title>Reservations Details</h2>
 <div mat-dialog-content>
   <p>ID: {{ reservation.id }}</p>
-  <p>Vehicle ID: {{ reservation.vehicle.id }}</p>
-  <p>Marque: {{ reservation.vehicle.marque }}</p>
-  <p>Modèle: {{ reservation.vehicle.modele }}</p>
-  <p>Conducteur: {{ reservation.user.username }}</p>
-  <p>Start Date: {{ reservation.startDate }}</p>
-  <p>End Date: {{ reservation.endDate }}</p>
-  <p>Mission: {{ reservation.mission }}</p>
-  <p>Chef département: {{ reservation.connectedUserName?.username }}</p>
-  <p>Destination: {{ reservation.distiantion }}</p>
-  <p>Accompagnateur: {{ reservation.accompagnateur }}</p>
-  <p>Montant: {{ reservation.montant }}</p>
-  <p>Status Reservation: {{ reservation.statusReservation }}</p>
-  <!-- Ajoutez d'autres détails ici au besoin -->
+  <p *ngIf="!reservation.vehicle">Vehicle ID: <em>No vehicle assigned</em></p>
+  <p *ngIf="reservation.vehicle">Vehicle ID: {{ reservation.vehicle.id }}</p>
+  <p *ngIf="reservation.vehicle">Marque: {{ reservation.vehicle.marque }}</p>
+  <p *ngIf="reservation.vehicle">Modèle: {{ reservation.vehicle.modele }}</p>
+  <p *ngIf="!reservation.user">Conducteur: <em>No user assigned</em></p>
+  <p *ngIf="reservation.user">Conducteur: {{ reservation.user.username }}</p>
+  <p *ngIf="!reservation.startDate">Start Date: <em>No start date specified</em></p>
+  <p *ngIf="reservation.startDate">Start Date: {{ reservation.startDate }}</p>
+  <p *ngIf="!reservation.endDate">End Date: <em>No end date specified</em></p>
+  <p *ngIf="reservation.endDate">End Date: {{ reservation.endDate }}</p>
+  <p *ngIf="!reservation.mission">Mission: <em>No mission specified</em></p>
+  <p *ngIf="reservation.mission">Mission: {{ reservation.mission }}</p>
+  <p *ngIf="!reservation.connectedUserName?.username">Chef département: <em>No chef département assigned</em></p>
+  <p *ngIf="reservation.connectedUserName?.username">Chef département: {{ reservation.connectedUserName?.username }}</p>
+  <p *ngIf="!reservation.distiantion">Destination: <em>No destination specified</em></p>
+  <p *ngIf="reservation.distiantion">Destination: {{ reservation.distiantion }}</p>
+  <p *ngIf="!reservation.accompagnateur">Accompagnateur: <em>No accompagnateur specified</em></p>
+  <p *ngIf="reservation.accompagnateur">Accompagnateur: {{ reservation.accompagnateur }}</p>
+  <p *ngIf="!reservation.montant">Montant: <em>No montant specified</em></p>
+  <p *ngIf="reservation.montant">Montant: {{ reservation.montant }}</p>
+  <p *ngIf="!reservation.statusReservation">Status Reservation: <em>No status specified</em></p>
+  <p *ngIf="reservation.statusReservation">Status Reservation: {{ reservation.statusReservation }}</p>
+  <!-- Add other details here as needed -->
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="true">Close</button>
