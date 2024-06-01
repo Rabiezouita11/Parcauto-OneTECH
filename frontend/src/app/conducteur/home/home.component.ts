@@ -50,6 +50,7 @@ AfterViewInit {
     @Input()chartData : any;
     @ViewChild('chart')chartRef !: ElementRef;
     @ViewChild('carburantsChart')carburantsChartRef !: ElementRef;
+    @ViewChild('rapportsChart') rapportsChartRef!: ElementRef;
 
     constructor(private ConducteurService : ConducteurService, private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
@@ -58,6 +59,8 @@ AfterViewInit {
     ngAfterViewInit() { // Call getAllReservations to fetch reservation data and update chartData
         this.getAllReservations();
         this.loadCarburants();
+        this.loadReports();
+
 
     }
 
@@ -255,7 +258,8 @@ AfterViewInit {
             console.log(this.reports);
             this.reportCountNoUserId = reports.length;
             this.reportCount = this.countReportsByUserId(this.userIdConnected); // Assuming userId is already defined
-            console.log(this.reportCount);
+            this.createReportsChart();
+
         }, error => {
             console.error('Error loading reports:', error);
         });
@@ -264,4 +268,48 @@ AfterViewInit {
     countReportsByUserId(userId : number): number {
         return this.reports.filter(report => report.userId == userId).length;
     }
+
+    createReportsChart(): void {
+      const ctx = this.rapportsChartRef.nativeElement.getContext('2d');
+      if (!ctx) {
+          console.error('Canvas context is null.');
+          return;
+      }
+  
+      // Extract unique categories and their counts
+      const uniqueCategories = new Set(this.reports.map(report => report.category));
+      const categoryCounts = Array.from(uniqueCategories).map(category => {
+          return {
+              category: category,
+              count: this.reports.filter(report => report.category === category).length
+          };
+      });
+  
+      // Extract labels and data for the chart
+      const labels = categoryCounts.map(item => item.category);
+      const data = categoryCounts.map(item => item.count);
+  
+      // Create the bar chart using the extracted data
+      new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Number of Reports',
+                  data: data,
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  }
+  
 }
