@@ -8,8 +8,10 @@ header {
     &.fixed-header {
         position: fixed; // Fix the header when scrolled
         top: 0; // Position the header at the top of the viewport
-        width: 100%; // Ensure the header spans the entire width
+        width: 70%; // Ensure the header spans the entire width
         background-color: rgba(255, 255, 255, 0.9); // Set the background color with transparency
 
     }
 }
+
+
