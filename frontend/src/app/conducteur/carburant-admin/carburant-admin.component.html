@@ -19,8 +19,8 @@
           <td (click)="openReservationModal(carburant.reservation_id)">{{ carburant.reservation_id }}</td>
           <td>{{ carburant.kilometrageDebut }}</td>
           <td>{{ carburant.kilometrageFin }}</td>
-          <td>{{ carburant.quantiteCarburantUtiliser }}</td>
-          <td>{{ carburant.carburantConsome }}</td>
+          <td>{{ carburant.quantiteCarburantUtiliser.toFixed(2) }}</td>
+          <td>{{ carburant.carburantConsome.toFixed(2) }}</td>
           <td>{{ carburant.vehicleId }}</td>
 
         </tr>
