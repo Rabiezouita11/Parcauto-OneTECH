@@ -129,8 +129,11 @@ export class CarburantConducteurComponent implements OnInit {
 
         // Call the service to save carburant data
         this.ConducteurService.saveCarburant(carburantData).subscribe((result) => { // Handle success
-            Swal.fire({icon: 'success', title: 'Success', text: 'Carburant data saved successfully!'});
-            this.ngOnInit();
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Les données du carburant ont été enregistrées avec succès !'
+          });            this.ngOnInit();
             // Optionally, reset form data or perform any other actions
         }, (error) => { // Handle error
             Swal.fire({icon: 'error', title: 'Error', text: error.message});
@@ -210,7 +213,7 @@ export class CarburantConducteurComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Report created successfully:', response);
-          Swal.fire('Success', 'Report created successfully!', 'success');
+          Swal.fire('Succès', 'Le rapport a été créé avec succès!', 'success');
           this.ngOnInit();
         },
         error => {

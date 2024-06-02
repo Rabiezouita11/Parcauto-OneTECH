@@ -153,29 +153,29 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="fuelManagementModalLabel">Create Report</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="fuelManagementModalLabel">Créer un Rapport</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="categorySelect" class="form-label">Select Report Category:</label>
+            <label for="categorySelect" class="form-label">Sélectionnez la Catégorie du Rapport:</label>
             <select class="form-select" id="categorySelect" [(ngModel)]="rapport.selectedCategory" name="selectedCategory">
-              <option value="panneVoiture">Panne Voiture</option>
+              <option value="panneVoiture">Panne de Voiture</option>
               <option value="maintenance">Maintenance</option>
               <option value="accident">Accident</option>
-              <!-- Add more options for different report categories -->
+              <!-- Ajoutez plus d'options pour différentes catégories de rapport -->
             </select>
           </div>
 
-          <!-- Inputs for specific report categories -->
+          <!-- Inputs pour des catégories de rapport spécifiques -->
           <div *ngIf="rapport.selectedCategory === 'panneVoiture'">
             <div class="mb-3">
               <label for="description" class="form-label">Description:</label>
               <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="panneVoitureDescription"></textarea>
             </div>
             <div class="mb-3">
-              <label for="location" class="form-label">Location:</label>
+              <label for="location" class="form-label">Emplacement:</label>
               <input type="text" class="form-control" id="location" name="location" [(ngModel)]="panneVoitureLocation">
             </div>
           </div>
@@ -202,12 +202,13 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="createReport()">Create Report</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createReport()">Créer le Rapport</button>
       </div>
     </div>
   </div>
 </div>
+
 
 
 
