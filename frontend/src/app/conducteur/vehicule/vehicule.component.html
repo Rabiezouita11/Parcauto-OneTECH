@@ -124,7 +124,7 @@
         <td>{{ vehicle.disponibilite }}</td>
         <td>{{ vehicle.kilometrage }}</td>
         <!-- Add more table cells as needed -->
-        <td>
+        <td class="button-container">
           <button mat-icon-button color="primary" (click)="openUpdate(vehicle)">
             <mat-icon>edit</mat-icon>
           </button>
@@ -138,6 +138,7 @@
             <mat-icon>history</mat-icon> <!-- Use the appropriate icon for history -->
           </button>
         </td>
+        
       </tr>
     </tbody>
   </table>
