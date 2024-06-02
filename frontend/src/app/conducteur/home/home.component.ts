@@ -53,7 +53,7 @@ AfterViewInit {
     @ViewChild('carburantsChart')carburantsChartRef !: ElementRef;
     @ViewChild('rapportsChart') rapportsChartRef!: ElementRef;
 
-    constructor(private http: HttpClient ,private ConducteurService : ConducteurService, private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService) {
+    constructor(private UserService:UserService ,private http: HttpClient ,private ConducteurService : ConducteurService, private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
 
     }
@@ -131,7 +131,10 @@ AfterViewInit {
     async getAllReservationsMap(map: google.maps.Map): Promise<void> {
       try {
           let reservationsData: any;
-  
+          const token = localStorage.getItem('jwtToken');
+          if (token) {
+          const user = await this.UserService.getUserInfo(token).toPromise();
+          
           // Check user's role
           if (this.role === 'ADMIN') {
               // Fetch all reservations for admin
@@ -140,10 +143,10 @@ AfterViewInit {
               // Fetch reservations based on user's ID for CHEF_DEPARTEMENT
               reservationsData = await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise();
           } else {
-              console.error('Unknown role:', this.role);
-              return;
+            reservationsData = await this.reservationService.getReservationsByUserId(user.id).toPromise();
+
           }
-  
+        }
           if (reservationsData) {
               this.reservations = reservationsData;
               console.log("this.reservations: ", this.reservations);

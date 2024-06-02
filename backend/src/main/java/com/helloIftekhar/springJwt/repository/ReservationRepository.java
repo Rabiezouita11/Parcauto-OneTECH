@@ -18,6 +18,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByUserAndStatusIsTrue(User user);
 
     List<Reservation> findByUser(User user);
+
     boolean existsByUserAndStatusIsFalse(User user);
     @Query("SELECT r FROM Reservation r WHERE r.user = :user AND r.statusReservation = :statusReservation")
     List<Reservation> findByUserAndStatusReservation(@Param("user") User user, @Param("statusReservation") Boolean statusReservation);

@@ -152,6 +152,15 @@ public class ChefDepartementController {
     public List<Reservation> getReservationsByUserIdConnected(@PathVariable Long userIdConnected) {
         return reservationRepository.findByUserIdConnected(userIdConnected);
     }
+
+    @GetMapping("/reservationsByUserId/{userId}")
+    public List<Reservation> getReservationsByUserId(@PathVariable Integer userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+          
+        }
+        return reservationRepository.findByUser(user);
+    }
     @GetMapping("/reservations")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
