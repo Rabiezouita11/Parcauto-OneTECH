@@ -11,6 +11,7 @@
           <th>Type</th>
           <th>Date</th>
           <th>ID Utilisateur</th>
+          <th>action</th>
         </tr>
       </thead>
       <!-- Corps du tableau -->
@@ -65,6 +66,12 @@
                     <!-- Afficher la valeur de la colonne userId -->
                     {{ report.userId }}
                 </td>
+                <td>
+                    <!-- Add a delete icon with a click event handler -->
+                    <button (click)="deleteReport(report.id)" class="btn btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
             </tr>
         </ng-container>
     </tbody>

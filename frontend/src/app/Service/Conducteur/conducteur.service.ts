@@ -87,6 +87,25 @@ export class ConducteurService {
       );
   }
 
+  getAllReportActive(): Observable<Report[]> {
+    const token = localStorage.getItem('jwtToken');
+    console.log(token);
+    if (!token) {
+      return throwError('Token is not available');
+    }
+
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    return this.http.get<Report[]>(`${this.baseUrl}/reportsActive`, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Error:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+
 
   createReport(report: any): Observable<any> {
     const token = localStorage.getItem('jwtToken');
@@ -100,6 +119,23 @@ export class ConducteurService {
     return this.http.post(`${this.baseUrl}/CreateReport`, report, { headers })
       .pipe(
         catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
+  deleteReport(id: number): Observable<any> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      return throwError('Token is not available');
+    }
+
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+    return this.http.put(`${this.baseUrl}/reports/${id}/delete`, null, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Error:', error);
           return throwError(error);
         })
       );

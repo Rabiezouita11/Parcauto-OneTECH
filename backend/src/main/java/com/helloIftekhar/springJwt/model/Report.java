@@ -24,6 +24,7 @@ public class Report {
     private String type;
     private Date date;
     private Long userId; // New field
+    private boolean deleted; // Renamed field
 
     public Report() {
         this.reservationId = null;
@@ -33,6 +34,7 @@ public class Report {
         this.location = null;
         this.type = null;
         this.date = null;
+        this.deleted = false; // Set default value to false
     }
 
     public Report(Long reservationId, Long userId, String category, String description, String location, String type, Date date) {
@@ -43,6 +45,6 @@ public class Report {
         this.location = location;
         this.type = type;
         this.date = date;
+        this.deleted = false; // Set default value to false
     }
-
 }

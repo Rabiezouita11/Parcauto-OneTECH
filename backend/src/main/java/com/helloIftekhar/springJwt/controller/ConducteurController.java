@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -51,9 +52,30 @@ public class ConducteurController {
         }
     }
 
+    @GetMapping("/reportsActive")
+    public ResponseEntity<List<Report>> reportsActive() {
+        List<Report> reports = reportRepository.findAllActiveReports();
+        return new ResponseEntity<>(reports, HttpStatus.OK);
+    }
     @GetMapping("/reports")
-    public ResponseEntity<List<Report>> getAllReports() {
+    public ResponseEntity<List<Report>> getallraport() {
         List<Report> reports = reportRepository.findAll();
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
+
+
+    // New endpoint to update deleted to true
+    @PutMapping("/reports/{id}/delete")
+    public ResponseEntity<Report> deleteReport(@PathVariable Long id) {
+        Optional<Report> reportData = reportRepository.findById(id);
+        if (reportData.isPresent()) {
+            Report report = reportData.get();
+            report.setDeleted(true); // Use setDeleted instead of setIsDeleted
+            Report updatedReport = reportRepository.save(report);
+            return new ResponseEntity<>(updatedReport, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

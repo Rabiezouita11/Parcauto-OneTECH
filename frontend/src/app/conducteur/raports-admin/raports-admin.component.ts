@@ -7,6 +7,7 @@ import { Report } from 'src/app/model/Report';
 import { ReservationDetailsComponent } from '../carburant-admin/reservation-details/reservation-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-raports-admin',
@@ -27,7 +28,7 @@ export class RaportsAdminComponent implements OnInit {
     this.loadReports();
   }
   async loadReports(): Promise<void> {
-    this.ConducteurService.getAllReport().subscribe(reports => {
+    this.ConducteurService.getAllReportActive().subscribe(reports => {
         this.reports = reports;
         console.log(this.reports);
 
@@ -81,4 +82,35 @@ export class RaportsAdminComponent implements OnInit {
       console.error('Error loading reservations:', error);
     });
   }
+  deleteReport(id: number): void {
+    Swal.fire({
+      title: 'Êtes-vous sûr de supprimer?',
+      text: "Cette action est irréversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ConducteurService.deleteReport(id).subscribe(response => {
+          this.reports = this.reports.filter(report => report.id !== id);
+          Swal.fire(
+            'Supprimé!',
+            'Le rapport a été supprimé.',
+            'success'
+          );
+        }, error => {
+          console.error('Error deleting report:', error);
+          Swal.fire(
+            'Erreur!',
+            'Une erreur s\'est produite lors de la suppression du rapport.',
+            'error'
+          );
+        });
+      }
+    });
+  }
+  
 }
