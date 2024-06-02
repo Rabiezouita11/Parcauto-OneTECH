@@ -38,7 +38,7 @@
     </div>
     <div class="detail-item">
         <span class="label">Mission:</span>
-        <span class="value">{{ reservation.mission }}</span>
+        <span class="value" [innerHTML]="reservation.mission | newline"></span>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>

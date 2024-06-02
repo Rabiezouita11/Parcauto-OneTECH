@@ -67,12 +67,15 @@ export class VehiculeComponent implements OnInit {
     });
   }
   openUpdate(vehicle: any): void {
-    this.dialog.open(VehiculeUpdateModalComponent, {
+    const dialogRef = this.dialog.open(VehiculeUpdateModalComponent, {
       width: '400px',
       data: vehicle
     });
-  }
 
+    dialogRef.componentInstance.vehicleUpdated.subscribe(() => {
+      this.getAllVehicles(); // Refresh the list of vehicles
+    });
+  }
   addVehicle(): void {
     if (this.vehicleForm.invalid) {
       Swal.fire('Error', 'All fields are required', 'error');
@@ -113,12 +116,12 @@ export class VehiculeComponent implements OnInit {
 
   deleteVehicle(id: number): void {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this vehicle!',
+      title: 'Êtes-vous sûr?',
+      text: 'Vous ne pourrez pas récupérer ce véhicule!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
+      confirmButtonText: 'Oui, le supprimer!',
+      cancelButtonText: 'Non, annuler'
     }).then((result) => {
       if (result.isConfirmed) {
         this.vehicleService.deleteVehicle(id)
@@ -126,23 +129,31 @@ export class VehiculeComponent implements OnInit {
             () => {
               this.vehicles = this.vehicles.filter(v => v.id !== id);
               Swal.fire(
-                'Deleted!',
-                'Your vehicle has been deleted.',
+                'Supprimé!',
+                'Votre véhicule a été supprimé.',
                 'success'
               );
             },
             error => {
               this.errorMessage = error;
+              // Afficher le message d'erreur avec SweetAlert
+              Swal.fire(
+                'Erreur!',
+                'Impossible de supprimer le véhicule car il est occupé par une réservation.',
+                'error'
+              );
             }
           );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
-          'Cancelled',
-          'Your vehicle is safe :)',
+          'Annulé',
+          'Votre véhicule est en sécurité :)',
           'error'
         );
       }
     });
   }
+  
+  
   
 }

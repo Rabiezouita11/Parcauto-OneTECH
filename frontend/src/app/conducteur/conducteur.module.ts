@@ -29,6 +29,7 @@ import { CarburantConducteurComponent } from './carburant-conducteur/carburant-c
 import { CarburantAdminComponent } from './carburant-admin/carburant-admin.component';
 import { RaportsAdminComponent } from './raports-admin/raports-admin.component';
 import { ReservationDetailsComponent } from './carburant-admin/reservation-details/reservation-details.component';
+import { NewlinePipe } from '../newline.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { ReservationDetailsComponent } from './carburant-admin/reservation-detai
     CarburantAdminComponent,
     RaportsAdminComponent,
     ReservationDetailsComponent,
-    
+    NewlinePipe
   ],
   imports: [
     CommonModule,
@@ -62,7 +63,9 @@ import { ReservationDetailsComponent } from './carburant-admin/reservation-detai
     MatFormFieldModule, // Add MatFormFieldModule here
     FullCalendarModule, // register FullCalendar with your app
     MatSelectModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    
+
 
 
   ]

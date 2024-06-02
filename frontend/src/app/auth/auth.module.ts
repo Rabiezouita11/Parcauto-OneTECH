@@ -10,6 +10,7 @@ import { ResetPasswordComponent } from './resetPassword/reset-password/reset-pas
 import { AuthComponentComponent } from './authComponent/auth-component/auth-component.component';
 import { VerifcationEmailComponent } from './verifcation-email/verifcation-email.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule ,
     FormsModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
 
 
   ]

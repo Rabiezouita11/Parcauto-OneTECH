@@ -64,7 +64,7 @@ public class AdminController {
         vehicle.setId(id);
         return vehicleService.saveOrUpdateVehicle(vehicle);
     }
-    @DeleteMapping("/admin/vehicles/{id}")
+    @DeleteMapping("/admin/vehicless/{id}")
     public void deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
     }

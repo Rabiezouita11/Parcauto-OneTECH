@@ -8,10 +8,12 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthModule } from './auth/auth.module';
 import { ConducteurModule } from './conducteur/conducteur.module';
+import { NewlinePipe } from './newline.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    
   ],
   imports: [
     BrowserModule,

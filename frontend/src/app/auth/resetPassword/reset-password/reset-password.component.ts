@@ -16,6 +16,8 @@ const SCRIPT_PATH_LIST =[
 export class ResetPasswordComponent implements OnInit {
     submitted = true; // Change to true to display validation messages on load
     token !: string;
+    loading = false;
+
     form !: FormGroup;
     constructor(private ScriptServiceService: ScriptService ,private renderer: Renderer2 ,private scriptStyleLoaderService : ScriptStyleLoaderService, public service : UserService, public fb : FormBuilder, private router : Router, private route : ActivatedRoute) {}
     ngOnInit(): void {
@@ -53,6 +55,8 @@ export class ResetPasswordComponent implements OnInit {
     }
     onSubmit() {
         this.submitted = true;
+        this.loading = true;
+
         this.service.resetPassword(this.token, this.form.value.password).subscribe((response : any) => {
             Swal.fire({
                 icon: 'success',
@@ -60,12 +64,15 @@ export class ResetPasswordComponent implements OnInit {
                 text: response.message,
                 timer: 2000, // Adjust the duration as needed
             });
+            this.loading = false;
             // Navigate to login after the timer expires
             setTimeout(() => {
                 this.router.navigate(['/auth/login']);
+                this.loading = false;
             }, 2000); // Match the timer duration
         }, (error) => {
             Swal.fire({icon: 'error', title: 'Error!', text: error.error.message});
+            this.loading = false;
         });
     }
 

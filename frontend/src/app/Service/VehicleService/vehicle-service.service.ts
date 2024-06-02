@@ -78,7 +78,7 @@ import { catchError } from 'rxjs/operators';
         return throwError('Token is not available'); // Throw an error if token is not available
       }
       const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-      const url = `${this.baseUrl}/vehicles/${id}`;
+      const url = `${this.baseUrl}/vehicless/${id}`;
       return this.http.delete(url, { headers }).pipe(
         catchError(error => {
           console.error('Error deleting vehicle:', error);
