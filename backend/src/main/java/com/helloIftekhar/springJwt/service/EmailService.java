@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -33,11 +34,12 @@ public class EmailService {
             // Définir les détails de l'email
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(text);
+            helper.setText("Bonjour, voici notre logo : <img src='cid:logo'>", true);
 
             // Créer une Resource à partir du contenu PDF
             Resource pdfResource = new ByteArrayResource(pdfContent);
-
+            ClassPathResource resource = new ClassPathResource("assets/logo.jpg");
+            helper.addInline("logo", resource);
             // Ajouter la pièce jointe PDF en utilisant la Resource
             helper.addAttachment("Reservation.pdf", pdfResource);
 
