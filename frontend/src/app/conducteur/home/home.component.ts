@@ -129,17 +129,34 @@ AfterViewInit {
     
     
     async getAllReservationsMap(map: google.maps.Map): Promise<void> {
-      await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise().then(data => {
-          if (data) {
-              this.reservations = data;
-              console.log("this.reservations"+this.reservations)
+      try {
+          let reservationsData: any;
+  
+          // Check user's role
+          if (this.role === 'ADMIN') {
+              // Fetch all reservations for admin
+              reservationsData = await this.reservationService.getAllReservations().toPromise();
+          } else if (this.role === 'CHEF_DEPARTEMENT') {
+              // Fetch reservations based on user's ID for CHEF_DEPARTEMENT
+              reservationsData = await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise();
+          } else {
+              console.error('Unknown role:', this.role);
+              return;
+          }
+  
+          if (reservationsData) {
+              this.reservations = reservationsData;
+              console.log("this.reservations: ", this.reservations);
               // Display markers for each reservation
-              this.displayMarkers(map);
+              await this.displayMarkers(map);
           } else {
               console.error('No reservation data received.');
           }
-      }).catch(error => console.error('Error fetching reservations', error));
+      } catch (error) {
+          console.error('Error fetching reservations:', error);
+      }
   }
+  
   
   async displayMarkers(map: google.maps.Map): Promise<void> {
     // Iterate over each reservation
