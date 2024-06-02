@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { VehiculeUpdateModalComponent } from './vehicule-update-modal/vehicule-update-modal.component';
 import { HistoriqueComponent } from './historique/historique.component';
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
+import { Reservation } from 'src/app/model/Reservation';
 
 @Component({
   selector: 'app-vehicule',
@@ -17,6 +18,7 @@ import { ReservationService } from 'src/app/Service/Reservation/reservation.serv
 export class VehiculeComponent implements OnInit {
   @ViewChild('exampleModal') exampleModal!: ElementRef;
   vehicleForm!: FormGroup;
+  reservations: Reservation[] = [];
 
   vehicles!: Vehicle[];
   errorMessage!: string;
@@ -67,10 +69,16 @@ export class VehiculeComponent implements OnInit {
     this.reservationService.getAllReservations().subscribe(
       (reservations: any[]) => {
         const selectedReservations = reservations.filter(reservation => reservation.vehicle.id === vehicleid);
-        if (selectedReservations.length > 0) { // Check if there are any reservations found
-          this.dialog.open(HistoriqueComponent, {
-            width: '400px',
-            data: selectedReservations
+        if (selectedReservations.length > 0) {
+          // Populate connected user names
+          this.populateConnectedUserNames(selectedReservations).then(() => {
+            // Open the dialog after user details are populated
+            this.dialog.open(HistoriqueComponent, {
+              width: '400px',
+              data: selectedReservations
+            });
+          }).catch(error => {
+            console.error('Error populating user details', error);
           });
         } else {
           console.error('No reservations found for this vehicle');
@@ -80,6 +88,34 @@ export class VehiculeComponent implements OnInit {
         console.error('Error loading reservations:', error);
       }
     );
+  }
+  
+  populateConnectedUserNames(reservations: Reservation[]): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let completedRequests = 0;
+      for (const reservation of reservations) {
+        if (reservation.userIdConnected) {
+          this.reservationService.getUsernameById(reservation.userIdConnected).subscribe(
+            username => {
+              reservation.connectedUserName = username;
+              completedRequests++;
+              if (completedRequests === reservations.length) {
+                resolve();
+              }
+            },
+            error => {
+              console.error('Error fetching user details', error);
+              reject(error);
+            }
+          );
+        } else {
+          completedRequests++;
+          if (completedRequests === reservations.length) {
+            resolve();
+          }
+        }
+      }
+    });
   }
   
 
