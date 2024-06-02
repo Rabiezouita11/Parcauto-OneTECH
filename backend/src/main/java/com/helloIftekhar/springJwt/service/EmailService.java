@@ -48,7 +48,7 @@ public class EmailService {
         }
     }
 
-    public byte[] generatePDFContent(String usernameConnectedFirstname, String usernameConnectedlastname, String firstname, String lastname, String startDate, String endDate, Vehicle vehicle, String destination, String accompagnateur) throws IOException {
+    public byte[] generatePDFContent(String usernameConnectedFirstname, String usernameConnectedlastname, String firstname, String lastname, String startDate, String endDate, Vehicle vehicle, String destination, String accompagnateur , String montant) throws IOException {
         // Base content of the PDF
         StringBuilder pdfContent = new StringBuilder();
         pdfContent.append("Je soussigné, ").append(usernameConnectedFirstname).append(" ").append(usernameConnectedlastname).append(" de la société Onetech Business Solutions,\n")
@@ -65,8 +65,8 @@ public class EmailService {
                 .append("Modèle: ").append(vehicle.getModele()).append("\n")
                 .append("Année: ").append(vehicle.getAnnee()).append("\n")
                 .append("Numéro de série: ").append(vehicle.getNumeroSerie()).append("\n")
-                .append("Kilométrage: ").append(vehicle.getKilometrage()).append("\n");
-
+                .append("Kilométrage: ").append(vehicle.getKilometrage()).append("\n")
+                .append("montant de carburant: ").append(montant).append("\n");
         // Create a PDF document using PDFBox
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PDDocument document = new PDDocument();

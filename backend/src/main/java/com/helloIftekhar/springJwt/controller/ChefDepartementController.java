@@ -189,6 +189,7 @@ public class ChefDepartementController {
             String accompagnateur = reservation.getAccompagnateur();
             String startDate = reservation.getStartDate().toString();
             String endDate = reservation.getEndDate().toString();
+            String montant = reservation.getMontant().toString();
             if (status) {
 
                 Vehicle vehicle = reservation.getVehicle();
@@ -212,7 +213,7 @@ public class ChefDepartementController {
                 emailBody = emailBody.replace("Conducteur Assignéee", reservation.getUser().getFirstName() + " "+ reservation.getUser().getLastName());
 
                 // Generate PDF content
-                byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname, usernameConnectedlastname, firstname, lastname, startDate, endDate, reservation.getVehicle(), destination, accompagnateur);
+                byte[] pdfBytes = emailService.generatePDFContent(usernameConnectedFirstname, usernameConnectedlastname, firstname, lastname, startDate, endDate, reservation.getVehicle(), destination, accompagnateur ,montant);
 
                 // Send email with PDF attachment
                 emailService.sendEmailWithPDFAttachment(usernameConnectedEmail, emailSubject,
