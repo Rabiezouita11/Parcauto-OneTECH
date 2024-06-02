@@ -9,6 +9,8 @@
           <th>Kilométrage Fin</th>
           <th>Quantité Carburant Utilisée</th>
           <th>Carburant Consommé</th>
+          <th>vehicle</th>
+
         </tr>
       </thead>
       <!-- Corps du tableau -->
@@ -21,7 +23,7 @@
           <td>{{ carburant.kilometrageFin }}</td>
           <td>{{ carburant.quantiteCarburantUtiliser.toFixed(2) }}</td>
           <td>{{ carburant.carburantConsome.toFixed(2) }}</td>
-          <td>{{ carburant.vehicleId }}</td>
+          <td   (click)="openDetailsVehicleModal(carburant.vehicleId)" >{{ carburant.vehicleId }}</td>
 
         </tr>
       </tbody>

@@ -7,6 +7,7 @@ import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.s
 import { Carburant } from 'src/app/model/Carburant';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
 import { forkJoin } from 'rxjs';
+import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
 
 @Component({
   selector: 'app-carburant-admin',
@@ -24,6 +25,7 @@ export class CarburantAdminComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loadCarburants();
+
 
   }
   async loadCarburants(): Promise<void> {
@@ -98,6 +100,27 @@ forkJoin(observables).subscribe(usernames => {
     console.error('Error loading reservations:', error);
   });
 }
+ 
+
+openDetailsVehicleModal(vehicleid:  number | undefined): void {
+  this.vehicleService.getAllVehicles().subscribe(
+    vehicles => {
+      const selectedVehicle = vehicles.find(vehicle => vehicle.id === vehicleid);
+      if (selectedVehicle) { // Check if selectedVehicle is defined
+        this.dialog.open(VehicleDetailsComponent, {
+          width: '400px',
+          data: selectedVehicle
+        });
+      } else {
+        console.error('Vehicle not found');
+      }
+    },
+    (error: any) => {
+      console.error('Error loading vehicles:', error);
+    }
+  );
+}
+
 
 
 }

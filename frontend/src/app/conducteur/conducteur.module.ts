@@ -30,6 +30,8 @@ import { CarburantAdminComponent } from './carburant-admin/carburant-admin.compo
 import { RaportsAdminComponent } from './raports-admin/raports-admin.component';
 import { ReservationDetailsComponent } from './carburant-admin/reservation-details/reservation-details.component';
 import { NewlinePipe } from '../newline.pipe';
+import { VehicleDetailsComponent } from './carburant-admin/vehicle-details/vehicle-details.component';
+import { HistoriqueComponent } from './vehicule/historique/historique.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { NewlinePipe } from '../newline.pipe';
     CarburantAdminComponent,
     RaportsAdminComponent,
     ReservationDetailsComponent,
-    NewlinePipe
+    NewlinePipe,
+    VehicleDetailsComponent,
+    HistoriqueComponent
   ],
   imports: [
     CommonModule,

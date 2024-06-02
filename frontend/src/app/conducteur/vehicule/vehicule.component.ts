@@ -6,6 +6,8 @@ import { VehicleDetailsModalComponent } from './vehicle-details-modal/vehicle-de
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { VehiculeUpdateModalComponent } from './vehicule-update-modal/vehicule-update-modal.component';
+import { HistoriqueComponent } from './historique/historique.component';
+import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 
 @Component({
   selector: 'app-vehicule',
@@ -30,7 +32,7 @@ export class VehiculeComponent implements OnInit {
   };
   currentYear: number;
 
-  constructor(private fb: FormBuilder ,private vehicleService: VehicleService ,private dialog: MatDialog) { 
+  constructor(private reservationService: ReservationService ,private fb: FormBuilder ,private vehicleService: VehicleService ,private dialog: MatDialog) { 
     this.currentYear = new Date().getFullYear();
 
   }
@@ -60,6 +62,28 @@ export class VehiculeComponent implements OnInit {
         }
       );
   }
+
+  openHistorique(vehicleid: number | undefined): void {
+    this.reservationService.getAllReservations().subscribe(
+      (reservations: any[]) => {
+        const selectedReservations = reservations.filter(reservation => reservation.vehicle.id === vehicleid);
+        if (selectedReservations.length > 0) { // Check if there are any reservations found
+          this.dialog.open(HistoriqueComponent, {
+            width: '400px',
+            data: selectedReservations
+          });
+        } else {
+          console.error('No reservations found for this vehicle');
+        }
+      },
+      (error: any) => {
+        console.error('Error loading reservations:', error);
+      }
+    );
+  }
+  
+
+
   openDetailsModal(vehicle: any): void {
     this.dialog.open(VehicleDetailsModalComponent, {
       width: '400px',
