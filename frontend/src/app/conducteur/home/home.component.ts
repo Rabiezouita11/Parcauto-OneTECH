@@ -160,7 +160,9 @@ AfterViewInit {
 
                 // Optionally, add an info window with reservation details
                 const infoWindow = new google.maps.InfoWindow({
-                    content: `<h3>${reservation.mission}</h3>`
+                    content: `    <h3>${reservation.mission}</h3>
+                    <p>Status: ${reservation.status ? 'Accepted' : 'Not Accepted'}</p>
+                    <p>Terminé: ${reservation.statusReservation ? 'Oui' : 'Non'}</p>`
                 });
 
                 marker.addListener('click', () => {
