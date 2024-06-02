@@ -22,6 +22,7 @@ import {Reservation} from 'src/app/model/Reservation';
 import {ConducteurService} from 'src/app/Service/Conducteur/conducteur.service';
 import {Carburant} from 'src/app/model/Carburant';
 import {Report} from 'src/app/model/Report';
+import { Loader } from '@googlemaps/js-api-loader';
 @Component({selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnInit,
 AfterViewInit {
@@ -52,7 +53,7 @@ AfterViewInit {
     @ViewChild('carburantsChart')carburantsChartRef !: ElementRef;
     @ViewChild('rapportsChart') rapportsChartRef!: ElementRef;
 
-    constructor(private ConducteurService : ConducteurService, private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService) {
+    constructor(private http: HttpClient ,private ConducteurService : ConducteurService, private reservationService : ReservationService, private vehicleService : VehicleService, private userService : UserService) {
         this.token = localStorage.getItem('jwtToken');
 
     }
@@ -127,8 +128,78 @@ AfterViewInit {
     }
     
     
+    async getAllReservationsMap(map: google.maps.Map): Promise<void> {
+      await this.reservationService.getReservationsByUserIdConnected(this.userIdConnected).toPromise().then(data => {
+          if (data) {
+              this.reservations = data;
+              console.log("this.reservations"+this.reservations)
+              // Display markers for each reservation
+              this.displayMarkers(map);
+          } else {
+              console.error('No reservation data received.');
+          }
+      }).catch(error => console.error('Error fetching reservations', error));
+  }
   
+  async displayMarkers(map: google.maps.Map): Promise<void> {
+    // Iterate over each reservation
+    for (const reservation of this.reservations) {
+        // Extract destination information from the reservation
+        const destination = reservation.distiantion;
+
+        // Geocode the destination to get its coordinates
+        try {
+            const coordinates = await this.geocodeDestination(destination);
+            if (coordinates) {
+                // Create a marker at the destination location
+                const marker = new google.maps.Marker({
+                    position: coordinates,
+                    map: map,
+                    title: reservation.mission // Optionally, set the marker title to reservation mission
+                });
+
+                // Optionally, add an info window with reservation details
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<h3>${reservation.mission}</h3>`
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+            }
+        } catch (error) {
+            console.error('Error geocoding destination:', error);
+        }
+    }
+}
+
+async geocodeDestination(destination: string): Promise<google.maps.LatLng | null> {
+  const apiUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destination)}`;
+  try {
+    const response: any = await this.http.get(apiUrl).toPromise();
+    if (response && Array.isArray(response) && response.length > 0) {
+      const firstResult = response[0];
+      const coordinates = new google.maps.LatLng(parseFloat(firstResult.lat), parseFloat(firstResult.lon));
+      return coordinates;
+    }
+  } catch (error) {
+    console.error('Geocoding error:', error);
+  }
+  return null;
+}
     async ngOnInit() {
+
+      let loader = new Loader({
+        apiKey: 'AIzaSyDFK8e9zS74Z-dr_Om8a0sPGUPAepAlMp4',
+      });
+      loader.load().then(() => {
+        let map = new google.maps.Map(document.getElementById('map')!, {
+          center: { lat: 36.81897, lng: 10.16579 },
+          zoom: 8,
+        });
+       this.getAllReservationsMap(map);
+
+ });
 
         await this.getInfo();
 
