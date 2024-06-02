@@ -50,8 +50,8 @@
 <li *ngIf="role === 'CHEF_DEPARTEMENT'"><a routerLink="/calendrier" routerLinkActive="active"><i class="fa fa-calendar"></i> Calendrier</a></li>
 <li *ngIf="role === 'ADMIN'"><a routerLink="/reservation" routerLinkActive="active"><i class="fa fa-calendar"></i> Réservations</a></li>
 <li *ngIf="role === 'CONDUCTEUR'"><a routerLink="/CarburantConducteur" routerLinkActive="active"><i class="fa fa-calendar"></i> Réservations</a></li>
-<li *ngIf="role === 'ADMIN'"><a routerLink="/CarburantAdmin" routerLinkActive="active"><i class="fa fa-gas-pump"></i> Gérer carburant</a></li>
-<li *ngIf="role === 'ADMIN'"><a routerLink="/RaportsAdmin" routerLinkActive="active"><i class="fa fa-file-alt"></i> Gérer rapports</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/CarburantAdmin" routerLinkActive="active"><i class="fa fa-gas-pump"></i>  carburant</a></li>
+<li *ngIf="role === 'ADMIN'"><a routerLink="/RaportsAdmin" routerLinkActive="active"><i class="fa fa-file-alt"></i>  rapports</a></li>
 
                                     <li>
                                         <a (click)="logout()">
