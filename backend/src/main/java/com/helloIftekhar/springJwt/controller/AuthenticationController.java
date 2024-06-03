@@ -3,6 +3,7 @@ package com.helloIftekhar.springJwt.controller;
 import com.helloIftekhar.springJwt.model.AuthenticationResponse;
 import com.helloIftekhar.springJwt.model.MessageResponse;
 import com.helloIftekhar.springJwt.model.User;
+import com.helloIftekhar.springJwt.repository.CarburantRepository;
 import com.helloIftekhar.springJwt.repository.ReservationRepository;
 import com.helloIftekhar.springJwt.repository.TokenRepository;
 import com.helloIftekhar.springJwt.repository.UserRepository;
@@ -54,6 +55,9 @@ public class AuthenticationController {
     private UserRepository userRepository;
     @Autowired
     private TokenRepository tokenRepository;
+    @Autowired
+    private CarburantRepository carburantRepository;
+
     @Autowired
     private ReservationRepository reservationRepository; // Autowire ReservationRepository
     public AuthenticationController(UserService userService, AuthenticationService authService) {
@@ -284,6 +288,7 @@ public class AuthenticationController {
             // Delete associated tokens first
             tokenRepository.deleteByUserId(Long.valueOf(id)); // Assuming you have a method to delete tokens by user ID
             reservationRepository.deleteByUser_Id(Long.valueOf(id)); // Assuming you have a method to delete reservations by user ID
+            carburantRepository.deleteByUserId(Long.valueOf(id)); // Delete carburants by user ID
 
             // Then delete the user
             userRepository.deleteById(id);
