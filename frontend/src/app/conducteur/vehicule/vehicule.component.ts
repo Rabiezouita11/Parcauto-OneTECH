@@ -70,25 +70,41 @@ export class VehiculeComponent implements OnInit {
       (reservations: any[]) => {
         const selectedReservations = reservations.filter(reservation => reservation.vehicle.id === vehicleid);
         if (selectedReservations.length > 0) {
-          // Populate connected user names
+          // Peupler les noms d'utilisateur connectés
           this.populateConnectedUserNames(selectedReservations).then(() => {
-            // Open the dialog after user details are populated
+            // Ouvrir le dialogue après que les détails des utilisateurs soient peuplés
             this.dialog.open(HistoriqueComponent, {
               width: '400px',
               data: selectedReservations
             });
           }).catch(error => {
-            console.error('Error populating user details', error);
+            console.error('Erreur lors du peuplement des détails de l\'utilisateur', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Erreur lors du peuplement des détails de l\'utilisateur',
+            });
           });
         } else {
-          console.error('No reservations found for this vehicle');
+          console.error('Aucune réservation trouvée pour ce véhicule');
+          Swal.fire({
+            icon: 'info',
+            title: 'Aucune réservation trouvée',
+            text: 'Aucune réservation trouvée pour ce véhicule',
+          });
         }
       },
       (error: any) => {
-        console.error('Error loading reservations:', error);
+        console.error('Erreur lors du chargement des réservations', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Erreur',
+          text: 'Erreur lors du chargement des réservations',
+        });
       }
     );
   }
+  
   
   populateConnectedUserNames(reservations: Reservation[]): Promise<void> {
     return new Promise((resolve, reject) => {
