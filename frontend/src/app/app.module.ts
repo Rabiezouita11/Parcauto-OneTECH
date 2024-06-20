@@ -9,6 +9,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthModule } from './auth/auth.module';
 import { ConducteurModule } from './conducteur/conducteur.module';
 import { NewlinePipe } from './newline.pipe';
+import { TimeAgoPipe } from './time-ago.pipe';
 @NgModule({
   declarations: [
     AppComponent,

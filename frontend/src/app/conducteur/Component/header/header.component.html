@@ -54,10 +54,14 @@
                                                 alt="Chef Departement Photo" class="notification-img">
                                             <div class="notification-content">
                                                 <span class="notification-message">{{ notification.message }}</span>
-                                                <span class="notification-chef" *ngIf="notification.chefDepartement"> chef Departement {{
+                                                <span class="notification-chef" *ngIf="notification.chefDepartement">
+                                                    chef Departement {{
                                                     notification.chefDepartement }}</span>
-                                                <span class="notification-chef" *ngIf="!notification.chefDepartement"> chef Departement {{
+                                                <span class="notification-chef" *ngIf="!notification.chefDepartement">
+                                                    chef Departement {{
                                                     notification.username }}</span>
+<div>{{ notification.timestamp | timeAgo }}</div>
+
 
                                             </div>
                                         </div>

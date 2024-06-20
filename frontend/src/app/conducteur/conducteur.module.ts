@@ -32,6 +32,7 @@ import { ReservationDetailsComponent } from './carburant-admin/reservation-detai
 import { NewlinePipe } from '../newline.pipe';
 import { VehicleDetailsComponent } from './carburant-admin/vehicle-details/vehicle-details.component';
 import { HistoriqueComponent } from './vehicule/historique/historique.component';
+import { TimeAgoPipe } from '../time-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,9 @@ import { HistoriqueComponent } from './vehicule/historique/historique.component'
     ReservationDetailsComponent,
     NewlinePipe,
     VehicleDetailsComponent,
-    HistoriqueComponent
+    HistoriqueComponent,
+    TimeAgoPipe,
+
   ],
   imports: [
     CommonModule,

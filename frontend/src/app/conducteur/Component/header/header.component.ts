@@ -38,42 +38,44 @@ export class HeaderComponent implements OnInit {
     }
     ngOnInit(): void {
         this.webSocketService.connect().then(() => {
-          // Subscribe to notifications
-          this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
-            // Handle notification update
-            console.log('Notification received:', notification);
-            this.notificationCount++;
-            this.notifications.unshift(notification); // Add new notification to the top of the list
-            this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
+            // Subscribe to notifications
+            this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+                // Handle notification update
+                console.log('Notification received:', notification);
+                notification.timestamp = new Date(); // Set current timestamp
 
-          });
+                this.notificationCount++;
+                this.notifications.unshift(notification); // Add new notification to the top of the list
+                this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
+
+            });
         }).catch(error => {
-          console.error('WebSocket connection error:', error);
+            console.error('WebSocket connection error:', error);
         });
-      
+
         // Fetch existing notifications from the backend
         this.webSocketService.fetchNotifications().subscribe((notifications: any[]) => {
-          this.notifications = notifications;
-          console.log( 'aaaaaaaaa',this.notifications )
-          this.notificationCount = notifications.length;
-          notifications.forEach(notification => {
-            this.getImageUrlNotifications(notification.userId, notification.fileName
-            );
-          });
+            this.notifications = notifications;
+            console.log('aaaaaaaaa', this.notifications)
+            this.notificationCount = notifications.length;
+            notifications.forEach(notification => {
+                this.getImageUrlNotifications(notification.userId, notification.fileName
+                );
+            });
         }, error => {
-          console.error('Error fetching notifications:', error);
+            console.error('Error fetching notifications:', error);
         });
-      
+
         this.getUserFirstName();
-      }
-      
+    }
+
     ngOnDestroy() {
         // Clean up subscriptions
         if (this.notificationSubscription) {
-          this.notificationSubscription.unsubscribe();
+            this.notificationSubscription.unsubscribe();
         }
         this.webSocketService.disconnect();
-      }
+    }
     public showNotifications() {
         this.showNotificationList = true;
     }
@@ -166,11 +168,11 @@ export class HeaderComponent implements OnInit {
                 resolve(); // No image to fetch, resolve immediately
                 return;
             }
-    
+
             const headers = new HttpHeaders({
                 'Authorization': `Bearer ${this.token}`
             });
-    
+
             this.http.get(`http://localhost:8080/images/${userId}/${fileName}`, { headers, responseType: 'blob' }).subscribe((response: Blob) => {
                 const reader = new FileReader();
                 reader.onloadend = () => {
@@ -184,13 +186,34 @@ export class HeaderComponent implements OnInit {
             });
         });
     }
-    
-      updateNotificationImage(userId: number, imageUrl: string): void {
+
+    updateNotificationImage(userId: number, imageUrl: string): void {
         for (let notification of this.notifications) {
-          if (notification.userId === userId) {
-            notification.imageUrl = imageUrl;
-          }
+            if (notification.userId === userId) {
+                notification.imageUrl = imageUrl;
+            }
         }
-      }
-    
+    }
+    // Assuming this method is responsible for formatting the timestamp
+    formatTimestamp(timestamp: Date | undefined): string {
+        if (!timestamp) {
+            return ''; // Handle case where timestamp is undefined or null
+        }
+
+        if (!(timestamp instanceof Date)) {
+            console.error('Invalid timestamp:', timestamp);
+            return ''; // Handle case where timestamp is not a Date object
+        }
+
+        // Format the timestamp as needed
+        const hours = timestamp.getHours().toString().padStart(2, '0');
+        const minutes = timestamp.getMinutes().toString().padStart(2, '0');
+        const seconds = timestamp.getSeconds().toString().padStart(2, '0');
+        const day = timestamp.getDate().toString().padStart(2, '0');
+        const month = (timestamp.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+        const year = timestamp.getFullYear();
+
+        return `${hours}:${minutes}:${seconds} - ${day}/${month}/${year}`;
+    }
+
 }
