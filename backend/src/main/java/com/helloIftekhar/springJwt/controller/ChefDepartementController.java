@@ -12,6 +12,7 @@ import com.helloIftekhar.springJwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -28,7 +29,8 @@ public class ChefDepartementController {
     private EmailService emailService;
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
@@ -141,6 +143,18 @@ public class ChefDepartementController {
             // Update vehicle disponibilite to false
             vehicle.setDisponibilite(false);
             vehicleRepository.save(vehicle);
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", reservation.getId()); // Add ID to the data
+            data.put("message", "New reservation created for vehicle " + reservation.getVehicle().getId());
+            data.put("Conducteur", reservation.getUser() != null ? reservation.getUser().getUsername() : "Unknown");
+            if (reservation.getUserIdConnected() != null) {
+                Optional<User> chefDepartementOptional = userService.findById(Math.toIntExact(reservation.getUserIdConnected()));
+                String chefDepartement = chefDepartementOptional.map(User::getUsername).orElse("Unknown");
+                data.put("chefDepartement", chefDepartement);
+            } else {
+                data.put("chefDepartement", "Unknown");
+            }
+            messagingTemplate.convertAndSend("/topic/notification", data);
 
             return ResponseEntity.ok(reservation);
         } catch (Exception e) {

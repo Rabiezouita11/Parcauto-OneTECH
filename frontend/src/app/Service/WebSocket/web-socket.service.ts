@@ -8,6 +8,8 @@ import * as Stomp from 'stompjs';
 })
 export class WebSocketService {
 
+  public message: string = '';
+
   constructor(private http: HttpClient) {}
 
   // Open connection with the back-end socket
@@ -31,6 +33,14 @@ export class WebSocketService {
       stompClient.connect({}, (frame) => {
         // On successful connection
         console.log('Connected:', frame);
+
+        // Subscribe to /topic/notification
+        stompClient.subscribe('/topic/notification', (notification: { body: string; }) => {
+          // Update message attribute with the recent message sent from the server
+          this.message = notification.body;
+          console.log('Received notification:', this.message);
+        });
+
         resolve(stompClient);
       }, (error) => {
         // On error
@@ -40,4 +50,3 @@ export class WebSocketService {
     });
   }
 }
-
