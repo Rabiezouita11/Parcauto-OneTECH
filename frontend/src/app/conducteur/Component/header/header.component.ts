@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
     lastName: any;
     email: any;
     role: any;
+    mouseLeaveTimeout: any; // Variable to hold the timeout reference
 
     constructor(private webSocketService: WebSocketService, private renderer: Renderer2, private sanitizer: DomSanitizer, private http: HttpClient, private router: Router, private scriptStyleLoaderService: ScriptStyleLoaderService, private userService: UserService) {
         this.token = localStorage.getItem('jwtToken');
@@ -76,14 +77,17 @@ export class HeaderComponent implements OnInit {
         }
         this.webSocketService.disconnect();
     }
-    public showNotifications() {
+    showNotifications(): void {
+        clearTimeout(this.mouseLeaveTimeout); // Clear the timeout if it's already set
         this.showNotificationList = true;
-    }
+      }
 
-    // Hide notification list on mouse leave
-    public hideNotifications() {
-        this.showNotificationList = false;
-    }
+      hideNotifications(): void {
+        // Delay hiding the notification list by 200 milliseconds
+        this.mouseLeaveTimeout = setTimeout(() => {
+          this.showNotificationList = false;
+        }, 200);
+      }
     getUserFirstName(): void {
 
         if (this.token) {
