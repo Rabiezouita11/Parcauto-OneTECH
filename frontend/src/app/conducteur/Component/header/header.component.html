@@ -4,19 +4,22 @@
             <div class="topbar-left xs-hide">
                 <div class="topbar-widget">
                     <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+216 39 140 000</a></div>
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-envelope"></i>Contact.onetech@onetech-group.com
-                    </a></div>
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 08.00 - 17.00</a></div>
+                    <div class="topbar-widget"><a href="#"><i
+                                class="fa fa-envelope"></i>Contact.onetech@onetech-group.com
+                        </a></div>
+                    <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 08.00 - 17.00</a>
+                    </div>
                 </div>
             </div>
-        
+
             <div class="topbar-right">
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/profile.php?id=100063876420454"><i class="fa fa-facebook fa-lg"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=100063876420454"><i
+                            class="fa fa-facebook fa-lg"></i></a>
                     <a href="https://tn.linkedin.com/company/onetech-b-s"><i class="fa fa-linkedin fa-lg"></i></a>
-                 
+
                 </div>
-            </div>  
+            </div>
             <div class="clearfix"></div>
         </div>
     </div>
@@ -29,32 +32,42 @@
                             <!-- logo begin -->
                             <div id="logo">
                                 <a href="index.html">
-                                    <img class="logo-1" src="assets/logo-removebg-preview.png"  style="height: 100px; width: 200px;" alt="">
+                                    <img class="logo-1" src="assets/logo-removebg-preview.png"
+                                        style="height: 100px; width: 200px;" alt="">
                                 </a>
                             </div>
                             <!-- logo close -->
                         </div>
                     </div>
-                  
-                    <div class="de-flex-col">
+
+                    <div class="de-flex-col" *ngIf="role === 'ADMIN'">
                         <div class="menu_side_area">
                             <div class="de-login-menu">
+                                <div class="notification-icon" (mouseenter)="showNotifications()"
+                                    (mouseleave)="hideNotifications()">
+                                    <i class="fa fa-bell fa-lg"></i>
+                                    <span class="notification-count">{{ notificationCount }}</span>
+                                    <!-- Notification list -->
+                                    <div class="notification-list" *ngIf="showNotificationList">
+                                        <div *ngFor="let notification of notifications" class="notification-item">
+                                            <img *ngIf="notification.imageUrl" [src]="notification.imageUrl"
+                                                alt="Chef Departement Photo" class="notification-img">
+                                            <div class="notification-content">
+                                                <span class="notification-message">{{ notification.message }}</span>
+                                                <span class="notification-chef" *ngIf="notification.chefDepartement"> chef Departement {{
+                                                    notification.chefDepartement }}</span>
+                                                <span class="notification-chef" *ngIf="!notification.chefDepartement"> chef Departement {{
+                                                    notification.username }}</span>
 
-                                <span id="de-click-menu-profile" class="de-menu-profile" *ngIf="imageUrl"  >                           
-                                    <img [src]="imageUrl"  class="img-fluid" alt="">
-                                </span>
-                                <span id="de-click-menu-profile" class="de-menu-profile" *ngIf="!imageUrl && firstName && lastName"  >                           
-                                    <img [src]="generateAvatarSrcBlanc(firstName, lastName)" class="img-fluid" alt="" width="100" height="100">
-                                </span>
-
-                                
-                              
-                                  
-                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <span id="menu-btn"></span>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

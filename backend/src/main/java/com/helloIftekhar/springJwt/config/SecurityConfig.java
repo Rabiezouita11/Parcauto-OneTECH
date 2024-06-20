@@ -47,7 +47,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .requestMatchers("/delete/**").hasAnyAuthority("CHEF_DEPARTEMENT", "CONDUCTEUR")
-
+                                .requestMatchers("/api/notifications/**").hasAnyAuthority("CHEF_DEPARTEMENT", "CONDUCTEUR","ADMIN")
 
                                 .requestMatchers("/ChefDepartement/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN","CONDUCTEUR")
                                 .requestMatchers("/user/**").hasAnyAuthority("CHEF_DEPARTEMENT", "ADMIN", "CONDUCTEUR")

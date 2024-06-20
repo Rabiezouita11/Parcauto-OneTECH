@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
+import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
 import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/script-style-loader.service';
 
 @Component({
@@ -17,6 +19,10 @@ export class HeaderComponent implements OnInit {
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         this.isScrolled = scrollPosition > 0; // Set isScrolled to true if the page is scrolled
     }
+    notificationCount: number = 0;
+    notifications: any[] = [];
+    showNotificationList: boolean = false;
+    notificationSubscription: Subscription | undefined;
     userId: any;
     fileName: any;
     token: string | null;
@@ -24,15 +30,57 @@ export class HeaderComponent implements OnInit {
     firstName: any;
     lastName: any;
     email: any;
-    constructor(private renderer: Renderer2, private sanitizer: DomSanitizer, private http: HttpClient, private router: Router, private scriptStyleLoaderService: ScriptStyleLoaderService, private userService: UserService) {
+    role: any;
+
+    constructor(private webSocketService: WebSocketService, private renderer: Renderer2, private sanitizer: DomSanitizer, private http: HttpClient, private router: Router, private scriptStyleLoaderService: ScriptStyleLoaderService, private userService: UserService) {
         this.token = localStorage.getItem('jwtToken');
 
     }
-
     ngOnInit(): void {
+        this.webSocketService.connect().then(() => {
+          // Subscribe to notifications
+          this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+            // Handle notification update
+            console.log('Notification received:', notification);
+            this.notificationCount++;
+            this.notifications.unshift(notification); // Add new notification to the top of the list
+            this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
 
+          });
+        }).catch(error => {
+          console.error('WebSocket connection error:', error);
+        });
+      
+        // Fetch existing notifications from the backend
+        this.webSocketService.fetchNotifications().subscribe((notifications: any[]) => {
+          this.notifications = notifications;
+          console.log( 'aaaaaaaaa',this.notifications )
+          this.notificationCount = notifications.length;
+          notifications.forEach(notification => {
+            this.getImageUrlNotifications(notification.userId, notification.fileName
+            );
+          });
+        }, error => {
+          console.error('Error fetching notifications:', error);
+        });
+      
         this.getUserFirstName();
+      }
+      
+    ngOnDestroy() {
+        // Clean up subscriptions
+        if (this.notificationSubscription) {
+          this.notificationSubscription.unsubscribe();
+        }
+        this.webSocketService.disconnect();
+      }
+    public showNotifications() {
+        this.showNotificationList = true;
+    }
 
+    // Hide notification list on mouse leave
+    public hideNotifications() {
+        this.showNotificationList = false;
     }
     getUserFirstName(): void {
 
@@ -43,6 +91,8 @@ export class HeaderComponent implements OnInit {
                 this.firstName = data.firstName;
                 this.lastName = data.lastName;
                 this.email = data.email;
+                this.role = data.role;
+
                 this.getImageUrl(); // Call getImageUrl after getting user info
 
             }, (error) => {
@@ -109,4 +159,38 @@ export class HeaderComponent implements OnInit {
             return '';
         }
     }
+
+    getImageUrlNotifications(userId: number, fileName: string): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            if (!fileName) {
+                resolve(); // No image to fetch, resolve immediately
+                return;
+            }
+    
+            const headers = new HttpHeaders({
+                'Authorization': `Bearer ${this.token}`
+            });
+    
+            this.http.get(`http://localhost:8080/images/${userId}/${fileName}`, { headers, responseType: 'blob' }).subscribe((response: Blob) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const imageUrl = reader.result as string;
+                    this.updateNotificationImage(userId, imageUrl);
+                };
+                reader.readAsDataURL(response);
+            }, (error) => {
+                console.error('Error fetching image:', error);
+                reject(error); // Reject promise on error
+            });
+        });
+    }
+    
+      updateNotificationImage(userId: number, imageUrl: string): void {
+        for (let notification of this.notifications) {
+          if (notification.userId === userId) {
+            notification.imageUrl = imageUrl;
+          }
+        }
+      }
+    
 }

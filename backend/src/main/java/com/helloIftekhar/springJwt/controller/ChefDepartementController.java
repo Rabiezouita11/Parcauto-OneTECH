@@ -1,9 +1,7 @@
 package com.helloIftekhar.springJwt.controller;
 
-import com.helloIftekhar.springJwt.model.Reservation;
-import com.helloIftekhar.springJwt.model.Role;
-import com.helloIftekhar.springJwt.model.User;
-import com.helloIftekhar.springJwt.model.Vehicle;
+import com.helloIftekhar.springJwt.model.*;
+import com.helloIftekhar.springJwt.repository.NotificationsRepository;
 import com.helloIftekhar.springJwt.repository.ReservationRepository;
 import com.helloIftekhar.springJwt.repository.UserRepository;
 import com.helloIftekhar.springJwt.repository.VehicleRepository;
@@ -15,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,6 +32,8 @@ public class ChefDepartementController {
     private SimpMessagingTemplate messagingTemplate;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private NotificationsRepository notificationRepository;
     @Autowired
     private UserRepository userRepository;
     @GetMapping("/afficherVehculeNondisponibilite")
@@ -159,12 +160,25 @@ public class ChefDepartementController {
                 Optional<User> chefDepartementOptional = userService.findById(Math.toIntExact(reservation.getUserIdConnected()));
                 chefDepartementOptional.ifPresent(chefDepartement -> {
                     data.put("chefDepartement", chefDepartement.getUsername());
+                    data.put("userId", chefDepartement.getId());
+
                     data.put("chefDepartementPhoto", chefDepartement.getPhotos());
+                    Notification notification = new Notification();
+                    notification.setUserId(chefDepartement.getId()); // Set user ID or null if not applicable
+                    notification.setFileName(chefDepartement.getPhotos()); // Set chefDepartementPhoto as fileName
+                    notification.setMessage(data.get("message").toString()); // Extract message from data
+                    notification.setUsername(data.get("chefDepartement").toString()); // Extract username from data
+                    notification.setTimestamp(LocalDateTime.now()); // Set current timestamp
+
+                    notificationRepository.save(notification);
                 });
             } else {
                 data.put("chefDepartement", "Unknown");
                 data.put("chefDepartementPhoto", null); // or set default photo path
             }
+
+
+
             messagingTemplate.convertAndSend("/topic/notification", data);
 
             return ResponseEntity.ok(reservation);
