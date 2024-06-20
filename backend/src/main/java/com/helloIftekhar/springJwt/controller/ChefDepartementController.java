@@ -146,13 +146,24 @@ public class ChefDepartementController {
             Map<String, Object> data = new HashMap<>();
             data.put("id", reservation.getId()); // Add ID to the data
             data.put("message", "New reservation created for vehicle " + reservation.getVehicle().getMarque() + " - Matricule: " + reservation.getVehicle().getMatricule());
-            data.put("Conducteur", reservation.getUser() != null ? reservation.getUser().getUsername() : "Unknown");
+            if (reservation.getUser() != null) {
+                data.put("Conducteur", reservation.getUser().getUsername());
+                data.put("ConducteurPhoto", reservation.getUser().getPhotos());
+            } else {
+                data.put("Conducteur", "Unknown");
+                data.put("ConducteurPhoto", null); // or set default photo path
+            }
+
+            // Fetch photos for chefDepartement (based on reservation's userIdConnected)
             if (reservation.getUserIdConnected() != null) {
                 Optional<User> chefDepartementOptional = userService.findById(Math.toIntExact(reservation.getUserIdConnected()));
-                String chefDepartement = chefDepartementOptional.map(User::getUsername).orElse("Unknown");
-                data.put("chefDepartement", chefDepartement);
+                chefDepartementOptional.ifPresent(chefDepartement -> {
+                    data.put("chefDepartement", chefDepartement.getUsername());
+                    data.put("chefDepartementPhoto", chefDepartement.getPhotos());
+                });
             } else {
                 data.put("chefDepartement", "Unknown");
+                data.put("chefDepartementPhoto", null); // or set default photo path
             }
             messagingTemplate.convertAndSend("/topic/notification", data);
 
