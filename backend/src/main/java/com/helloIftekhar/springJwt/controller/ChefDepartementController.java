@@ -145,7 +145,7 @@ public class ChefDepartementController {
             vehicleRepository.save(vehicle);
             Map<String, Object> data = new HashMap<>();
             data.put("id", reservation.getId()); // Add ID to the data
-            data.put("message", "New reservation created for vehicle " + reservation.getVehicle().getId());
+            data.put("message", "New reservation created for vehicle " + reservation.getVehicle().getMarque() + " - Matricule: " + reservation.getVehicle().getMatricule());
             data.put("Conducteur", reservation.getUser() != null ? reservation.getUser().getUsername() : "Unknown");
             if (reservation.getUserIdConnected() != null) {
                 Optional<User> chefDepartementOptional = userService.findById(Math.toIntExact(reservation.getUserIdConnected()));
