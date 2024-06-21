@@ -23,5 +23,8 @@ public class NotificationController {
     public List<Notification> getNotificationsForUser(@PathVariable Integer userId) {
         return notificationService.getNotificationsForUser(userId);
     }
-
+    @DeleteMapping("/{notificationId}")
+    public void deleteNotificationById(@PathVariable Long notificationId) {
+        notificationService.deleteNotificationById(notificationId);
+    }
 }

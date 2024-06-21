@@ -95,29 +95,6 @@ public class ChefDepartementController {
     @PostMapping("/createReservation")
     public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
         try {
-            // Check if the start date and end date are the same
-           // if (reservation.getStartDate().equals(reservation.getEndDate())) {
-          //      return ResponseEntity.badRequest().body("Start date and end date cannot be the same");
-       //     }
-
-            // Check if the reservation already exists for the given vehicle and time period
-       /*     if (reservation.getStartDate() != null && reservation.getEndDate() != null) {
-                Optional<Reservation> existingReservation = reservationRepository.findByVehicleAndStartDateAndEndDate(
-                        reservation.getVehicle(), reservation.getStartDate(), reservation.getEndDate());
-
-                if (existingReservation.isPresent()) {
-                    if (existingReservation.get().getUserIdConnected() == reservation.getUserIdConnected()
-                            && (reservation.getStatus() == null || existingReservation.get().getStatus() == null
-                            || existingReservation.get().getStatus().equals(reservation.getStatus()))) {
-                        return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
-                    }
-                }
-            } else {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body("Une réservation existe déjà pour la période donnée");
-            } */
-
-
-
             // Retrieve the vehicle from the database
             Optional<Vehicle> vehicleOptional = vehicleRepository.findById(reservation.getVehicleId());
             if (vehicleOptional.isEmpty()) {
@@ -137,7 +114,6 @@ public class ChefDepartementController {
                 }
                 // Set the user for the reservation
                 reservation.setUser(userOptional.get());
-
             }
 
             // Save the reservation
@@ -146,9 +122,10 @@ public class ChefDepartementController {
             // Update vehicle disponibilite to false
             vehicle.setDisponibilite(false);
             vehicleRepository.save(vehicle);
+
             Map<String, Object> data = new HashMap<>();
             data.put("id", reservation.getId()); // Add ID to the data
-            data.put("message", "New reservation created for vehicle " + reservation.getVehicle().getMarque() + " - Matricule: " + reservation.getVehicle().getMatricule());
+            data.put("message", "Nouvelle réservation créée pour le véhicule " + reservation.getVehicle().getMarque() + " - Matricule : " + reservation.getVehicle().getMatricule());
             if (reservation.getUser() != null) {
                 data.put("Conducteur", reservation.getUser().getUsername());
                 data.put("ConducteurPhoto", reservation.getUser().getPhotos());
@@ -163,23 +140,48 @@ public class ChefDepartementController {
                 chefDepartementOptional.ifPresent(chefDepartement -> {
                     data.put("chefDepartement", chefDepartement.getUsername());
                     data.put("userId", chefDepartement.getId());
-
                     data.put("chefDepartementPhoto", chefDepartement.getPhotos());
-                    Notification notification = new Notification();
-                    notification.setUserId(chefDepartement.getId()); // Set user ID or null if not applicable
-                    notification.setFileName(chefDepartement.getPhotos()); // Set chefDepartementPhoto as fileName
-                    notification.setMessage(data.get("message").toString()); // Extract message from data
-                    notification.setUsername(data.get("chefDepartement").toString()); // Extract username from data
-                    notification.setTimestamp(LocalDateTime.now()); // Set current timestamp
-                    notification.setNotAdmin(false);
-                    notificationRepository.save(notification);
+
+                    Notification chefDepartementNotification = new Notification();
+                    chefDepartementNotification.setUserId(chefDepartement.getId()); // Set user ID or null if not applicable
+                    chefDepartementNotification.setFileName(chefDepartement.getPhotos()); // Set chefDepartementPhoto as fileName
+                    chefDepartementNotification.setMessage(data.get("message").toString()); // Extract message from data
+                    chefDepartementNotification.setUsername(data.get("chefDepartement").toString()); // Extract username from data
+                    chefDepartementNotification.setTimestamp(LocalDateTime.now()); // Set current timestamp
+                    chefDepartementNotification.setNotAdmin(false);
+                    notificationRepository.save(chefDepartementNotification);
+
+                    // Notify the user who made the reservation
+                    if (reservation.getUser() != null) {
+                        Map<String, Object> userNotificationData = new HashMap<>();
+                        userNotificationData.put("message", "Vous avez été affecté à la mission : " + reservation.getMission() +
+                                " par Chef Departement : " + chefDepartement.getUsername());
+                        userNotificationData.put("Conducteur", reservation.getUser().getUsername());
+                        userNotificationData.put("ConducteurPhoto", reservation.getUser().getPhotos());
+                        userNotificationData.put("chefDepartement", chefDepartement.getUsername());
+                        userNotificationData.put("chefDepartementPhoto", chefDepartement.getPhotos());
+
+                        messagingTemplate.convertAndSendToUser(
+                                reservation.getUser().getUsername(),
+                                "/queue/notification",
+                                userNotificationData
+                        );
+
+                        // Save the user notification
+                        Notification userNotification = new Notification();
+                        userNotification.setUserId(reservation.getUser().getId());
+                        userNotification.setFileName(reservation.getUser().getPhotos());
+                        userNotification.setMessage(userNotificationData.get("message").toString());
+                        userNotification.setUsername(reservation.getUser().getUsername());
+                        userNotification.setTimestamp(LocalDateTime.now());
+                        userNotification.setNotAdmin(true);
+                        notificationRepository.save(userNotification);
+                    }
                 });
             } else {
                 data.put("chefDepartement", "Unknown");
                 data.put("chefDepartementPhoto", null); // or set default photo path
             }
-
-
 
             messagingTemplate.convertAndSend("/topic/notification", data);
 

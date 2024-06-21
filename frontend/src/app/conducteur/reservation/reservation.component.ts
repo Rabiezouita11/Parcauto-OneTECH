@@ -5,6 +5,8 @@ import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { Reservation } from 'src/app/model/Reservation';
 import Swal from 'sweetalert2';
 import { ReservationDetailsModalComponent } from './reservation-details-modal/reservation-details-modal.component';
+import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reservation',
@@ -13,14 +15,36 @@ import { ReservationDetailsModalComponent } from './reservation-details-modal/re
 })
 export class ReservationComponent implements OnInit {
   reservations: Reservation[] = [];
+  notificationSubscription: Subscription | undefined;
 
-  constructor(private dialog: MatDialog,private reservationService: ReservationService, private userService: UserService) { } // Inject UserService
+  constructor( private webSocketService: WebSocketService,  private dialog: MatDialog,private reservationService: ReservationService, private userService: UserService) { } // Inject UserService
 
   ngOnInit(): void {
         this.getAllReservations();
+        this.initializeWebSocketConnection(); // Initialize WebSocket connection
 
   }
 
+  initializeWebSocketConnection(): void {
+    this.webSocketService.connect().then(() => {
+       
+      // Subscribe to notifications for admin
+      this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+       
+        this.getAllReservations();
+
+
+      
+      
+    
+  
+        // Add new notification to the ADMIN notifications list
+       
+      });
+    }).catch(error => {
+      console.error('WebSocket connection error:', error);
+    });
+  }
   openDetailsModal(reservation: any): void {
     this.dialog.open(ReservationDetailsModalComponent, {
       width: '400px',

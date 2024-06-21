@@ -109,4 +109,17 @@ export class WebSocketService {
 
     return this.http.get<any[]>(`${this.apiUrl}/${userId}`, { headers });
   }
+
+  public deleteNotification(notificationId: number): Observable<any> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('JWT Token is not available');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete(`${this.apiUrl}/${notificationId}`, { headers });
+  }
 }

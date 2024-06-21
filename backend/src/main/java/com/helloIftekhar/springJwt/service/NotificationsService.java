@@ -13,7 +13,7 @@ public class NotificationsService {
     @Autowired
     private NotificationsRepository notificationRepository;
     public List<Notification> getNotificationsForUser(Integer userId) {
-        return notificationRepository.findByUserIdAndIsNotAdmin(userId, true);
+        return notificationRepository.findByUserIdAndIsNotAdminOrderByIsNotAdminDesc(userId, true);
     }
 
     public Notification saveNotification(Notification notification) {
@@ -21,6 +21,9 @@ public class NotificationsService {
     }
 
     public List<Notification> getAllNotifications() {
-        return notificationRepository.findByIsNotAdminFalse();
+        return notificationRepository.findAllByIsNotAdminFalseOrderByIsNotAdminDesc();
+    }
+    public void deleteNotificationById(Long notificationId) {
+        notificationRepository.deleteById(notificationId);
     }
 }

@@ -14,6 +14,7 @@ import { NgForm } from '@angular/forms';
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 import Swal from 'sweetalert2';
 import { EventInput } from '@fullcalendar/core';
+import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
 
 declare var $: any;
 
@@ -80,15 +81,43 @@ export class CalenderComponent implements OnInit {
     role: any;
     userIdConnected: any;
 
-    constructor(private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService, private cdr: ChangeDetectorRef) { }
+    constructor( private webSocketService: WebSocketService, private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService, private cdr: ChangeDetectorRef) { }
 
     async ngOnInit() {
         await this.getInfo();
         this.loadUnavailableVehicles();
         this.loadConducteurUsers();
         this.loadReservations();
-    }
 
+        this.initializeWebSocketConnection(); // Initialize WebSocket connection
+
+    }
+    initializeWebSocketConnection(): void {
+
+
+
+        let stompClient = this.webSocketService.connectToUser();
+        stompClient.connect({}, (frame: any) => {
+          console.log('Connected to WebSocket:', frame);
+  
+          // Subscribe to the user-specific queue
+          stompClient.subscribe(`/user/${this.userIdConnected}/queue/notification`, (message: { body: string; }) => {
+            this.loadUnavailableVehicles();
+            this.loadConducteurUsers();
+            this.loadReservations();
+            this.cdr.detectChanges(); // Manually trigger change detection
+
+          
+           
+            // Ensure userNotifications array is initialized before pushing data
+        
+          }, (error: any) => {
+            console.error('Subscription error:', error);
+          });
+        }, (error: any) => {
+          console.error('Connection error:', error);
+        });
+    }
     async getInfo(): Promise<void> {
         const token = localStorage.getItem('jwtToken');
 
@@ -213,6 +242,8 @@ export class CalenderComponent implements OnInit {
 
                 // Set events to calendarOptions
                 this.calendarOptions.events = events;
+                this.cdr.detectChanges();
+
             } else {
                 console.error('No reservations found');
             }
