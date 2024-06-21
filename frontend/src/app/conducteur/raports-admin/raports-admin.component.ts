@@ -6,8 +6,9 @@ import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.s
 import { Report } from 'src/app/model/Report';
 import { ReservationDetailsComponent } from '../carburant-admin/reservation-details/reservation-details.component';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
+import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
 
 @Component({
   selector: 'app-raports-admin',
@@ -17,15 +18,41 @@ import Swal from 'sweetalert2';
 export class RaportsAdminComponent implements OnInit {
   token: string | null;
   reports: Report[] = []; // To store carburant data
+  notificationSubscription: Subscription | undefined;
 
 
-  constructor( private dialog: MatDialog , private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
+  constructor(private webSocketService: WebSocketService,  private dialog: MatDialog , private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
 
   ngOnInit(): void {
     this.loadReports();
+    this.initializeWebSocketConnection(); // Initialize WebSocket connection
+
+  }
+
+  initializeWebSocketConnection(): void {
+    this.webSocketService.connect().then(() => {
+       
+      // Subscribe to notifications for admin
+      this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+       
+        this.loadReports();
+
+
+
+      
+      
+    
+  
+        // Add new notification to the ADMIN notifications list
+       
+      });
+    }).catch(error => {
+      console.error('WebSocket connection error:', error);
+    });
+
   }
   async loadReports(): Promise<void> {
     this.ConducteurService.getAllReportActive().subscribe(reports => {

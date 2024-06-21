@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ConducteurService} from 'src/app/Service/Conducteur/conducteur.service';
 import {ReservationService} from 'src/app/Service/Reservation/reservation.service';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 
 @Component({selector: 'app-carburant-conducteur', templateUrl: './carburant-conducteur.component.html', styleUrls: ['./carburant-conducteur.component.scss']})
 export class CarburantConducteurComponent implements OnInit {
+  @ViewChild('kilometrageDebutInput') kilometrageDebutInput!: ElementRef;
+  @ViewChild('kilometrageFinInput') kilometrageFinInput!: ElementRef;
+  @ViewChild('quantiteCarburantInput') quantiteCarburantInput!: ElementRef;
     reservations : Reservation[] = [];
     token : string | null;
     userId : any;
@@ -43,7 +46,17 @@ export class CarburantConducteurComponent implements OnInit {
         this.token = localStorage.getItem('jwtToken');
 
     }
-
+    onModalOpen(): void {
+      // Reset form values when the modal opens
+      this.fuelData.kilometrageDebut = null;
+      this.fuelData.kilometrageFin = null;
+  
+      // Reset form inputs using template references
+      if (this.kilometrageDebutInput && this.kilometrageFinInput ) {
+        this.kilometrageDebutInput.nativeElement.value = null;
+        this.kilometrageFinInput.nativeElement.value = null;
+      }
+    }
     ngOnInit(): void {
         this.getInfo();
         this.loadCarburants();
@@ -133,7 +146,8 @@ export class CarburantConducteurComponent implements OnInit {
             icon: 'success',
             title: 'Succès',
             text: 'Les données du carburant ont été enregistrées avec succès !'
-          });            this.ngOnInit();
+          });            
+          this.ngOnInit();
             // Optionally, reset form data or perform any other actions
         }, (error) => { // Handle error
             Swal.fire({icon: 'error', title: 'Error', text: error.message});

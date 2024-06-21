@@ -1,31 +1,39 @@
 package com.helloIftekhar.springJwt.controller;
 
-import com.helloIftekhar.springJwt.model.Carburant;
-import com.helloIftekhar.springJwt.model.Report;
-import com.helloIftekhar.springJwt.model.Reservation;
+import com.helloIftekhar.springJwt.model.*;
+import com.helloIftekhar.springJwt.repository.NotificationsRepository;
 import com.helloIftekhar.springJwt.repository.ReportRepository;
 import com.helloIftekhar.springJwt.repository.ReservationRepository;
 import com.helloIftekhar.springJwt.service.CarburantService;
+import com.helloIftekhar.springJwt.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/conducteur")
 public class ConducteurController {
-
+    @Autowired
+    private NotificationsRepository notificationRepository;
     @Autowired
     private CarburantService carburantService;
-
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
     @Autowired
     private ReservationRepository reservationRepository; // Assuming you have a repository for Reservation
     @Autowired
     private ReportRepository reportRepository;
+    @Autowired
+    private UserService userService;
     @GetMapping("/reservations/{userId}")
     public List<Reservation> getReservationsByUserId(@PathVariable Long userId) {
         return reservationRepository.findByUser_IdAndStatus(userId, true);
@@ -46,6 +54,27 @@ public class ConducteurController {
     public ResponseEntity<Report> createReport(@RequestBody Report report) {
         try {
             Report savedReport = reportRepository.save(report);
+            Optional<User> userOptional = userService.findById(Math.toIntExact(savedReport.getUserId()));
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", "Nouveau rapport créé par " + userOptional.get().getUsername() + " avec l'identifiant : " + savedReport.getId());
+            data.put("userId", savedReport.getUserId());
+            data.put("chefDepartementPhoto", userOptional.get().getPhotos());
+
+
+
+            Notification userNotification = new Notification();
+            userNotification.setUserId(userOptional.get().getId());
+            userNotification.setFileName(userOptional.get().getPhotos());
+            userNotification.setMessage(data.get("message").toString());
+            userNotification.setUsername(userOptional.get().getUsername());
+            userNotification.setTimestamp(LocalDateTime.now());
+            userNotification.setNotAdmin(false);
+            notificationRepository.save(userNotification);
+
+
+
+            messagingTemplate.convertAndSend("/topic/notification", data);
+
             return new ResponseEntity<>(savedReport, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

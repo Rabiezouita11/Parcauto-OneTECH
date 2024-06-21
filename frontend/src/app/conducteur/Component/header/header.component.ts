@@ -107,8 +107,6 @@ export class HeaderComponent implements OnInit {
         // Subscribe to notifications for admin
         this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
           this.notificationSound.play();
-          notification.isNew = true; // Add this line
-
           console.log('Notification received:', notification);
           notification.timestamp = new Date();
       

@@ -54,7 +54,8 @@
 
 
 <!-- Modal for fuel management -->
-<div class="modal fade" id="fuelManagementModal" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="fuelManagementModal" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true" (shown.bs.modal)="onModalOpen()">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -68,15 +69,15 @@
 
           <div class="mb-3">
             <label for="kilometrageDebut" class="form-label">Kilométrage Début:</label>
-            <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required>
+            <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required #kilometrageDebutInput>
           </div>
           <div class="mb-3">
             <label for="kilometrageFin" class="form-label">Kilométrage Fin:</label>
-            <input type="number" class="form-control" id="kilometrageFin" [(ngModel)]="fuelData.kilometrageFin" name="kilometrageFin" required>
+            <input type="number" class="form-control" id="kilometrageFin" [(ngModel)]="fuelData.kilometrageFin" name="kilometrageFin" required #kilometrageFinInput>
           </div>
           <div class="mb-3">
             <label for="quantiteCarburant" class="form-label">Quantité de Carburant Utilisée:</label>
-            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" readonly name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required>
+            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" readonly name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required #quantiteCarburantInput>
           </div>
          
           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Enregistrer</button>
@@ -88,6 +89,17 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 <div class="modal fade" id="fuelManagementModal3" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
