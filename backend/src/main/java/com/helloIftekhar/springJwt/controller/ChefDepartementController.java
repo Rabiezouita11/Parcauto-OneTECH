@@ -125,7 +125,7 @@ public class ChefDepartementController {
 
             Map<String, Object> data = new HashMap<>();
             data.put("id", reservation.getId()); // Add ID to the data
-            data.put("message", "Nouvelle réservation créée pour le véhicule " + reservation.getVehicle().getMarque() + " - Matricule : " + reservation.getVehicle().getMatricule());
+            data.put("message", "Nouvelle réservation (ID: " + reservation.getId() + ") créée pour le véhicule " + reservation.getVehicle().getMarque() + " - Matricule : " + reservation.getVehicle().getMatricule());
             if (reservation.getUser() != null) {
                 data.put("Conducteur", reservation.getUser().getUsername());
                 data.put("ConducteurPhoto", reservation.getUser().getPhotos());
