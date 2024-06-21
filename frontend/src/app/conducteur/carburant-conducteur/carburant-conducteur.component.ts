@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 @Component({selector: 'app-carburant-conducteur', templateUrl: './carburant-conducteur.component.html', styleUrls: ['./carburant-conducteur.component.scss']})
 export class CarburantConducteurComponent implements OnInit {
   @ViewChild('kilometrageDebutInput') kilometrageDebutInput!: ElementRef;
+  @ViewChild('rapportselect') rapportselect!: ElementRef;
   @ViewChild('kilometrageFinInput') kilometrageFinInput!: ElementRef;
   @ViewChild('quantiteCarburantInput') quantiteCarburantInput!: ElementRef;
     reservations : Reservation[] = [];
@@ -46,6 +47,17 @@ export class CarburantConducteurComponent implements OnInit {
         this.token = localStorage.getItem('jwtToken');
 
     }
+
+
+    onModalOpen2():void{
+      this.rapportselect.nativeElement.value = null;
+      this.rapport.selectedCategory = null; // Resetting selectedCategory to null
+    }
+
+
+
+
+
     onModalOpen(): void {
       // Reset form values when the modal opens
       this.fuelData.kilometrageDebut = null;

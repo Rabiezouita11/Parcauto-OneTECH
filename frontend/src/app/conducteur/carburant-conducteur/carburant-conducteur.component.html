@@ -161,7 +161,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="createReport" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true">
+<div class="modal fade" id="createReport" tabindex="-1" aria-labelledby="fuelManagementModalLabel" aria-hidden="true"  (shown.bs.modal)="onModalOpen2()">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -172,7 +172,7 @@
         <form>
           <div class="mb-3">
             <label for="categorySelect" class="form-label">Sélectionnez la Catégorie du Rapport:</label>
-            <select class="form-select" id="categorySelect" [(ngModel)]="rapport.selectedCategory" name="selectedCategory">
+            <select class="form-select" id="categorySelect" [(ngModel)]="rapport.selectedCategory"  #rapportselect name="selectedCategory">
               <option value="panneVoiture">Panne de Voiture</option>
               <option value="maintenance">Maintenance</option>
               <option value="accident">Accident</option>
