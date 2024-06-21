@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import * as SockJsClient from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Subject, Observable } from 'rxjs';
+import * as SockJs from 'sockjs-client';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,11 @@ export class WebSocketService {
 
   // Open connection with the back-end socket
   public connect(): Promise<void> {
+    
     if (this.connected) {
       return Promise.resolve();
     }
+    
 
     const token = localStorage.getItem('jwtToken');
     if (!token) {
@@ -58,6 +61,13 @@ export class WebSocketService {
     });
   }
 
+  public connectToUser() {
+    let socket = new SockJs(`http://localhost:8080/socket`);
+
+    let stompClient = Stomp.over(socket);
+
+    return stompClient;
+}
   // Method to get notifications as an observable
   public getNotificationObservable(): Observable<any> {
     return this.notificationSubject.asObservable();
@@ -85,5 +95,18 @@ export class WebSocketService {
         this.connected = false;
       });
     }
+  }
+
+  public getNotificationsForUser(userId: number): Observable<any[]> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      throw new Error('JWT Token is not available');
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}`, { headers });
   }
 }

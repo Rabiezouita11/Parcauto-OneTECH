@@ -14,6 +14,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -169,7 +171,7 @@ public class ChefDepartementController {
                     notification.setMessage(data.get("message").toString()); // Extract message from data
                     notification.setUsername(data.get("chefDepartement").toString()); // Extract username from data
                     notification.setTimestamp(LocalDateTime.now()); // Set current timestamp
-
+                    notification.setNotAdmin(false);
                     notificationRepository.save(notification);
                 });
             } else {
@@ -229,6 +231,19 @@ public class ChefDepartementController {
             String startDate = reservation.getStartDate().toString();
             String endDate = reservation.getEndDate().toString();
             String montant = reservation.getMontant().toString();
+
+
+            String notificationMessage = status
+                    ? "Your reservation has been approved. Start Date: " + startDate + ", End Date: " +endDate
+                    : "Your reservation has been declined. Start Date:  " + startDate + ", End Date: " +endDate;
+
+
+
+            Notification notification = createNotification(reservation, usernameConnectedFirstname, notificationMessage , userConnected.getPhotos());
+
+            sendNotification(Long.valueOf(notification.getUserId()),  userConnected.getPhotos(), notificationMessage, usernameConnectedFirstname, notification);
+
+
             if (status) {
 
                 Vehicle vehicle = reservation.getVehicle();
@@ -300,11 +315,46 @@ public class ChefDepartementController {
                 // Send email
                 emailService.sendEmail(usernameConnectedEmail, emailSubject, emailBody);
             }
+
+
             return ResponseEntity.ok(reservation);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error updating reservation status: " + e.getMessage());
         }
+    }
+    private LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+    private void sendNotification(Long userId, String fileName, String message, String username, Notification notification) {
+        // Construct data object for WebSocket message
+        Map<String, Object> data = new HashMap<>();
+        data.put("userId", userId);
+        data.put("fileName", fileName);
+        data.put("message", message);
+        data.put("username", username);
+        data.put("timestamp", notification.getTimestamp()); // Add timestamp to the data
+        data.put("id", notification.getId()); // Add ID to the data
+
+        // Send notification through WebSocket
+        messagingTemplate.convertAndSendToUser(String.valueOf(userId), "/queue/notification", data);
+    }
+
+    private Notification createNotification(Reservation reservation, String usernameConnectedFirstname, String notificationMessage, String photos) {
+        // Assuming Notification is an entity with appropriate fields and a repository to save it
+        Notification notification = new Notification();
+        notification.setUserId(Math.toIntExact(reservation.getUserIdConnected()));
+        notification.setUsername(usernameConnectedFirstname);
+        notification.setMessage(notificationMessage);
+        notification.setFileName(photos);
+        notification.setNotAdmin(true);
+        notification.setTimestamp(LocalDateTime.now()); // Set current LocalDateTime
+        // Save notification if needed
+        notificationRepository.save(notification);
+
+        return notification;
     }
 
 

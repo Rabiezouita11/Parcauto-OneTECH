@@ -19,6 +19,7 @@ public class Notification {
     private String message;
     private String username;
     private LocalDateTime timestamp;
+    private boolean isNotAdmin = false; // Default value is false
 
 
 

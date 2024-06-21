@@ -14,12 +14,14 @@ import { ScriptStyleLoaderService } from 'src/app/Service/script-style-loader/sc
 })
 export class HeaderComponent implements OnInit {
     isScrolled = false;
+    userNotifications!: any[];
     @HostListener('window:scroll', [])
     onWindowScroll() {
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
         this.isScrolled = scrollPosition > 0; // Set isScrolled to true if the page is scrolled
     }
     notificationCount: number = 0;
+    notificationCountuser: number = 0;
     notifications: any[] = [];
     showNotificationList: boolean = false;
     notificationSubscription: Subscription | undefined;
@@ -38,34 +40,38 @@ export class HeaderComponent implements OnInit {
 
     }
     ngOnInit(): void {
-        this.webSocketService.connect().then(() => {
-            // Subscribe to notifications
-            this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
-                // Handle notification update
-                console.log('Notification received:', notification);
-                notification.timestamp = new Date(); // Set current timestamp
 
-                this.notificationCount++;
-                this.notifications.unshift(notification); // Add new notification to the top of the list
-                this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
 
-            });
-        }).catch(error => {
-            console.error('WebSocket connection error:', error);
-        });
 
-        // Fetch existing notifications from the backend
-        this.webSocketService.fetchNotifications().subscribe((notifications: any[]) => {
-            this.notifications = notifications;
-            console.log('aaaaaaaaa', this.notifications)
-            this.notificationCount = notifications.length;
-            notifications.forEach(notification => {
-                this.getImageUrlNotifications(notification.userId, notification.fileName
-                );
-            });
-        }, error => {
-            console.error('Error fetching notifications:', error);
-        });
+
+        // this.webSocketService.connect().then(() => {
+        //     // Subscribe to notifications
+        //     this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+        //         // Handle notification update
+        //         console.log('Notification received:', notification);
+        //         notification.timestamp = new Date(); // Set current timestamp
+
+        //         this.notificationCount++;
+        //         this.notifications.unshift(notification); // Add new notification to the top of the list
+        //         this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
+
+        //     });
+        // }).catch(error => {
+        //     console.error('WebSocket connection error:', error);
+        // });
+
+        // // Fetch existing notifications from the backend
+        // this.webSocketService.fetchNotifications().subscribe((notifications: any[]) => {
+        //     this.notifications = notifications;
+        //     console.log('aaaaaaaaa', this.notifications)
+        //     this.notificationCount = notifications.length;
+        //     notifications.forEach(notification => {
+        //         this.getImageUrlNotifications(notification.userId, notification.fileName
+        //         );
+        //     });
+        // }, error => {
+        //     console.error('Error fetching notifications:', error);
+        // });
 
         this.getUserFirstName();
     }
@@ -80,14 +86,14 @@ export class HeaderComponent implements OnInit {
     showNotifications(): void {
         clearTimeout(this.mouseLeaveTimeout); // Clear the timeout if it's already set
         this.showNotificationList = true;
-      }
+    }
 
-      hideNotifications(): void {
+    hideNotifications(): void {
         // Delay hiding the notification list by 200 milliseconds
         this.mouseLeaveTimeout = setTimeout(() => {
-          this.showNotificationList = false;
+            this.showNotificationList = false;
         }, 200);
-      }
+    }
     getUserFirstName(): void {
 
         if (this.token) {
@@ -100,6 +106,7 @@ export class HeaderComponent implements OnInit {
                 this.role = data.role;
 
                 this.getImageUrl(); // Call getImageUrl after getting user info
+                this.initializeWebSocketConnection(); // Initialize WebSocket connection based on role
 
             }, (error) => {
                 console.error('Error fetching user information:', error);
@@ -108,6 +115,83 @@ export class HeaderComponent implements OnInit {
             console.error('Token not found in localStorage');
         }
     }
+    initializeWebSocketConnection(): void {
+        if (this.role === 'ADMIN') {
+          this.webSocketService.connect().then(() => {
+            // Subscribe to notifications for admin
+            this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+              console.log('Notification received:', notification);
+              notification.timestamp = new Date();
+      
+              // Add new notification to the ADMIN notifications list
+              this.notifications.unshift(notification);
+              this.notificationCount++;
+              this.getImageUrlNotifications(notification.userId, notification.chefDepartementPhoto);
+            });
+          }).catch(error => {
+            console.error('WebSocket connection error:', error);
+          });
+      
+          // Fetch existing notifications from the backend
+          this.webSocketService.fetchNotifications().subscribe((notifications: any[]) => {
+            this.notifications = notifications; // Update ADMIN notifications
+            this.notificationCount = notifications.length;
+            notifications.forEach(notification => {
+              this.getImageUrlNotifications(notification.userId, notification.fileName);
+            });
+          }, error => {
+            console.error('Error fetching notifications:', error);
+          });
+      
+        } else if (this.role === 'CHEF_DEPARTEMENT') {
+          this.webSocketService.getNotificationsForUser(this.userId).subscribe((notifications: any[]) => {
+            this.userNotifications = notifications; // Update CHEF_DEPARTEMENT notifications
+
+            console.log( this.userNotifications)
+            this.notificationCountuser = notifications.length;
+            notifications.forEach(notification => {
+                console.log(notification.userId ,  notification.fileName)
+              this.getImageUrlNotifications(notification.userId, notification.fileName);
+            });
+          }, error => {
+            console.error('Error fetching user-specific notifications:', error);
+          });
+      
+          let stompClient = this.webSocketService.connectToUser();
+          stompClient.connect({}, (frame: any) => {
+            console.log('Connected to WebSocket:', frame);
+      
+            // Subscribe to the user-specific queue
+            stompClient.subscribe(`/user/${this.userId}/queue/notification`, (message: { body: string; }) => {
+              let data = JSON.parse(message.body);
+              console.log('Received a message for CHEF_DEPARTEMENT:', data);
+      
+              // Ensure userNotifications array is initialized before pushing data
+              if (this.userNotifications) {
+                this.userNotifications.unshift({ // Add new notification to CHEF_DEPARTEMENT notifications
+                  userId: data.userId,
+                  fileName: data.fileName,
+                  message: data.message,
+                  username: data.username,
+                  id: data.id,
+                  timestamp: new Date(data.timestamp) // Assuming data.timestamp is a string or number
+                });
+                this.notificationCountuser++;
+              } else {
+                console.error('userNotifications array is not initialized.');
+              }
+            }, (error: any) => {
+              console.error('Subscription error:', error);
+            });
+          }, (error: any) => {
+            console.error('Connection error:', error);
+          });
+        }
+      }
+      
+      
+      
+
     getImageUrl(): void {
         if (!this.fileName) { // Set imageUrl to null or provide a default image URL
             this.imageUrl = null; // or provide a default image URL: this.imageUrl = 'path/to/default/image.jpg';

@@ -8,6 +8,7 @@ import java.util.List;
 @Repository
 
 public interface NotificationsRepository  extends JpaRepository<Notification, Long> {
-    List<Notification> findByUserId(Integer userId);
+    List<Notification> findByUserIdAndIsNotAdmin(Integer userId, boolean isNotAdmin);
+    List<Notification> findByIsNotAdminFalse();
 
 }

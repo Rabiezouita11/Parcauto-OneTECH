@@ -1,79 +1,93 @@
 <header class="transparent scroll-light has-topbar" [ngClass]="{ 'fixed-header': isScrolled }">
     <div id="topbar" class="topbar-dark text-light">
-        <div class="container">
-            <div class="topbar-left xs-hide">
-                <div class="topbar-widget">
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-phone"></i>+216 39 140 000</a></div>
-                    <div class="topbar-widget"><a href="#"><i
-                                class="fa fa-envelope"></i>Contact.onetech@onetech-group.com
-                        </a></div>
-                    <div class="topbar-widget"><a href="#"><i class="fa fa-clock-o"></i>Mon - Fri 08.00 - 17.00</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="topbar-right">
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/profile.php?id=100063876420454"><i
-                            class="fa fa-facebook fa-lg"></i></a>
-                    <a href="https://tn.linkedin.com/company/onetech-b-s"><i class="fa fa-linkedin fa-lg"></i></a>
-
-                </div>
-            </div>
-            <div class="clearfix"></div>
+      <div class="container">
+        <div class="topbar-left xs-hide">
+          <!-- Topbar content for contact information -->
         </div>
+        <div class="topbar-right">
+          <!-- Social icons -->
+        </div>
+        <div class="clearfix"></div>
+      </div>
     </div>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="de-flex sm-pt10">
-                    <div class="de-flex-col">
-                        <div class="de-flex-col">
-                            <!-- logo begin -->
-                            <div id="logo">
-                                <a href="index.html">
-                                    <img class="logo-1" src="assets/logo-removebg-preview.png"
-                                        style="height: 100px; width: 200px;" alt="">
-                                </a>
-                            </div>
-                            <!-- logo close -->
-                        </div>
-                    </div>
-
-                    <div class="de-flex-col" *ngIf="role === 'ADMIN'">
-                        <div class="menu_side_area">
-                            <div class="de-login-menu">
-                                <div class="notification-icon" (mouseenter)="showNotifications()"
-                                    (mouseleave)="hideNotifications()">
-                                    <i class="fa fa-bell fa-lg"></i>
-                                    <span class="notification-count">{{ notificationCount }}</span>
-                                    <!-- Notification list -->
-                                    <div class="notification-list" *ngIf="showNotificationList">
-                                        <div *ngFor="let notification of notifications" class="notification-item">
-                                            <img *ngIf="notification.imageUrl" [src]="notification.imageUrl"
-                                                alt="Chef Departement Photo" class="notification-img">
-                                            <div class="notification-content">
-                                                <span class="notification-message">{{ notification.message }}</span>
-                                                <span class="notification-chef" *ngIf="notification.chefDepartement">
-                                                    chef Departement {{
-                                                    notification.chefDepartement }}</span>
-                                                <span class="notification-chef" *ngIf="!notification.chefDepartement">
-                                                    chef Departement {{
-                                                    notification.username }}</span>
-                                                <div>{{ notification.timestamp | timeAgo }}</div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span id="menu-btn"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="de-flex sm-pt10">
+            <div class="de-flex-col">
+              <!-- Logo -->
+              <div id="logo">
+                <a href="index.html">
+                  <img class="logo-1" src="assets/logo-removebg-preview.png" style="height: 100px; width: 200px;" alt="">
+                </a>
+              </div>
+              <!-- End Logo -->
             </div>
+  
+            <!-- Notification Section for ADMIN -->
+            <div class="de-flex-col" *ngIf="role === 'ADMIN'">
+              <div class="menu_side_area">
+                <div class="de-login-menu">
+                  <div class="notification-icon" (mouseenter)="showNotifications()" (mouseleave)="hideNotifications()">
+                    <i class="fa fa-bell fa-lg"></i>
+                    <span class="notification-count">{{ notificationCount }}</span>
+                    <!-- Notification list for ADMIN -->
+                    <div *ngIf="role === 'ADMIN' && showNotificationList" class="notification-list">
+                        <div *ngFor="let notification of notifications" class="notification-item">
+                        <img *ngIf="notification.imageUrl" [src]="notification.imageUrl" alt="Notification Image"
+                          class="notification-img">
+                        <div class="notification-content">
+                          <span class="notification-message">{{ notification.message }}</span>
+                          <span class="notification-chef" *ngIf="notification.chefDepartement">
+                            Chef Departement {{ notification.chefDepartement }}
+                          </span>
+                          <span class="notification-chef" *ngIf="!notification.chefDepartement">
+                            User {{ notification.username }}
+                          </span>
+                          <div>{{ notification.timestamp | timeAgo }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span id="menu-btn"></span>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Notification Section for CHEF_DEPARTEMENT -->
+            <div class="de-flex-col" *ngIf="role === 'CHEF_DEPARTEMENT'">
+              <div class="menu_side_area">
+                <div class="de-login-menu">
+                  <div class="notification-icon" (mouseenter)="showNotifications()" (mouseleave)="hideNotifications()">
+                    <i class="fa fa-bell fa-lg"></i>
+                    <span class="notification-count">{{ notificationCountuser }}</span>
+                    <!-- Notification list for CHEF_DEPARTEMENT -->
+                    <div *ngIf="role === 'CHEF_DEPARTEMENT' && showNotificationList" class="notification-list">
+
+                        <div *ngFor="let notification of userNotifications" class="notification-item">
+                            <img *ngIf="notification.imageUrl" [src]="notification.imageUrl" alt="Notification Image"
+                          class="notification-img">
+                        <div class="notification-content">
+                          <span class="notification-message">{{ notification.message }}</span>
+                          <span class="notification-chef" *ngIf="notification.chefDepartement">
+                            Chef Departement {{ notification.chefDepartement }}
+                          </span>
+                          <span class="notification-chef" *ngIf="!notification.chefDepartement">
+                            User {{ notification.username }}
+                          </span>
+                          <div>{{ notification.timestamp | timeAgo }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span id="menu-btn"></span>
+                </div>
+              </div>
+            </div>
+  
+          </div>
         </div>
+      </div>
     </div>
-</header>
+  </header>
+  
