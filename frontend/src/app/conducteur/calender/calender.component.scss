@@ -84,3 +84,19 @@
         border-top: 4px solid #dc3545; // red
     }
 }
+
+
+// Define variables for spacing
+$label-bottom-margin: 0.5rem;
+$invalid-feedback-top-margin: -1.5rem;
+
+// Style classes
+.label-with-margin {
+    margin-bottom: $label-bottom-margin;
+}
+
+.invalid-feedback {
+    margin-top: $invalid-feedback-top-margin;
+}
+
+// Apply additional styles as needed

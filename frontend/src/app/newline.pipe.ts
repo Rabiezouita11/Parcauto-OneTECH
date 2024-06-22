@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NewlinePipe implements PipeTransform {
 
-  transform(value: string, every: number = 20): string {
+  transform(value: string, every: number = 32): string {
     if (!value) return value;
     const regex = new RegExp(`.{1,${every}}`, 'g');
     const matches = value.match(regex);

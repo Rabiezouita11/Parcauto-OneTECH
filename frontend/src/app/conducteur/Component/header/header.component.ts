@@ -161,6 +161,7 @@ export class HeaderComponent implements OnInit {
           this.notificationSound.play();
           // Ensure userNotifications array is initialized before pushing data
           if (this.userNotifications) {
+
             this.userNotifications.unshift({ // Add new notification to CHEF_DEPARTEMENT notifications
               userId: data.userId,
               fileName: data.fileName,

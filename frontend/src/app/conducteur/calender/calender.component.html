@@ -72,70 +72,89 @@
                             <div class="form-group">
                                 <label for="vehicleSelect">Voiture</label>
                                 <div class="select-wrapper">
-                                    <select class="form-control" id="vehicleSelect" [(ngModel)]="selectedVehicleId"
-                                        name="selectedVehicleId" required>
+                                    <select class="form-control" id="vehicleSelect" [(ngModel)]="selectedVehicleId" name="selectedVehicleId" required #selectedVehicleIdInput="ngModel" [ngClass]="{'is-invalid': selectedVehicleIdInput.invalid && selectedVehicleIdInput.touched}">
                                         <option value="">--Please choose an option--</option>
-
                                         <option *ngFor="let vehicle of unavailableVehicles" [value]="vehicle.id">
-                                            {{ vehicle . marque }} - {{ vehicle . modele }}
+                                            {{ vehicle.marque }} - {{ vehicle.modele }}
                                         </option>
                                     </select>
-                                    <span class="arrow"></span>
+                                    <div *ngIf="selectedVehicleIdInput.invalid && selectedVehicleIdInput.touched" class="invalid-feedback">
+                                        Veuillez sélectionner un véhicule.
+                                    </div>
                                 </div>
                             </div>
-                                <div class="form-group">
-                                    <label for="startDate">Date début</label>
-                                    <input type="date" class="form-control" id="startDate"
-                                        [(ngModel)]="reservation.startDate" name="startDate" required
-                                        [min]="getCurrentDate()">
+        
+                            <div class="form-group">
+                                <label for="startDate" >Date début</label>
+                                <input type="date" class="form-control" id="startDate" [(ngModel)]="reservation.startDate" name="startDate" required [min]="getCurrentDate()" #startDateInput="ngModel" [ngClass]="{'is-invalid': startDateInput.invalid && startDateInput.touched}">
+                                <div *ngIf="startDateInput.invalid && startDateInput.touched" class="invalid-feedback">
+                                    Veuillez sélectionner une date de début.
                                 </div>
-                                <div class="form-group">
-                                    <label for="endDate">Date fin</label>
-                                    <input type="date" class="form-control" id="endDate"
-                                        [(ngModel)]="reservation.endDate" name="endDate" required
-                                        [min]="reservation.startDate | date:'yyyy-MM-dd'">
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="endDate">Date fin</label>
+                                <input type="date" class="form-control" id="endDate" [(ngModel)]="reservation.endDate" name="endDate" required [min]="reservation.startDate | date:'yyyy-MM-dd'" #endDateInput="ngModel" [ngClass]="{'is-invalid': endDateInput.invalid && endDateInput.touched}">
+                                <div *ngIf="endDateInput.invalid && endDateInput.touched" class="invalid-feedback">
+                                    Veuillez sélectionner une date de fin.
                                 </div>
-                            
+                            </div>
+        
                             <div class="form-group">
                                 <label for="userSelect">Conducteur</label>
                                 <div class="select-wrapper">
-                                    <select class="form-control" id="userSelect" [(ngModel)]="selectedUserId"
-                                        name="selectedUserId" required>
+                                    <select class="form-control" id="userSelect" [(ngModel)]="selectedUserId" name="selectedUserId" required #selectedUserIdInput="ngModel" [ngClass]="{'is-invalid': selectedUserIdInput.invalid && selectedUserIdInput.touched}">
                                         <option value="">--Please choose an option--</option>
-
                                         <option *ngFor="let user of conducteurUsers" [ngValue]="user.id">
-                                            {{ user . firstName }} {{ user . lastName }} ({{ user . username }})
+                                            {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
                                         </option>
                                     </select>
-                                    <span class="arrow"></span>
+                                    <div *ngIf="selectedUserIdInput.invalid && selectedUserIdInput.touched" class="invalid-feedback">
+                                        Veuillez sélectionner un conducteur.
+                                    </div>
                                 </div>
                             </div>
+        
                             <div class="form-group">
                                 <label for="mission">Mission</label>
-                                <textarea class="form-control" id="mission" rows="3" [(ngModel)]="reservation.mission" name="mission" required></textarea>
+                                <textarea class="form-control" id="mission" rows="3" [(ngModel)]="reservation.mission" name="mission" required #missionInput="ngModel" [ngClass]="{'is-invalid': missionInput.invalid && missionInput.touched}"></textarea>
+                                <div *ngIf="missionInput.invalid && missionInput.touched" class="invalid-feedback">
+                                    La mission est requise.
+                                </div>
                             </div>
+        
                             <div class="form-group">
-                                <label for="distiantion">distiantion</label>
-                                <input type="text" class="form-control" [(ngModel)]="reservation.distiantion"  name="distiantion" required  >
+                                <label for="distiantion">Distination</label>
+                                <input type="text" class="form-control" id="distiantion" [(ngModel)]="reservation.distiantion" name="distiantion" required #distiantionInput="ngModel" [ngClass]="{'is-invalid': distiantionInput.invalid && distiantionInput.touched}">
+                                <div *ngIf="distiantionInput.invalid && distiantionInput.touched" class="invalid-feedback">
+                                    La distination est requise.
+                                </div>
                             </div>
+        
                             <div class="form-group">
-                                <label for="accompagnateur">accompagnateur</label>
-                                <input type="text" class="form-control" [(ngModel)]="reservation.accompagnateur"  name="accompagnateur">
+                                <label for="accompagnateur">Accompagnateur</label>
+                                <input type="text" class="form-control" id="accompagnateur" [(ngModel)]="reservation.accompagnateur" name="accompagnateur" #accompagnateurInput="ngModel" [ngClass]="{'is-invalid': accompagnateurInput.invalid && accompagnateurInput.touched}">
                             </div>
+        
                             <div class="form-group">
                                 <label for="montant">Montant</label>
-                                <input type="number" class="form-control" id="montant" [(ngModel)]="reservation.montant" name="montant" required>
+                                <input type="number" class="form-control" id="montant" [(ngModel)]="reservation.montant" name="montant" required #montantInput="ngModel" [ngClass]="{'is-invalid': montantInput.invalid && montantInput.touched}">
+                                <div *ngIf="montantInput.invalid && montantInput.touched" class="invalid-feedback">
+                                    Le montant est requis.
+                                </div>
                             </div>
+        
                             <div class="modal-footer">
-
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-                        </div>
+                                <button type="submit" class="btn btn-primary" [disabled]="reservationForm.invalid">Save</button>
+                                <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
 
 
 

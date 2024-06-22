@@ -6,8 +6,9 @@ import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.service';
 import { Carburant } from 'src/app/model/Carburant';
 import { ReservationDetailsComponent } from './reservation-details/reservation-details.component';
-import { forkJoin } from 'rxjs';
 import { VehicleDetailsComponent } from './vehicle-details/vehicle-details.component';
+import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
+import { Subscription, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-carburant-admin',
@@ -18,14 +19,39 @@ export class CarburantAdminComponent implements OnInit {
   carburants: Carburant[] = []; // To store carburant data
   token: string | null;
   selectedReservationId: number | null = null;
+  notificationSubscription: Subscription | undefined;
 
-  constructor(private dialog: MatDialog, private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
+  constructor(private webSocketService: WebSocketService,private dialog: MatDialog, private ConducteurService : ConducteurService ,private reservationService: ReservationService, private vehicleService: VehicleService, private userService: UserService) {
     this.token = localStorage.getItem('jwtToken');
 
   }
   ngOnInit(): void {
     this.loadCarburants();
+    this.initializeWebSocketConnection(); // Initialize WebSocket connection
 
+
+  }
+
+  initializeWebSocketConnection(): void {
+    this.webSocketService.connect().then(() => {
+       
+      // Subscribe to notifications for admin
+      this.notificationSubscription = this.webSocketService.getNotificationObservable().subscribe(notification => {
+       
+        this.loadCarburants();
+
+
+
+      
+      
+    
+  
+        // Add new notification to the ADMIN notifications list
+       
+      });
+    }).catch(error => {
+      console.error('WebSocket connection error:', error);
+    });
 
   }
   async loadCarburants(): Promise<void> {

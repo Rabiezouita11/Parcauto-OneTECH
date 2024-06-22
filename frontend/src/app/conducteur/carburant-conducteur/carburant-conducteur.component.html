@@ -21,7 +21,8 @@
     
         <td>{{ reservation.startDate }}</td>
         <td>{{ reservation.endDate }}</td>
-        <td>{{ reservation.mission }}</td>
+        <td>        <span class="value" [innerHTML]="reservation.mission | newline"></span>
+        </td>
         <td>{{ reservation.montant }}</td>
         <td>
           <!-- Button to trigger the fuel management modal -->
@@ -66,22 +67,31 @@
         <!-- Add fuel management form -->
         <form (ngSubmit)="submitFuelManagementForm()" #fuelForm="ngForm">
           <input type="hidden" id="reservationId" name="reservationId" [value]="selectedReservation?.id">
-
+        
           <div class="mb-3">
             <label for="kilometrageDebut" class="form-label">Kilométrage Début:</label>
-            <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required #kilometrageDebutInput>
+            <input type="number" class="form-control" id="kilometrageDebut" [(ngModel)]="fuelData.kilometrageDebut" name="kilometrageDebut" required #kilometrageDebutInput="ngModel" [ngClass]="{'is-invalid': kilometrageDebutInput.invalid && kilometrageDebutInput.touched}">
+            <div *ngIf="kilometrageDebutInput.invalid && kilometrageDebutInput.touched" class="invalid-feedback">
+              Kilométrage Début est requis.
+            </div>
           </div>
+          <br>
           <div class="mb-3">
             <label for="kilometrageFin" class="form-label">Kilométrage Fin:</label>
-            <input type="number" class="form-control" id="kilometrageFin" [(ngModel)]="fuelData.kilometrageFin" name="kilometrageFin" required #kilometrageFinInput>
+            <input type="number" class="form-control" id="kilometrageFin" [(ngModel)]="fuelData.kilometrageFin" name="kilometrageFin" required #kilometrageFinInput="ngModel" [ngClass]="{'is-invalid': kilometrageFinInput.invalid && kilometrageFinInput.touched}">
+            <div *ngIf="kilometrageFinInput.invalid && kilometrageFinInput.touched" class="invalid-feedback">
+              Kilométrage Fin est requis.
+            </div>
           </div>
+          <br>
           <div class="mb-3">
             <label for="quantiteCarburant" class="form-label">Quantité de Carburant Utilisée:</label>
-            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" readonly name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required #quantiteCarburantInput>
+            <input type="number" class="form-control" id="quantiteCarburant" [(ngModel)]="fuelData.quantiteCarburantUtiliser" readonly name="quantiteCarburant" [ngModelOptions]="{standalone: true}" required #quantiteCarburantInput="ngModel">
           </div>
-         
-          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Enregistrer</button>
+          
+          <button type="submit" class="btn btn-primary" [disabled]="fuelForm.invalid" data-bs-dismiss="modal">Enregistrer</button>
         </form>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -89,6 +99,7 @@
     </div>
   </div>
 </div>
+
 
 
 

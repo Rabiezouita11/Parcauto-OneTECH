@@ -152,31 +152,7 @@ public class ChefDepartementController {
                     notificationRepository.save(chefDepartementNotification);
 
                     // Notify the user who made the reservation
-                    if (reservation.getUser() != null) {
-                        Map<String, Object> userNotificationData = new HashMap<>();
-                        userNotificationData.put("message", "Vous avez été affecté à la mission : " + reservation.getMission() +
-                                " par Chef Departement : " + chefDepartement.getUsername());
-                        userNotificationData.put("Conducteur", reservation.getUser().getUsername());
-                        userNotificationData.put("ConducteurPhoto", reservation.getUser().getPhotos());
-                        userNotificationData.put("chefDepartement", chefDepartement.getUsername());
-                        userNotificationData.put("chefDepartementPhoto", chefDepartement.getPhotos());
 
-                        messagingTemplate.convertAndSendToUser(
-                                reservation.getUser().getUsername(),
-                                "/queue/notification",
-                                userNotificationData
-                        );
-
-                        // Save the user notification
-                        Notification userNotification = new Notification();
-                        userNotification.setUserId(reservation.getUser().getId());
-                        userNotification.setFileName(reservation.getUser().getPhotos());
-                        userNotification.setMessage(userNotificationData.get("message").toString());
-                        userNotification.setUsername(reservation.getUser().getUsername());
-                        userNotification.setTimestamp(LocalDateTime.now());
-                        userNotification.setNotAdmin(true);
-                        notificationRepository.save(userNotification);
-                    }
                 });
             } else {
                 data.put("chefDepartement", "Unknown");
@@ -236,8 +212,9 @@ public class ChefDepartementController {
 
 
             String notificationMessage = status
-                    ? "Your reservation has been approved. Start Date: " + startDate + ", End Date: " +endDate
-                    : "Your reservation has been declined. Start Date:  " + startDate + ", End Date: " +endDate;
+                    ? "Votre réservation a été approuvée. Date de début : " + startDate + ", Date de fin : " + endDate
+                    : "Votre réservation a été refusée. Date de début : " + startDate + ", Date de fin : " + endDate;
+
 
 
 
@@ -247,7 +224,32 @@ public class ChefDepartementController {
 
 
             if (status) {
+                if (reservation.getUser() != null) {
+                    Map<String, Object> userNotificationData = new HashMap<>();
+                    userNotificationData.put("message", "Vous avez été affecté à la mission : " + reservation.getMission() +
+                            " par Chef Departement : " + usernameConnectedFirstname);
+                    userNotificationData.put("Conducteur", reservation.getUser().getUsername());
+                    userNotificationData.put("ConducteurPhoto", reservation.getUser().getPhotos());
+                    userNotificationData.put("chefDepartement", usernameConnectedFirstname);
+                    userNotificationData.put("chefDepartementPhoto", userConnected.getPhotos());
+                    userNotificationData.put("timestamp", notification.getTimestamp()); // Add timestamp to the data
 
+                    messagingTemplate.convertAndSendToUser(
+                            String.valueOf(reservation.getUser().getId()),
+                            "/queue/notification",
+                            userNotificationData
+                    );
+
+                    // Save the user notification
+                    Notification userNotification = new Notification();
+                    userNotification.setUserId(reservation.getUser().getId());
+                    userNotification.setFileName(reservation.getUser().getPhotos());
+                    userNotification.setMessage(userNotificationData.get("message").toString());
+                    userNotification.setUsername(reservation.getUser().getUsername());
+                    userNotification.setTimestamp(LocalDateTime.now());
+                    userNotification.setNotAdmin(true);
+                    notificationRepository.save(userNotification);
+                }
                 Vehicle vehicle = reservation.getVehicle();
                 vehicle.setDisponibilite(false); // Set disponibilite to true
                 vehicleRepository.save(vehicle);
@@ -299,6 +301,10 @@ public class ChefDepartementController {
                 // Send email with PDF attachment
                 emailService.sendEmailWithPDFAttachment(reservation.getUser().getEmail(), emailSubject2,
                         emailBody2, pdfBytes);
+
+
+
+
 
             }else{
 

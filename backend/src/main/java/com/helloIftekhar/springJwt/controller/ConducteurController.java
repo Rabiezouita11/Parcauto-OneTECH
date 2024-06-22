@@ -41,10 +41,44 @@ public class ConducteurController {
 
     @PostMapping("/save")
     public ResponseEntity<Carburant> saveCarburant(@RequestBody Carburant carburant) {
+        try {
+            // Save the Carburant entity
+            Carburant savedCarburant = carburantService.saveCarburant(carburant);
 
-        Carburant savedCarburant = carburantService.saveCarburant(carburant);
-        return new ResponseEntity<>(savedCarburant, HttpStatus.CREATED);
+            // Retrieve the user details based on userId
+            Optional<User> userOptional = userService.findById(Math.toIntExact(savedCarburant.getUserId()));
+            if (!userOptional.isPresent()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // User not found
+            }
+
+            // Prepare notification data
+
+            String message = "Les informations sur le carburant ont été enregistrées par " + userOptional.get().getUsername() +
+                    " (ID utilisateur : " + userOptional.get().getId() + ")";
+            Map<String, Object> data = new HashMap<>();
+            data.put("message", message);
+            data.put("userId", savedCarburant.getUserId());
+            data.put("chefDepartementPhoto", userOptional.get().getPhotos());
+
+            // Create and save the notification
+            Notification userNotification = new Notification();
+            userNotification.setUserId(userOptional.get().getId());
+            userNotification.setFileName(userOptional.get().getPhotos());
+            userNotification.setMessage(message);
+            userNotification.setUsername(userOptional.get().getUsername());
+            userNotification.setTimestamp(LocalDateTime.now());
+            userNotification.setNotAdmin(false);
+            notificationRepository.save(userNotification);
+
+            // Send notification through WebSocket
+            messagingTemplate.convertAndSend("/topic/notification", data);
+
+            return new ResponseEntity<>(savedCarburant, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     @GetMapping("/carburants")
     public ResponseEntity<List<Carburant>> getAllCarburants() {
         List<Carburant> carburants = carburantService.getAllCarburants();

@@ -89,7 +89,7 @@
                           <img *ngIf="notification.imageUrl" [src]="notification.imageUrl" alt="Notification Image"
                             class="notification-img">
                           <div class="notification-content">
-                            <span class="notification-message">{{ notification.message }}</span>
+                            <span class="notification-message">  <span class="value" [innerHTML]="notification.message | newline"></span> </span>
                             <span class="notification-chef" *ngIf="notification.chefDepartement">
                               Chef Departement {{ notification.chefDepartement }}
                             </span>
