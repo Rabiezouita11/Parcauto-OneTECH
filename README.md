@@ -4,6 +4,7 @@
 - 🛠️ Realiser Integration template admin
 - 🛠️ Integration template system d'authentification
 - 🛠️ Integration template conducteur
+- 🛠️ Integration template chef depatement
 
 ## UI Enhancements
 - 🔄 Add spinner in "Send lien mot de passe oublier"
