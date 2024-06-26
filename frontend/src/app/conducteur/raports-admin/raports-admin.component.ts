@@ -3,12 +3,12 @@ import { ConducteurService } from 'src/app/Service/Conducteur/conducteur.service
 import { ReservationService } from 'src/app/Service/Reservation/reservation.service';
 import { UserService } from 'src/app/Service/UserService/user-service.service';
 import { VehicleService } from 'src/app/Service/VehicleService/vehicle-service.service';
-import { Report } from 'src/app/model/Report';
 import { ReservationDetailsComponent } from '../carburant-admin/reservation-details/reservation-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription, forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
+import { Report } from 'src/app/model/Report';
 
 @Component({
   selector: 'app-raports-admin',
