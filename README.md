@@ -44,5 +44,7 @@
 
 ## Documentation and Deployment
 - 📚 Donner README in GitHub with icons ok
-- 📚 Base donner SQL
+- 📚 Base donner SQL: Include a basic SQL script for database setup
 
+## Contact Information
+For support and inquiries, contact [rabiezouita82@gmail.com](mailto:rabiezouita82@gmail.com).
