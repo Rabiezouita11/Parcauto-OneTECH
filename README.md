@@ -43,7 +43,6 @@
 - 📊 Gérer réservation : add code verification email, gérer rapport gérer carburant
 
 ## Documentation and Deployment
-- 📚 Donner README in GitHub with icons ok
 - 📚 Base donner SQL: Include a basic SQL script for database setup
 
 ## Contact Information
