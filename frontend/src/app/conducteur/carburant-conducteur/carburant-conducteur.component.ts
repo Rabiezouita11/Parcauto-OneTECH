@@ -3,7 +3,7 @@ import {ConducteurService} from 'src/app/Service/Conducteur/conducteur.service';
 import {ReservationService} from 'src/app/Service/Reservation/reservation.service';
 import {UserService} from 'src/app/Service/UserService/user-service.service';
 import {Carburant} from 'src/app/model/Carburant';
-import { Report } from 'src/app/model/Report';
+import { report } from 'src/app/model/report';
 import {Reservation} from 'src/app/model/Reservation';
 import Swal from 'sweetalert2';
 
@@ -23,7 +23,7 @@ export class CarburantConducteurComponent implements OnInit {
     role : any;
     userName : any;
     carburants: Carburant[] = []; // To store carburant data
-    reports: Report[] = []; // To store carburant data
+    reports: report[] = []; // To store carburant data
 
    
     selectedReservation : Reservation | null = null; // Selected reservation for fuel management

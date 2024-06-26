@@ -21,7 +21,7 @@ import {ReservationService} from 'src/app/Service/Reservation/reservation.servic
 import {Reservation} from 'src/app/model/Reservation';
 import {ConducteurService} from 'src/app/Service/Conducteur/conducteur.service';
 import {Carburant} from 'src/app/model/Carburant';
-import {Report} from 'src/app/model/Report';
+import {report} from 'src/app/model/report';
 import { Loader } from '@googlemaps/js-api-loader';
 @Component({selector: 'app-home', templateUrl: './home.component.html', styleUrls: ['./home.component.scss']})
 export class HomeComponent implements OnInit,
@@ -42,7 +42,7 @@ AfterViewInit {
     refusedReservations : any[] = [];
     carburants : Carburant[] = []; // To store carburant data
     carburantsCount : number = 0;
-    reports !: Report[];
+    reports !: report[];
     reportCount : number = 0;
     reportCountNoUserId : number = 0;
     CarburantsCountNoUserId : number = 0;

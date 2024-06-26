@@ -1,4 +1,4 @@
-export interface Report {
+export interface report {
     id: number;
     reservationId: number;
     category: string;

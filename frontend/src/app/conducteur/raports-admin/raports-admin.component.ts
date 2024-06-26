@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription, forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 import { WebSocketService } from 'src/app/Service/WebSocket/web-socket.service';
-import { Report } from 'src/app/model/Report';
+import { report } from 'src/app/model/report';
 
 @Component({
   selector: 'app-raports-admin',
@@ -17,7 +17,7 @@ import { Report } from 'src/app/model/Report';
 })
 export class RaportsAdminComponent implements OnInit {
   token: string | null;
-  reports: Report[] = []; // To store carburant data
+  reports: report[] = []; // To store carburant data
   notificationSubscription: Subscription | undefined;
 
 

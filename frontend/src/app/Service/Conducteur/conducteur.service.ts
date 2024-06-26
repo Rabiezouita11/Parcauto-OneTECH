@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Carburant } from 'src/app/model/Carburant';
 import { Reservation } from 'src/app/model/Reservation';
-import { Report } from 'src/app/model/Report';
+import { report } from 'src/app/model/report';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +69,7 @@ export class ConducteurService {
   }
 
 
-  getAllReport(): Observable<Report[]> {
+  getAllReport(): Observable<report[]> {
     const token = localStorage.getItem('jwtToken');
     console.log(token);
     if (!token) {
@@ -78,7 +78,7 @@ export class ConducteurService {
 
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    return this.http.get<Report[]>(`${this.baseUrl}/reports`, { headers })
+    return this.http.get<report[]>(`${this.baseUrl}/reports`, { headers })
       .pipe(
         catchError(error => {
           console.error('Error:', error);
@@ -87,7 +87,7 @@ export class ConducteurService {
       );
   }
 
-  getAllReportActive(): Observable<Report[]> {
+  getAllReportActive(): Observable<report[]> {
     const token = localStorage.getItem('jwtToken');
     console.log(token);
     if (!token) {
@@ -96,7 +96,7 @@ export class ConducteurService {
 
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    return this.http.get<Report[]>(`${this.baseUrl}/reportsActive`, { headers })
+    return this.http.get<report[]>(`${this.baseUrl}/reportsActive`, { headers })
       .pipe(
         catchError(error => {
           console.error('Error:', error);
