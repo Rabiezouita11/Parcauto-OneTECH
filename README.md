@@ -47,4 +47,5 @@
 
 ## Contact Information
 - For support and inquiries, contact [rabiezouita82@gmail.com](mailto:rabiezouita82@gmail.com).
- - You can also connect with us on [Facebook](https://www.facebook.com/rabie.zouita.37/) <i class="fab fa-facebook"></i>.
+- Connect with me on [Facebook](https://www.facebook.com/rabie.zouita.37/) <i class="fab fa-facebook"></i>.
+
